@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\Etat;
+use App\Entity\Site;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker;
@@ -19,8 +20,14 @@ class AppFixtures extends Fixture
         }
         $manager->flush();
 
-        // $product = new Product();
-        // $manager->persist($product);
+
+        $siteNames=['Nantes','Rennes','Quimper','Niort'];
+        foreach ($siteNames as $name){
+            $site=new Site();
+            $site->setNom($name);
+            $manager->persist($site);
+        }
+        $manager->flush();
 
 
     }
