@@ -27,7 +27,7 @@ class Site
     /**
      * @ORM\OneToMany(targetEntity=User::class, mappedBy="site")
      */
-    private $User;
+    private $users;
 
     /**
      * @ORM\OneToMany(targetEntity=Sortie::class, mappedBy="site")
@@ -58,29 +58,29 @@ class Site
     }
 
     /**
-     * @return Collection|Participant[]
+     * @return Collection|User[]
      */
-    public function getParticipant(): Collection
+    public function getUser(): Collection
     {
-        return $this->participants;
+        return $this->users;
     }
 
-    public function addParticipant(Participant $participant): self
+    public function addUser(User $user): self
     {
-        if (!$this->participants->contains($participant)) {
-            $this->participants[] = $participant;
-            $participant->setSite($this);
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
+            $user->setSite($this);
         }
 
         return $this;
     }
 
-    public function removeParticipant(Participant $participant): self
+    public function removeUser(User $user): self
     {
-        if ($this->participants->removeElement($participant)) {
+        if ($this->users->removeElement($user)) {
             // set the owning side to null (unless already changed)
-            if ($participant->getSite() === $this) {
-                $participant->setSite(null);
+            if ($user->getSite() === $this) {
+                $user->setSite(null);
             }
         }
 
