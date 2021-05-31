@@ -25,9 +25,9 @@ class Site
     private $nom;
 
     /**
-     * @ORM\OneToMany(targetEntity=Participant::class, mappedBy="site")
+     * @ORM\OneToMany(targetEntity=User::class, mappedBy="site")
      */
-    private $participants;
+    private $User;
 
     /**
      * @ORM\OneToMany(targetEntity=Sortie::class, mappedBy="site")

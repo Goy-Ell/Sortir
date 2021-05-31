@@ -61,15 +61,15 @@ class Sortie
     private $site;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Participant::class, inversedBy="sortiesOrganisateur")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="sortiesOrganisateur")
      * @ORM\JoinColumn(nullable=false)
      */
     private $organisateur;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Participant::class, inversedBy="sortiesParticipant")
+     * @ORM\ManyToMany(targetEntity=User::class, inversedBy="sortiesUser")
      */
-    private $participants;
+    private $user;
 
     /**
      * @ORM\ManyToOne(targetEntity=Lieu::class, inversedBy="sortie")
