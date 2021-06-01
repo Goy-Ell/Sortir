@@ -2,8 +2,17 @@
 
 <nav class="navbar navbar-light bg-light">
     <div class="container-fluid justify-content-start">
-        <a class="btn btn-outline-success me-2" href="{{ path('main_home') }}">Accueil</a>
-{#        <a class="btn btn-outline-secondary me-2"href="{{ path('#') }}">Mon profil</a>#}
-{#        <a class="btn btn-outline-secondary me-2"href="{{ path('#') }}">Se déconnecter</a>#}
+        <!-- Si un utilisateur est connecté -->
+        {% if  app.user%}
+            <a class="btn btn-outline-secondary me-2" href="{{ path('participant_recherche') }}">Accueil</a>
+            <!-- Si l'utilisateur est un ADMIN -->
+            {% if is_granted("ROLE_ADMIN") %}
+                <a class="btn btn-outline-secondary me-2"href="#">Villes</a>
+                <a class="btn btn-outline-secondary me-2"href="#">Sites</a>
+            {% endif %}
+            <a class="btn btn-outline-secondary me-2"href="{{ path('user_profil', {'id' : app.user.id}) }}">Mon profil</a>
+            <a class="btn btn-outline-secondary me-2"href="{{ path('app_logout') }}">Se déconnecter</a>
+        {% endif %}
+
     </div>
 </nav>

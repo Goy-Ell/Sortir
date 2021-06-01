@@ -46,7 +46,7 @@ class ParticipantRepository extends ServiceEntityRepository
             ->getOneOrNullResult()
         ;
     }
-    */
+
     public function rechercherSortie(\App\Entity\Recherche $recherche)
     {
         $queryBuilder=$this->createQueryBuilder('r');
@@ -87,5 +87,5 @@ class ParticipantRepository extends ServiceEntityRepository
 
 
 
-    }
+    }*/
 }

@@ -2,9 +2,8 @@
 
 namespace App\Controller;
 
-use App\Entity\Recherche;
-
 use App\Form\RechercheType;
+use App\Model\Recherche;
 use App\Repository\ParticipantRepository;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,18 +16,18 @@ class ParticipantController extends AbstractController
     /**
      * @Route("/participant/recherche", name="participant_recherche")
      */
-    public function recherche(ParticipantRepository $participantRepository, Request $request): Response
+    public function recherche(): Response
     {
-        $recherche= new Recherche();
+/**        $recherche= new Recherche();
         $rechercheForm=$this->createForm(RechercheType::class,$recherche);
         $rechercheForm->handleRequest($request);
         $resultat=$participantRepository->rechercherSortie($recherche);
-
+*/
 //        $nbSorties=$participantRepository->count([]);
 
         return $this->render('participant/recherche.html.twig', [
-                'rechercheForm'=>$rechercheForm->createView(),
-                'resultat'=>$resultat,
+//                'rechercheForm'=>$rechercheForm->createView(),
+//                'resultat'=>$resultat,
 
         ]);
     }
