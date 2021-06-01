@@ -2,8 +2,12 @@
 
 namespace App\Controller;
 
+
 use App\Entity\Sortie;
+use App\Form\RechercheType;
 use App\Form\SortieType;
+use App\Model\Recherche;
+use App\Repository\SortieRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -37,6 +41,26 @@ class SortieController extends AbstractController
 
         return $this->render('sortie/create.html.twig', [
             'sortieForm' => $sortieForm->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/sortie/recherche", name="sortie_recherche")
+     */
+    public function recherche(SortieRepository $sortieRepository, Request $request): Response
+    {
+        $recherche= new Recherche();
+        $rechercheForm=$this->createForm(RechercheType::class,$recherche);
+        $rechercheForm->handleRequest($request);
+
+        $resultat=$sortieRepository->rechercherSortie($recherche);
+
+//        $nbSorties=$participantRepository->count([]);
+
+        return $this->render('sortie/recherche.html.twig', [
+            'rechercheForm'=>$rechercheForm->createView(),
+            'resultat'=>$resultat,
+
         ]);
     }
 }

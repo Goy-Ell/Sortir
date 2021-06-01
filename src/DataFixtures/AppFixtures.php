@@ -16,13 +16,16 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager)
     {
+
+        $faker = Faker\Factory::create('fr_FR');
+
+
         $etatNames=['Créée','Ouverte','Cloturé','Activité en cours','Passée','Annulée'];
         foreach ($etatNames as $name ){
             $etat = new Etat();
             $etat->setLibelle($name);
             $manager->persist($etat);
         }
-        $manager->flush();
 
 
         $siteNames=['Nantes','Rennes','Quimper','Niort'];
@@ -31,19 +34,19 @@ class AppFixtures extends Fixture
             $site->setNom($name);
             $manager->persist($site);
         }
+
+
+        for($i=0;$i<=50;$i++){
+            $ville=New Ville();
+            $ville->setNom($faker->city);
+            $ville->setCodePostal($faker->postcode);
+
+            $manager->persist($ville);
+        }
         $manager->flush();
-
-
-        $faker = Faker\Factory::create('fr_FR');
-
-        $etatRepo=$manager->getRepository(Etat::class);
-        $etats=$etatRepo->findAll();
 
         $siteRepo = $manager->getRepository(Site::class);
         $sites = $siteRepo->findAll();
-
-
-
 
 
         for($i=0;$i<=50;$i++){
@@ -63,22 +66,19 @@ class AppFixtures extends Fixture
             $manager->persist($user);
         }
 
-        $userRepo =$manager->getRepository(User::class);
-        $users=$userRepo->findAll();
+        $manager->flush();
 
 
 
-        for($i=0;$i<=50;$i++){
-            $ville=New Ville();
-            $ville->setNom($faker->city);
-            $ville->setCodePostal($faker->postcode);
 
-            $manager->persist($ville);
-        }
+        $etatRepo=$manager->getRepository(Etat::class);
+        $etats=$etatRepo->findAll();
 
         $villeRepo=$manager->getRepository(Ville::class);
         $villes=$villeRepo->findAll();
 
+        $userRepo =$manager->getRepository(User::class);
+        $users=$userRepo->findAll();
 
 
         for($i=0;$i<=50;$i++){
@@ -89,6 +89,8 @@ class AppFixtures extends Fixture
 
             $manager->persist($lieu);
         }
+        $manager->flush();
+
 
         $lieuRepo=$manager->getRepository(Lieu::class);
         $lieux=$lieuRepo->findAll();
@@ -109,7 +111,7 @@ class AppFixtures extends Fixture
             $sortie->setInfosSortie($faker->text(200)) ;
             $sortie->setLieu($faker->randomElement($lieux)) ;
 
-            $manager->persist($sortie);
+//            $manager->persist($sortie);
         }
         $manager->flush();
     }

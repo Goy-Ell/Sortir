@@ -21,7 +21,7 @@ class SortieRepository extends ServiceEntityRepository
 
 
 
-    public function rechercherSortie(\App\Entity\Recherche $recherche)
+    public function rechercherSortie(\App\Model\Recherche $recherche)
     {
         $queryBuilder=$this->createQueryBuilder('r');
         $queryBuilder->addOrderBy('r.dateHeureDebut','ASC');
@@ -64,10 +64,10 @@ class SortieRepository extends ServiceEntityRepository
             $queryBuilder->setParameter('etat','Passée');
             $queryBuilder->setParameter('dateNow1m',$dateNow->modify('-1 month'));
         }
-        if($recherche->getSite()){
-            $queryBuilder->andWhere('r.site = :site');
-            $queryBuilder->setParameter('site',$recherche->getSite());
-        }
+//        if($recherche->getSite()){
+//            $queryBuilder->andWhere('r.site = :site');
+//            $queryBuilder->setParameter('site',$recherche->getSite());
+//        }
 
         //permet de récupérer le nombre de résultat
         $queryBuilder->select('COUNT(r)');

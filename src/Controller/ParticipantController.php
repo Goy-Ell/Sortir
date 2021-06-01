@@ -14,22 +14,22 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ParticipantController extends AbstractController
 {
-    /**
-     * @Route("/participant/recherche", name="participant_recherche")
-     */
-    public function recherche(SortieRepository $sortieRepository, Request $request): Response
-    {
-        $recherche= new Recherche();
-        $rechercheForm=$this->createForm(RechercheType::class,$recherche);
-        $rechercheForm->handleRequest($request);
-        $resultat=$sortieRepository->rechercherSortie($recherche);
-
-//        $nbSorties=$participantRepository->count([]);
-
-        return $this->render('participant/recherche.html.twig', [
-                'rechercheForm'=>$rechercheForm->createView(),
-                'resultat'=>$resultat,
-
-        ]);
-    }
+//    /**
+//     * @Route("/participant/recherche", name="participant_recherche")
+//     */
+//    public function recherche(SortieRepository $sortieRepository, Request $request): Response
+//    {
+//        $recherche= new Recherche();
+//        $rechercheForm=$this->createForm(RechercheType::class,$recherche);
+//        $rechercheForm->handleRequest($request);
+//        $resultat=$sortieRepository->rechercherSortie($recherche);
+//
+////        $nbSorties=$participantRepository->count([]);
+//
+//        return $this->render('participant/recherche.html.twig', [
+//                'rechercheForm'=>$rechercheForm->createView(),
+//                'resultat'=>$resultat,
+//
+//        ]);
+//    }
 }

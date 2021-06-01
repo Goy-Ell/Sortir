@@ -2,7 +2,7 @@
 
 namespace App\Form;
 
-use App\Entity\Recherche;
+use App\Model\Recherche;
 use App\Entity\Site;
 
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;

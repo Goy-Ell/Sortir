@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Entity;
+namespace App\Model;
 
 use App\Repository\RechercheRepository;
 use Doctrine\ORM\Mapping as ORM;
