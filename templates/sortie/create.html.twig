@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer une sortie{% endblock %}
+
+
+{% block body %}
+    <div class="container">
+        <div class="row justify-content-center mt-5">
+            <h1 class="col-lg-4">Créer une sortie</h1>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row justify-content-center mt-5">
+            <div class="col-lg-4">
+                {{ form_start(sortieForm) }}
+                <div class="mb-4">
+                    {{ form_label(sortieForm.nom) }}
+                    {{ form_widget (sortieForm.nom) }}
+                    {{ form_errors (sortieForm.nom) }}
+                </div>
+                <div class="mb-4">
+                    {{ form_label(sortieForm.dateHeureDebut) }}
+                    {{ form_widget (sortieForm.dateHeureDebut) }}
+                    {{ form_errors (sortieForm.dateHeureDebut) }}
+                </div>
+                <div class="mb-4">
+                    {{ form_label(sortieForm.dateLimiteInscription) }}
+                    {{ form_widget (sortieForm.dateLimiteInscription) }}
+                    {{ form_errors (sortieForm.dateLimiteInscription) }}
+                </div>
+                <div class="mb-4">
+                    {{ form_label(sortieForm.nbInscriptionMax) }}
+                    {{ form_widget (sortieForm.nbInscriptionMax) }}
+                    {{ form_errors (sortieForm.nbInscriptionMax) }}
+                </div>
+                <div class="mb-4">
+                    {{ form_label(sortieForm.duree) }}
+                    {{ form_widget (sortieForm.duree) }} minutes
+                    {{ form_errors (sortieForm.duree) }}
+                </div>
+                <div class="mb-4">
+                    {{ form_label(sortieForm.infosSortie) }}
+                    {{ form_widget (sortieForm.infosSortie) }}
+                    {{ form_errors (sortieForm.infosSortie) }}
+                </div>
+                {{ form_widget(sortieForm) }}
+                <button>Create a serie</button>
+                {{ form_end(sortieForm) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
