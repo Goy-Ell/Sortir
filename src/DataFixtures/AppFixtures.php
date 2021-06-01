@@ -60,7 +60,7 @@ class AppFixtures extends Fixture
             $user->setPrenom($faker->firstName()) ;
             $user->setPassword($faker->password()) ;
 
-//            $manager->persist($user);
+            $manager->persist($user);
         }
 
         $userRepo =$manager->getRepository(User::class);
@@ -73,7 +73,7 @@ class AppFixtures extends Fixture
             $ville->setNom($faker->city);
             $ville->setCodePostal($faker->postcode);
 
-//            $manager->persist($ville);
+            $manager->persist($ville);
         }
 
         $villeRepo=$manager->getRepository(Ville::class);
@@ -87,7 +87,7 @@ class AppFixtures extends Fixture
             $lieu->setRue($faker->streetName ) ;
             $lieu->setVille($faker->randomElement($villes) ) ;
 
-//            $manager->persist($lieu);
+            $manager->persist($lieu);
         }
 
         $lieuRepo=$manager->getRepository(Lieu::class);
