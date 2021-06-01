@@ -11,6 +11,7 @@
         {% block javascripts %} {% endblock %}
     </head>
     <body>
+        <header> {% include 'nav/nav.html.twig' %}</header>
         <!-- Gestion de message flash -->
         {% for label, messages in app.flashes %}
             <div class="alert alert-success">

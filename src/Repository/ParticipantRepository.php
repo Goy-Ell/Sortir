@@ -16,7 +16,7 @@ class ParticipantRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Participant::class);
+        parent::__construct($registry, Sortie::class);
     }
 
     // /**
@@ -47,4 +47,45 @@ class ParticipantRepository extends ServiceEntityRepository
         ;
     }
     */
+    public function rechercherSortie(\App\Entity\Recherche $recherche)
+    {
+        $queryBuilder=$this->createQueryBuilder('r');
+        $queryBuilder->addOrderBy('h.dateHeureDebut');
+
+        if($recherche->getDateMax()){
+            $queryBuilder->andWhere('');
+            $queryBuilder->setParameter('',$recherche->get)
+        }
+        if($recherche->getDateMin()){
+            $queryBuilder->andWhere('');
+            $queryBuilder->setParameter('',$recherche->get)
+        }
+        if($recherche->getInscrit()){
+            $queryBuilder->andWhere('');
+            $queryBuilder->setParameter('',$recherche->get)
+        }
+        if($recherche->getNom()){
+            $queryBuilder->andWhere('');
+            $queryBuilder->setParameter('',$recherche->get)
+        }
+        if($recherche->getOrganisateur()){
+            $queryBuilder->andWhere('');
+            $queryBuilder->setParameter('',$recherche->get)
+        }
+        if($recherche->getPasInscrit()){
+            $queryBuilder->andWhere('');
+            $queryBuilder->setParameter('',$recherche->get)
+        }
+        if($recherche->getPassees()){
+            $queryBuilder->andWhere('');
+            $queryBuilder->setParameter('',$recherche->get)
+        }
+        if($recherche->getSite()){
+            $queryBuilder->andWhere('');
+            $queryBuilder->setParameter('',$recherche->get)
+        }
+
+
+
+    }
 }
