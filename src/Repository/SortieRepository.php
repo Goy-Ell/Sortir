@@ -24,15 +24,15 @@ class SortieRepository extends ServiceEntityRepository
     public function rechercherSortie(\App\Entity\Recherche $recherche)
     {
         $queryBuilder=$this->createQueryBuilder('r');
-        $queryBuilder->addOrderBy('h.dateHeureDebut','ASC');
+        $queryBuilder->addOrderBy('r.dateHeureDebut','ASC');
 //        $queryBuilder->Join('r.', '');
 
         if($recherche->getDateMax()){
-            $queryBuilder->andWhere('h.dateHeureDebut <= :dateMax');
+            $queryBuilder->andWhere('r.dateHeureDebut <= :dateMax');
             $queryBuilder->setParameter('dateMax',$recherche->getDateMax());
         }
         if($recherche->getDateMin()){
-            $queryBuilder->andWhere('h.dateHeureDebut >= :dateMin');
+            $queryBuilder->andWhere('r.dateHeureDebut >= :dateMin');
             $queryBuilder->setParameter('dateMin',$recherche->getDateMin());
         }
 //TODO
@@ -42,7 +42,7 @@ class SortieRepository extends ServiceEntityRepository
             $queryBuilder->setParameter('',$recherche->getInscrit());
         }
         if($recherche->getNom()){
-            $queryBuilder->andWhere('h.nom LIKE :nom');
+            $queryBuilder->andWhere('r.nom LIKE :nom');
             $queryBuilder->setParameter('nom',$recherche->getNom());
         }
 //TODO la meme que get inscrit
@@ -58,17 +58,36 @@ class SortieRepository extends ServiceEntityRepository
         if($recherche->getPassees()){
             $dateNow=New \DateTime();
 //            $queryBuilder->andWhere('h.HeureDebut < :dateNow');
-            $queryBuilder->andWhere('h.etat = :etat');
-            $queryBuilder->andWhere('h.HeureDebut > :dateNow1m');
+            $queryBuilder->andWhere('r.etat = :etat');
+            $queryBuilder->andWhere('r.HeureDebut > :dateNow1m');
 //            $queryBuilder->setParameter('dateNow',$dateNow);
             $queryBuilder->setParameter('etat','Passée');
             $queryBuilder->setParameter('dateNow1m',$dateNow->modify('-1 month'));
         }
         if($recherche->getSite()){
-            $queryBuilder->andWhere('h.site = :site');
+            $queryBuilder->andWhere('r.site = :site');
             $queryBuilder->setParameter('site',$recherche->getSite());
         }
 
+        //permet de récupérer le nombre de résultat
+        $queryBuilder->select('COUNT(r)');
+        $countQuery = $queryBuilder->getQuery();
+        $nbSorties = $countQuery->getSingleScalarResult();
+
+        //doit refaire le select pour bien récupérer les résultats
+        $queryBuilder->select('r');
+        $query = $queryBuilder->getQuery();
+
+
+
+//        $query->setMaxResults(20);
+//        $query->setFirstResult($offset);
+
+
+        return [
+            'sorties' => $query->getResult(),
+            'nbSorties' => $nbSorties
+        ];
 
 
     }

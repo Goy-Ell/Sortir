@@ -9,7 +9,7 @@
     <div>
         <div class="container">
             <div class="row justify-content-center mt-5">
-                <div class="col-12 col-sm-10 col-md-8 col-lg-4">
+{#                <div class="col-12 col-sm-10 col-md-8 col-lg-8 row">#}
 
 {#                    {% for flashError in app.flashes('verify_email_error') %}#}
 {#                        <div class="alert alert-danger" role="alert">{{ flashError }}</div>#}
@@ -17,49 +17,59 @@
 
                     <h1 class="mb-3 font-weight-normal">Filtrer les sorties</h1>
 
+
                     {{ form_start(rechercheForm) }}
-                    <div class="mb-3">
-                        <div class="form-label">{{ form_label(rechercheForm.site) }}</div>
-                        {{ form_widget(rechercheForm.site, {'attr' : {'class': 'form-select'}}) }}
-                    </div>
-                    <div class="mb-3">
-                        <div class="form-label">{{ form_label(rechercheForm.nom) }}</div>
-                        {{ form_widget(rechercheForm.nom, {'attr' : {'class': 'form-control'}}) }}
-                    </div>
-                    <div class="mb-3">
-                        <div class="form-label">{{ form_label(rechercheForm.dateMin) }}</div>
-                        {{ form_widget(rechercheForm.dateMin, {'attr' : {'class': 'form-control'}}) }}
-                    </div>
-                    <div class="mb-3">
-                        <div class="form-label">{{ form_label(rechercheForm.dateMax) }}</div>
-                        {{ form_widget(rechercheForm.dateMax, {'attr' : {'class': 'form-control'}}) }}
-                    </div>
-                </div>
+                <div class="container row">
+                    <div class="col-5 justify-content-center m-5">
+                        <div class="mb-3 row ">
+                            <div class="input">{{ form_label(rechercheForm.site) }}</div>
+                            {{ form_widget(rechercheForm.site, {'attr' : {'class': 'form-select'}}) }}
+                        </div>
+                        <div class="mb-3 row">
+                            <div class="form-label">{{ form_label(rechercheForm.nom) }}</div>
+                            {{ form_widget(rechercheForm.nom, {'attr' : {'class': 'form-control'}}) }}
+                        </div>
 
-                <div>
-                    <div class="mb-3">
-                        <div class="form-label">{{ form_label(rechercheForm.organisateur) }}</div>
-                        {{ form_widget(rechercheForm.organisateur, {'attr' : {
-                            'class': 'form-control',
-                        }}) }}
-                    </div>
-                    <div class="mb-3">
-                        <div class="form-label">{{ form_label(rechercheForm.inscrit) }}</div>
-                        {{ form_widget(rechercheForm.inscrit, {'attr' : {'class': 'form-control'}}) }}
-                    </div>
-                    <div class="mb-3">
-                        <div class="form-label">{{ form_label(rechercheForm.pasInscrit, 'Mot de passe') }}</div>
-                        {{ form_widget(rechercheForm.pasInscrit, {'attr' : {'class': 'form-control'}}) }}
-                    </div>
-                    <div class="mb-3">
-                        <div class="form-label">{{ form_label(rechercheForm.passees, 'Mot de passe') }}</div>
-                        {{ form_widget(rechercheForm.passees, {'attr' : {'class': 'form-control'}}) }}
+
+                        <div class="mb-3 row ">
+                            <div class="col-sm-6 col-form-label ">
+                            {{ form_label(rechercheForm.dateMin) }}{{ form_widget(rechercheForm.dateMin, {'attr' : {'class': 'form-control'}}) }}
+                            </div>
+                            <div class="col-sm-6 col-form-label ">
+                            {{ form_label(rechercheForm.dateMax) }} {{ form_widget(rechercheForm.dateMax, {'attr' : {'class': 'form-control'}}) }}
+                            </div>
+                        </div>
                     </div>
 
-                    <button type="submit" class="btn btn-lg btn-primary">S'inscrire</button>
-                    {{ form_end(rechercheForm) }}
+                    <div class="form-check col-5 justify-content-center m-5">
+                        <div class="mb-3 col-10">
+                            {{ form_widget(rechercheForm.organisateur, {'attr' : {
+                                'class': 'form-check-input',
+                            }}) }}
+                            <div class="form-label">{{ form_label(rechercheForm.organisateur) }}</div>
 
-                </div>
+                        </div>
+                        <div class="mb-3">
+                            {{ form_widget(rechercheForm.inscrit, {'attr' : {'class': 'form-check-input'}}) }}
+                            <div class="form-label">{{ form_label(rechercheForm.inscrit) }}</div>
+
+                        </div>
+                        <div class="mb-3">
+
+                            {{ form_widget(rechercheForm.pasInscrit, {'attr' : {'class': 'form-check-input'}}) }}
+                            <div class="form-label">{{ form_label(rechercheForm.pasInscrit) }}</div>
+                        </div>
+                        <div class="mb-3">
+
+                            {{ form_widget(rechercheForm.passees, {'attr' : {'class': 'form-check-input'}}) }}
+                            <div class="form-label">{{ form_label(rechercheForm.passees) }}</div>
+                        </div>
+                        <div class="  m-4 mt-5">
+                        <button type="submit" class="btn btn-lg btn-primary">Rechercher</button>
+                        {{ form_end(rechercheForm) }}
+                        </div>
+                    </div>
+                 </div>
             </div>
         </div>
     </div>

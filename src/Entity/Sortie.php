@@ -189,12 +189,12 @@ class Sortie
         return $this;
     }
 
-    public function getOrganisateur(): ?Participant
+    public function getOrganisateur(): ?User
     {
         return $this->organisateur;
     }
 
-    public function setOrganisateur(?Participant $organisateur): self
+    public function setOrganisateur(?User $organisateur): self
     {
         $this->organisateur = $organisateur;
 
