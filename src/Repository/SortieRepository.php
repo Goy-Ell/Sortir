@@ -19,6 +19,60 @@ class SortieRepository extends ServiceEntityRepository
         parent::__construct($registry, Sortie::class);
     }
 
+
+
+    public function rechercherSortie(\App\Entity\Recherche $recherche)
+    {
+        $queryBuilder=$this->createQueryBuilder('r');
+        $queryBuilder->addOrderBy('h.dateHeureDebut','ASC');
+//        $queryBuilder->Join('r.', '');
+
+        if($recherche->getDateMax()){
+            $queryBuilder->andWhere('h.dateHeureDebut <= :dateMax');
+            $queryBuilder->setParameter('dateMax',$recherche->getDateMax());
+        }
+        if($recherche->getDateMin()){
+            $queryBuilder->andWhere('h.dateHeureDebut >= :dateMin');
+            $queryBuilder->setParameter('dateMin',$recherche->getDateMin());
+        }
+//TODO
+        if($recherche->getInscrit()){
+
+            $queryBuilder->andWhere('');
+            $queryBuilder->setParameter('',$recherche->getInscrit());
+        }
+        if($recherche->getNom()){
+            $queryBuilder->andWhere('h.nom LIKE :nom');
+            $queryBuilder->setParameter('nom',$recherche->getNom());
+        }
+//TODO la meme que get inscrit
+        if($recherche->getOrganisateur()){
+            $queryBuilder->andWhere('');
+            $queryBuilder->setParameter('',$recherche->getOrganisateur());
+        }
+        if($recherche->getPasInscrit()){
+            $queryBuilder->andWhere('');
+            $queryBuilder->setParameter('',$recherche->getPasInscrit());
+        }
+
+        if($recherche->getPassees()){
+            $dateNow=New \DateTime();
+//            $queryBuilder->andWhere('h.HeureDebut < :dateNow');
+            $queryBuilder->andWhere('h.etat = :etat');
+            $queryBuilder->andWhere('h.HeureDebut > :dateNow1m');
+//            $queryBuilder->setParameter('dateNow',$dateNow);
+            $queryBuilder->setParameter('etat','Passée');
+            $queryBuilder->setParameter('dateNow1m',$dateNow->modify('-1 month'));
+        }
+        if($recherche->getSite()){
+            $queryBuilder->andWhere('h.site = :site');
+            $queryBuilder->setParameter('site',$recherche->getSite());
+        }
+
+
+
+    }
+
     // /**
     //  * @return Sortie[] Returns an array of Sortie objects
     //  */
@@ -47,4 +101,5 @@ class SortieRepository extends ServiceEntityRepository
         ;
     }
     */
+
 }

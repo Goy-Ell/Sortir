@@ -6,10 +6,61 @@
 
 
 <div >
-    <h1>Filtrer les sorties</h1>
     <div>
-        <div>
+        <div class="container">
+            <div class="row justify-content-center mt-5">
+                <div class="col-12 col-sm-10 col-md-8 col-lg-4">
 
+{#                    {% for flashError in app.flashes('verify_email_error') %}#}
+{#                        <div class="alert alert-danger" role="alert">{{ flashError }}</div>#}
+{#                    {% endfor %}#}
+
+                    <h1 class="mb-3 font-weight-normal">Filtrer les sorties</h1>
+
+                    {{ form_start(rechercheForm) }}
+                    <div class="mb-3">
+                        <div class="form-label">{{ form_label(rechercheForm.site) }}</div>
+                        {{ form_widget(rechercheForm.site, {'attr' : {'class': 'form-select'}}) }}
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-label">{{ form_label(rechercheForm.nom) }}</div>
+                        {{ form_widget(rechercheForm.nom, {'attr' : {'class': 'form-control'}}) }}
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-label">{{ form_label(rechercheForm.dateMin) }}</div>
+                        {{ form_widget(rechercheForm.dateMin, {'attr' : {'class': 'form-control'}}) }}
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-label">{{ form_label(rechercheForm.dateMax) }}</div>
+                        {{ form_widget(rechercheForm.dateMax, {'attr' : {'class': 'form-control'}}) }}
+                    </div>
+                </div>
+
+                <div>
+                    <div class="mb-3">
+                        <div class="form-label">{{ form_label(rechercheForm.organisateur) }}</div>
+                        {{ form_widget(rechercheForm.organisateur, {'attr' : {
+                            'class': 'form-control',
+                        }}) }}
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-label">{{ form_label(rechercheForm.inscrit) }}</div>
+                        {{ form_widget(rechercheForm.inscrit, {'attr' : {'class': 'form-control'}}) }}
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-label">{{ form_label(rechercheForm.pasInscrit, 'Mot de passe') }}</div>
+                        {{ form_widget(rechercheForm.pasInscrit, {'attr' : {'class': 'form-control'}}) }}
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-label">{{ form_label(rechercheForm.passees, 'Mot de passe') }}</div>
+                        {{ form_widget(rechercheForm.passees, {'attr' : {'class': 'form-control'}}) }}
+                    </div>
+
+                    <button type="submit" class="btn btn-lg btn-primary">S'inscrire</button>
+                    {{ form_end(rechercheForm) }}
+
+                </div>
+            </div>
         </div>
     </div>
 </div>

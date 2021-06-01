@@ -52,7 +52,7 @@ class RechercheType extends AbstractType
                 'label' => "Sorties passées",
                 'required'=>false
             ])
-            ->add('Rechercher',SubmitType::class)
+//            ->add('Rechercher',SubmitType::class)
         ;
     }
 
