@@ -67,7 +67,7 @@ class Sortie
     private $organisateur;
 
     /**
-     * @ORM\ManyToMany(targetEntity=User::class, inversedBy="sortiesPartissipant")
+     * @ORM\ManyToMany(targetEntity=User::class, inversedBy="sortiesUser")
      */
     private $participants;
 
@@ -211,8 +211,8 @@ class Sortie
 
     public function addParticipant(User $user): self
     {
-        if (!$this->users->contains($user)) {
-            $this->users[] = $user;
+        if (!$this->participants->contains($user)) {
+            $this->participants[] = $user;
         }
 
         return $this;
@@ -220,7 +220,7 @@ class Sortie
 
     public function removeUser(User $user): self
     {
-        $this->users->removeElement($user);
+        $this->participants->removeElement($user);
 
         return $this;
     }

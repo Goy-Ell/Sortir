@@ -66,7 +66,7 @@ class UserController extends AbstractController
             $entityManager->flush();
 
             $this->addFlash('success', 'Modifications enregistrées !! ');
-            return $this->redirectToRoute('participant_recherche');
+            return $this->redirectToRoute('sortie_recherche');
         }
 
         return $this->render('user/profil.html.twig', [
