@@ -75,7 +75,7 @@ class User implements UserInterface
     private $sortiesOrganisateur;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Sortie::class, mappedBy="users")
+     * @ORM\ManyToMany(targetEntity=Sortie::class, mappedBy="participants")
      */
     private $sortiesParticipant;
 

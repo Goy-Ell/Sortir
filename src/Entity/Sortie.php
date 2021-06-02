@@ -67,9 +67,9 @@ class Sortie
     private $organisateur;
 
     /**
-     * @ORM\ManyToMany(targetEntity=User::class, inversedBy="sortiesUser")
+     * @ORM\ManyToMany(targetEntity=User::class, inversedBy="sortiesPartissipant")
      */
-    private $user;
+    private $participants;
 
     /**
      * @ORM\ManyToOne(targetEntity=Lieu::class, inversedBy="sortie")
@@ -204,9 +204,9 @@ class Sortie
     /**
      * @return Collection|user[]
      */
-    public function getUsers(): Collection
+    public function getParticipants(): Collection
     {
-        return $this->users;
+        return $this->participants;
     }
 
     public function addParticipant(User $user): self
