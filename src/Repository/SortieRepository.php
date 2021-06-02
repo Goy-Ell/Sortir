@@ -27,9 +27,14 @@ class SortieRepository extends ServiceEntityRepository
 
     public function rechercherSortie(\App\Model\Recherche $recherche): array
     {
-        $queryBuilder=$this->createQueryBuilder('r');
-            $queryBuilder->andWhere()
+        $queryBuilder = $this->createQueryBuilder('r');
 
+        if (!$recherche->getUser()->getAdmin()) {
+        $queryBuilder->andWhere('r.dateHeureDebut > :date')
+            ->setParameter('date', (new \DateTime())->modify('-1 month'));
+        }
+
+//        $queryBuilder ->andWhere( $recherche->getUser())
 
 
         if($recherche->getDateMax()){
@@ -83,23 +88,23 @@ class SortieRepository extends ServiceEntityRepository
         }
 
         //permet de récupérer le nombre de résultat
-        $queryBuilder->select('COUNT(r)');
-        $countQuery = $queryBuilder->getQuery();
-        $nbSorties = $countQuery->getSingleScalarResult();
+//        $queryBuilder->select('COUNT(r)');
+//        $countQuery = $queryBuilder->getQuery();
+//        $nbSorties = $countQuery->getSingleScalarResult();
 
         //doit refaire le select pour bien récupérer les résultats
         $queryBuilder->addOrderBy('r.dateHeureDebut','ASC');
         $queryBuilder->select('r');
         $query = $queryBuilder->getQuery();
-
-
+        $sorties = $query->getResult();
+        $nbSorties = count($sorties);
 
 //        $query->setMaxResults(20);
 //        $query->setFirstResult($offset);
 
 
         return [
-            'sorties' => $query->getResult(),
+            'sorties' => $sorties,
             'nbSorties' => $nbSorties
         ];
 
