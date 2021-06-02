@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Sortie;
 use App\Entity\Site;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -20,14 +21,15 @@ class SortieRepository extends ServiceEntityRepository
         parent::__construct($registry, Sortie::class);
     }
 
+    /**
+     * @var User $user
+     */
 
-
-    public function rechercherSortie(\App\Model\Recherche $recherche)
+    public function rechercherSortie(\App\Model\Recherche $recherche): array
     {
         $queryBuilder=$this->createQueryBuilder('r');
 
-        $queryBuilder->Join('r.site', 's')
-                    ->addSelect('s');
+
 
 
         if($recherche->getDateMax()){
@@ -38,25 +40,18 @@ class SortieRepository extends ServiceEntityRepository
             $queryBuilder->andWhere('r.dateHeureDebut >= :dateMin');
             $queryBuilder->setParameter('dateMin',$recherche->getDateMin());
         }
-//TODO
-        if($recherche->getInscrit()){
 
-            $queryBuilder->andWhere('');
-            $queryBuilder->setParameter('',$recherche->getInscrit());
-        }
+
         if($recherche->getNom()){
             $queryBuilder->andWhere('r.nom LIKE :nom');
-            $queryBuilder->setParameter('nom',$recherche->getNom());
+            $queryBuilder->setParameter('nom', '%'.$recherche->getNom().'%' );
         }
-//TODO la meme que get inscrit
+
         if($recherche->getOrganisateur()){
-            $queryBuilder->andWhere('');
-            $queryBuilder->setParameter('',$recherche->getOrganisateur());
+            $queryBuilder->andWhere('r.organisateur = :organisateur');
+            $queryBuilder->setParameter('organisateur',$recherche->getUser()->getId());
         }
-        if($recherche->getPasInscrit()){
-            $queryBuilder->andWhere('');
-            $queryBuilder->setParameter('',$recherche->getPasInscrit());
-        }
+
 
         if($recherche->getPassees()){
             $dateNow=New \DateTime();
@@ -68,10 +63,23 @@ class SortieRepository extends ServiceEntityRepository
             $queryBuilder->setParameter('dateNow1m',$dateNow->modify('-1 month'));
         }
         if($recherche->getSite()){
-//            $queryBuilder->join('r.site','site');
-//            $queryBuilder->addSelect('site');
-            $queryBuilder->andWhere('site.libelle = :site');
-            $queryBuilder->setParameter('site',$recherche->getSite()->getLibelle());
+//        dd($recherche->getSite()->getNom());
+            $queryBuilder->Join('r.site', 's')
+                ->addSelect('s');
+            $queryBuilder->andWhere('s.nom = :site');
+            $queryBuilder->setParameter('site',$recherche->getSite()->getNom());
+        }
+
+        //TODO
+        if($recherche->getInscrit()){
+
+            $queryBuilder->andWhere('');
+            $queryBuilder->setParameter('',$recherche->getInscrit());
+        }
+//TODO
+        if($recherche->getPasInscrit()){
+            $queryBuilder->andWhere('');
+            $queryBuilder->setParameter('',$recherche->getPasInscrit());
         }
 
         //permet de récupérer le nombre de résultat

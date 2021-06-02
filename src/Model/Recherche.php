@@ -2,6 +2,8 @@
 
 namespace App\Model;
 
+use App\Entity\Site;
+use App\Entity\User;
 use App\Repository\SortieRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -10,6 +12,8 @@ class Recherche
 {
 
     private $id;
+
+    private $user;
 
     private $site;
 
@@ -37,6 +41,18 @@ class Recherche
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
     }
 
     public function getSite(): ?Site

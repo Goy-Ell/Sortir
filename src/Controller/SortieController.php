@@ -32,15 +32,13 @@ class SortieController extends AbstractController
                             ): Response
     {
         $sortie = new Sortie();
-        $user = $userRepository->find($id);
 
-        $sortie->setOrganisateur($user);
+        $sortie->setOrganisateur($this->getUser());
 
         $sortieEtat = $etatRepository->findOneBy(['libelle'=> 'Créée']);
-
         $sortie->setEtat($sortieEtat);
 
-        $sortie->setSite($user->getSite());
+        $sortie->setSite($this->getUser()->getSite());
 
         $sortieForm = $this->createForm(SortieType::class, $sortie);
 
@@ -90,9 +88,11 @@ class SortieController extends AbstractController
      */
     public function recherche(SortieRepository $sortieRepository, Request $request): Response
     {
-//        $this->getUser()->getSite();
+
+//      $this->getUser()->getSite();
 
         $recherche= new Recherche();
+        $recherche->setUser($this->getUser());
         $rechercheForm=$this->createForm(RechercheType::class,$recherche);
         $rechercheForm->handleRequest($request);
 
