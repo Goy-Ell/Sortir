@@ -4,6 +4,7 @@ namespace App\Controller;
 
 
 use App\Entity\Sortie;
+use App\Entity\User;
 use App\Form\RechercheType;
 use App\Form\SortieType;
 use App\Model\Recherche;
@@ -46,16 +47,18 @@ class SortieController extends AbstractController
 
     /**
      * @Route("/sortie/recherche", name="sortie_recherche")
+     * @var   User $user
      */
     public function recherche(SortieRepository $sortieRepository, Request $request): Response
     {
+//        $this->getUser()->getSite();
+
         $recherche= new Recherche();
         $rechercheForm=$this->createForm(RechercheType::class,$recherche);
         $rechercheForm->handleRequest($request);
 
         $resultat=$sortieRepository->rechercherSortie($recherche);
 
-//        $nbSorties=$participantRepository->count([]);
 
         return $this->render('sortie/recherche.html.twig', [
             'rechercheForm'=>$rechercheForm->createView(),

@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Sortie;
+use App\Entity\Site;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -24,8 +25,10 @@ class SortieRepository extends ServiceEntityRepository
     public function rechercherSortie(\App\Model\Recherche $recherche)
     {
         $queryBuilder=$this->createQueryBuilder('r');
-        $queryBuilder->addOrderBy('r.dateHeureDebut','ASC');
-//        $queryBuilder->Join('r.', '');
+
+        $queryBuilder->Join('r.site', 's')
+                    ->addSelect('s');
+
 
         if($recherche->getDateMax()){
             $queryBuilder->andWhere('r.dateHeureDebut <= :dateMax');
@@ -59,15 +62,17 @@ class SortieRepository extends ServiceEntityRepository
             $dateNow=New \DateTime();
 //            $queryBuilder->andWhere('h.HeureDebut < :dateNow');
             $queryBuilder->andWhere('r.etat = :etat');
-            $queryBuilder->andWhere('r.HeureDebut > :dateNow1m');
+            $queryBuilder->andWhere('r.dateHeureDebut > :dateNow1m');
 //            $queryBuilder->setParameter('dateNow',$dateNow);
             $queryBuilder->setParameter('etat','Passée');
             $queryBuilder->setParameter('dateNow1m',$dateNow->modify('-1 month'));
         }
-//        if($recherche->getSite()){
-//            $queryBuilder->andWhere('r.site = :site');
-//            $queryBuilder->setParameter('site',$recherche->getSite());
-//        }
+        if($recherche->getSite()){
+//            $queryBuilder->join('r.site','site');
+//            $queryBuilder->addSelect('site');
+            $queryBuilder->andWhere('site.libelle = :site');
+            $queryBuilder->setParameter('site',$recherche->getSite()->getLibelle());
+        }
 
         //permet de récupérer le nombre de résultat
         $queryBuilder->select('COUNT(r)');
@@ -75,6 +80,7 @@ class SortieRepository extends ServiceEntityRepository
         $nbSorties = $countQuery->getSingleScalarResult();
 
         //doit refaire le select pour bien récupérer les résultats
+        $queryBuilder->addOrderBy('r.dateHeureDebut','ASC');
         $queryBuilder->select('r');
         $query = $queryBuilder->getQuery();
 

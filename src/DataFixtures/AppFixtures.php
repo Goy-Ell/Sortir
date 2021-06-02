@@ -111,7 +111,7 @@ class AppFixtures extends Fixture
             $sortie->setInfosSortie($faker->text(200)) ;
             $sortie->setLieu($faker->randomElement($lieux)) ;
 
-//            $manager->persist($sortie);
+            $manager->persist($sortie);
         }
         $manager->flush();
     }
