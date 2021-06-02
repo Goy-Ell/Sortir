@@ -75,19 +75,24 @@ class User implements UserInterface
     private $sortiesOrganisateur;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Sortie::class, mappedBy="participants")
+     * @ORM\ManyToMany(targetEntity=Sortie::class, mappedBy="user")
      */
-    private $sortiesParticipant;
+    private $sortiesUser;
 
     /**
      * @ORM\Column(type="string", length=30)
      */
     private $pseudo;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $photoProfil;
+
     public function __construct()
     {
         $this->sortiesOrganisateur = new ArrayCollection();
-        $this->sortiesParticipant = new ArrayCollection();
+        $this->sortiesUser = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -278,25 +283,25 @@ class User implements UserInterface
     /**
      * @return Collection|Sortie[]
      */
-    public function getSortiesParticipant(): Collection
+    public function getSortiesUser(): Collection
     {
-        return $this->sortiesParticipant;
+        return $this->sortiesUser;
     }
 
-    public function addSortiesParticipant(Sortie $sortiesParticipant): self
+    public function addSortiesUser(Sortie $sortiesUser): self
     {
-        if (!$this->sortiesParticipant->contains($sortiesParticipant)) {
-            $this->sortiesParticipant[] = $sortiesParticipant;
-            $sortiesParticipant->addParticipant($this);
+        if (!$this->sortiesUser->contains($sortiesUser)) {
+            $this->sortiesUser[] = $sortiesUser;
+            $sortiesUser->addUser($this);
         }
 
         return $this;
     }
 
-    public function removeSortiesParticipant(Sortie $sortiesParticipant): self
+    public function removeSortiesUser(Sortie $sortiesUser): self
     {
-        if ($this->sortiesParticipant->removeElement($sortiesParticipant)) {
-            $sortiesParticipant->removeParticipant($this);
+        if ($this->sortiesUser->removeElement($sortiesUser)) {
+            $sortiesUser->removeUser($this);
         }
 
         return $this;
@@ -310,6 +315,18 @@ class User implements UserInterface
     public function setPseudo(string $pseudo): self
     {
         $this->pseudo = $pseudo;
+
+        return $this;
+    }
+
+    public function getPhotoProfil(): ?string
+    {
+        return $this->photoProfil;
+    }
+
+    public function setPhotoProfil(?string $photoProfil): self
+    {
+        $this->photoProfil = $photoProfil;
 
         return $this;
     }
