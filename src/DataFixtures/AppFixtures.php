@@ -3,6 +3,7 @@
 namespace App\DataFixtures;
 
 use App\Entity\Etat;
+use App\Entity\Lieu;
 use App\Entity\Site;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -28,6 +29,8 @@ class AppFixtures extends Fixture
             $manager->persist($site);
         }
         $manager->flush();
+
+
 
 
     }

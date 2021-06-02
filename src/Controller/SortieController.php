@@ -27,7 +27,7 @@ class SortieController extends AbstractController
         if ($sortieForm->isSubmitted() && $sortieForm->isValid()) {
 
         $entityManager->persist($sortie);
-        $entityManager->flush();
+        $entityManager->flush(); 
 
             $this->addFlash('success', 'Sortie ajoutée ! ');
 
