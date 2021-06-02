@@ -18,18 +18,22 @@
                 <div class="mb-3">
                     <div class="form-label">{{ form_label(registrationForm.pseudo) }}</div>
                     {{ form_widget(registrationForm.pseudo, {'attr' : {'class': 'form-control'}}) }}
+                    {{ form_errors(registrationForm.pseudo) }}
                 </div>
                 <div class="mb-3">
                     <div class="form-label">{{ form_label(registrationForm.nom) }}</div>
                     {{ form_widget(registrationForm.nom, {'attr' : {'class': 'form-control'}}) }}
+                    {{ form_errors(registrationForm.nom) }}
                 </div>
                 <div class="mb-3">
                     <div class="form-label">{{ form_label(registrationForm.prenom) }}</div>
                     {{ form_widget(registrationForm.prenom, {'attr' : {'class': 'form-control'}}) }}
+                    {{ form_errors(registrationForm.prenom) }}
                 </div>
                 <div class="mb-3">
                     <div class="form-label">{{ form_label(registrationForm.telephone) }}</div>
                     {{ form_widget(registrationForm.telephone, {'attr' : {'class': 'form-control'}}) }}
+                    {{ form_errors(registrationForm.telephone) }}
                 </div>
             <div class="mb-3">
                 <div class="form-label">{{ form_label(registrationForm.site) }}</div>
@@ -37,14 +41,17 @@
                     'class': 'form-select',
                     'selected' : '',
                 }}) }}
+                {{ form_errors(registrationForm.site) }}
             </div>
                 <div class="mb-3">
                     <div class="form-label">{{ form_label(registrationForm.email) }}</div>
                     {{ form_widget(registrationForm.email, {'attr' : {'class': 'form-control'}}) }}
+                    {{ form_errors(registrationForm.email) }}
                 </div>
                 <div class="mb-3">
                     <div class="form-label">{{ form_label(registrationForm.plainPassword, 'Mot de passe') }}</div>
                     {{ form_widget(registrationForm.plainPassword, {'attr' : {'class': 'form-control'}}) }}
+                    {{ form_errors(registrationForm.plainPassword) }}
                 </div>
                 <div class="form-check mb-3">
                     {{ form_widget(registrationForm.agreeTerms, {'attr' : {'class': 'form-check-input'}}) }}

@@ -22,30 +22,38 @@
                     <div class="mb-3">
                         <div class="form-label">{{ form_label(monProfilType.pseudo) }}</div>
                         {{ form_widget(monProfilType.pseudo, {'attr' : {'class': 'form-control'}}) }}
+                        {{ form_errors(monProfilType.pseudo) }}
                     </div>
                     <div class="mb-3">
                         <div class="form-label">{{ form_label(monProfilType.nom) }}</div>
                         {{ form_widget(monProfilType.nom, {'attr' : {'class': 'form-control'}}) }}
+                        {{ form_errors(monProfilType.nom) }}
+
                     </div>
                     <div class="mb-3">
                         <div class="form-label">{{ form_label(monProfilType.prenom) }}</div>
                         {{ form_widget(monProfilType.prenom, {'attr' : {'class': 'form-control'}}) }}
+                        {{ form_errors(monProfilType.prenom) }}
                     </div>
                     <div class="mb-3">
                         <div class="form-label">{{ form_label(monProfilType.telephone) }}</div>
                         {{ form_widget(monProfilType.telephone, {'attr' : {'class': 'form-control'}}) }}
+                        {{ form_errors(monProfilType.telephone) }}
                     </div>
                     <div class="mb-3">
                         <div class="form-label">{{ form_label(monProfilType.email) }}</div>
                         {{ form_widget(monProfilType.email, {'attr' : {'class': 'form-control'}}) }}
+                        {{ form_errors(monProfilType.email) }}
                     </div>
                     <div class="mb-3">
                         <div class="form-label">{{ form_label(monProfilType.password.first) }}</div>
                         {{ form_widget(monProfilType.password.first, {'attr' : {'class': 'form-control'}}) }}
+                        {{ form_errors(monProfilType.password.first) }}
                     </div>
                     <div class="mb-3">
                         <div class="form-label">{{ form_label(monProfilType.password.second) }}</div>
                         {{ form_widget(monProfilType.password.second, {'attr' : {'class': 'form-control'}}) }}
+                        {{ form_errors(monProfilType.password.second) }}
                     </div>
                     <div class="mb-3">
                         <div class="form-label">{{ form_label(monProfilType.site) }}</div>
@@ -53,10 +61,12 @@
                             'class': 'form-select',
                             'selected' : '',
                         }}) }}
+                        {{ form_errors(monProfilType.site) }}
                     </div>
                     <div class="mb-3">
                         <div class="form-label">{{ form_label(monProfilType.photoProfil, 'Ma photo') }}</div>
                         {{ form_widget(monProfilType.photoProfil, {'attr' : {'class': 'form-control'}}) }}
+                        {{ form_errors(monProfilType.photoProfil) }}
                     </div>
                     <div class="mt-4">
                         <button type="submit" class="btn btn-lg btn-primary">Enregistrer</button>
