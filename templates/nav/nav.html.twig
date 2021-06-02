@@ -5,7 +5,7 @@
         <!-- Si un utilisateur est connecté -->
         {% if  app.user%}
             <a class="btn btn-outline-secondary me-2" href="{{ path('sortie_recherche') }}">Accueil</a>
-            <a class="btn btn-outline-secondary me-2" href="{{ path('sortie_create') }}">Nouvelle Sortie</a>
+            <a class="btn btn-outline-secondary me-2" href="{{ path('sortie_create', {'id' : app.user.id}) }}">Nouvelle Sortie</a>
             <!-- Si l'utilisateur est un ADMIN -->
             {% if is_granted("ROLE_ADMIN") %}
                 <a class="btn btn-outline-secondary me-2"href="#">Villes</a>

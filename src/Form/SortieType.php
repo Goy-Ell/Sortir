@@ -56,6 +56,7 @@ class SortieType extends AbstractType
             [
                 'label' => 'Description et infos'
             ])
+
             ->add('lieu', EntityType::class,
             [
                 'class' => Lieu::class,
