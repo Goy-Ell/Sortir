@@ -36,7 +36,6 @@ class User implements UserInterface
     private $roles = [];
 
     /**
-     * @Assert\NotBlank(message="Le mot de passe est obligatoire")
      * @Assert\Length (
      *     min=6, minMessage="Le mot de passe doit faire au moins 6 caratères",
      *     max=4096, maxMessage="Le mot de passe doit faire au max 4096 caratères"
