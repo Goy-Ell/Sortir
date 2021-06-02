@@ -10,44 +10,188 @@
         </div>
     </div>
 
-    <div class="container">
-        <div class="row justify-content-center mt-5">
-            <div class="col-lg-4">
+
+    <div class="row justify-content-center mt-5">
+        <div class="col-lg-4">
+            <div class="row justify-content-center mt-5">
                 {{ form_start(sortieForm) }}
                 <div class="mb-4">
-                    {{ form_label(sortieForm.nom) }}
-                    {{ form_widget (sortieForm.nom) }}
-                    {{ form_errors (sortieForm.nom) }}
+                    <div class="row justify-content-center mt-5">
+                        <div class="col-lg-5">
+                            {{ form_label(sortieForm.nom) }}
+                        </div>
+                        <div class="col-lg-6">
+                            {{ form_widget (sortieForm.nom) }}
+                            {{ form_errors (sortieForm.nom) }}
+                        </div>
+                    </div>
                 </div>
                 <div class="mb-4">
-                    {{ form_label(sortieForm.dateHeureDebut) }}
-                    {{ form_widget (sortieForm.dateHeureDebut) }}
-                    {{ form_errors (sortieForm.dateHeureDebut) }}
+                    <div class="row justify-content-center mt-5">
+                        <div class="col-lg-5">
+                            {{ form_label(sortieForm.dateHeureDebut) }}
+                        </div>
+                        <div class="col-lg-6">
+                            {{ form_widget (sortieForm.dateHeureDebut) }}
+                            {{ form_errors (sortieForm.dateHeureDebut) }}
+                        </div>
+                    </div>
                 </div>
                 <div class="mb-4">
-                    {{ form_label(sortieForm.dateLimiteInscription) }}
-                    {{ form_widget (sortieForm.dateLimiteInscription) }}
-                    {{ form_errors (sortieForm.dateLimiteInscription) }}
+                    <div class="row justify-content-center mt-5">
+                        <div class="col-lg-5">
+                            {{ form_label(sortieForm.dateLimiteInscription) }}
+                        </div>
+                        <div class="col-lg-6">
+                            {{ form_widget (sortieForm.dateLimiteInscription) }}
+                            {{ form_errors (sortieForm.dateLimiteInscription) }}
+                        </div>
+                    </div>
                 </div>
                 <div class="mb-4">
-                    {{ form_label(sortieForm.nbInscriptionMax) }}
-                    {{ form_widget (sortieForm.nbInscriptionMax) }}
-                    {{ form_errors (sortieForm.nbInscriptionMax) }}
+                    <div class="row justify-content-center mt-5">
+                        <div class="col-lg-5">
+                            {{ form_label(sortieForm.nbInscriptionMax) }}
+                        </div>
+                        <div class="col-lg-6">
+                            {{ form_widget (sortieForm.nbInscriptionMax) }}
+                            {{ form_errors (sortieForm.nbInscriptionMax) }}
+                        </div>
+                    </div>
                 </div>
                 <div class="mb-4">
-                    {{ form_label(sortieForm.duree) }}
-                    {{ form_widget (sortieForm.duree) }} minutes
-                    {{ form_errors (sortieForm.duree) }}
+                    <div class="row justify-content-center mt-5">
+                        <div class="col-lg-5">
+                            {{ form_label(sortieForm.duree) }}
+                        </div>
+                        <div class="col-lg-6">
+                            {{ form_widget (sortieForm.duree) }} minutes
+                            {{ form_errors (sortieForm.duree) }}
+                        </div>
+                    </div>
                 </div>
                 <div class="mb-4">
-                    {{ form_label(sortieForm.infosSortie) }}
-                    {{ form_widget (sortieForm.infosSortie) }}
-                    {{ form_errors (sortieForm.infosSortie) }}
+                    <div class="row justify-content-center mt-5">
+                        <div class="col-lg-5">
+                            {{ form_label(sortieForm.infosSortie) }}
+                        </div>
+                        <div class="col-lg-6">
+                            {{ form_widget (sortieForm.infosSortie) }}
+                            {{ form_errors (sortieForm.infosSortie) }}
+                        </div>
+                    </div>
                 </div>
-                {{ form_widget(sortieForm) }}
-                <button>Create a serie</button>
-                {{ form_end(sortieForm) }}
             </div>
         </div>
+
+
+        <div class="col-lg-4">
+            <div class="row justify-content-center mt-5">
+                <div class="mb-4">
+
+                    <div class="col">
+                        Ville Organisatrice :
+                    </div>
+
+                </div>
+
+                <div class="mb-4">
+                    <div class="row justify-content-center mt-5">
+                        <div class="col-lg-2">
+                            {{ form_label(sortieForm.lieu) }}
+                        </div>
+                        <div class="col-lg-10">
+                            {{ form_widget (sortieForm.lieu) }}
+                            {{ form_errors (sortieForm.lieu) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-4">
+
+                    <div class="col">
+                        Rue :
+                    </div>
+
+                </div>
+                <div class="mb-4">
+
+                    <div class="col">
+                        Code Postal :
+                    </div>
+
+                </div>
+                <div class="mb-4">
+                    <div class="row justify-content-center mt-5">
+                        <div class="col-lg-2">
+                            {{ form_label(sortieForm.latitude) }}
+                        </div>
+                        <div class="col-lg-10">
+                            {{ form_widget (sortieForm.latitude) }}
+                            {{ form_errors (sortieForm.latitude) }}
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <div class="row justify-content-center mt-5">
+                        <div class="col-lg-2">
+                            {{ form_label(sortieForm.longitude) }}
+                        </div>
+                        <div class="col-lg-10">
+                            {{ form_widget (sortieForm.longitude) }}
+                            {{ form_errors (sortieForm.longitude) }}
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
     </div>
+    <div class="row justify-content-center mt-5">
+        <div class="col-lg-1">
+            <button>Enregistrer</button>
+        </div>
+        <div class="col-lg-1">
+            <button>Publier la sortie</button>
+        </div>
+        <div class="col-lg-1">
+            <button>Annulez</button>
+        </div>
+    </div>
+    {{ form_end(sortieForm) }}
 {% endblock %}
+
+  {#   {% block Javascripts %}
+        <script>
+            window.onload = () => {
+                //On va chercher la ville
+                let ville = document.querySelector("#sortie_site");
+
+                ville.addEventListener("change", function () {
+                    let form = this.closest("form");
+
+                    console.log(form);
+                    let data = this.name + "=" + this.value;
+
+                    fetch(form.action, {
+                        method: form.getAttribute("method"),
+                        body: data,
+                        headers: {
+                            "Content-Type": "application/x-www-form-urlencoded;charset:UTF-8"
+                        }
+                    })
+                        .then(response => response.text())
+                        .then(html => {
+                            let content = document.createElement("html");
+                            content.innerHTML = html;
+                            let nouveauSelect = content.querySelector("#sortie_lieu");
+                            document.querySelector("#sortie_lieu").replaceWith(nouveauSelect);
+                        })
+                        .catch(error => {
+                            console.log(error);
+                        })
+                })
+            }
+        </script>
+    {% endblock %}#}
