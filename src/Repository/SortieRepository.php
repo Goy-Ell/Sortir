@@ -28,7 +28,7 @@ class SortieRepository extends ServiceEntityRepository
     public function rechercherSortie(\App\Model\Recherche $recherche): array
     {
         $queryBuilder=$this->createQueryBuilder('r');
-
+            $queryBuilder->andWhere()
 
 
 
