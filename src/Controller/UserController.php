@@ -58,8 +58,8 @@ class UserController extends AbstractController
             $file = $monProfilType->get('photoProfil')->getData();
             if ($file){
                 $directory = $this->getParameter('upload_photo_profil_dir');
-                //rename files
-                $newFileName = $user->getNom().'-'.uniqid().'.'.$file->guessExtension();
+                //rename files - parametre uniqid special prdi nico !!
+                $newFileName = $user->getNom().'-'.uniqid('', true).'.'.$file->guessExtension();
                 //save in to directory (+ modified service.yaml)
                 $file->move($directory, $newFileName);
                 //save name in BDD
