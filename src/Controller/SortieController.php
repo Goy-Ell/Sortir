@@ -4,8 +4,10 @@ namespace App\Controller;
 
 
 use App\Entity\Etat;
+use App\Entity\Lieu;
 use App\Entity\Sortie;
 use App\Entity\User;
+use App\Form\LieuType;
 use App\Form\RechercheType;
 use App\Form\SortieType;
 use App\Model\Recherche;
@@ -26,7 +28,6 @@ class SortieController extends AbstractController
      */
     public function create(Request $request,
                             EntityManagerInterface $entityManager,
-                            UserRepository $userRepository,
                             EtatRepository $etatRepository
                             ): Response
     {
@@ -58,6 +59,35 @@ class SortieController extends AbstractController
 
         return $this->render('sortie/create.html.twig', [
             'sortieForm' => $sortieForm->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/lieu/create", name="lieu_create")
+     */
+
+    public function ajouterLieu(Request $request,
+                                EntityManagerInterface $entityManager):Response
+    {
+        $lieu = new Lieu();
+
+        $lieuForm = $this->createForm(LieuType::class, $lieu);
+
+        $lieuForm->handleRequest($request);
+
+        if($lieuForm->isSubmitted() && $lieuForm->isValid()){
+
+            $entityManager->persist($lieu);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Lieu ajouté !');
+
+            return $this->redirectToRoute('sortie_create');
+
+        }
+
+        return $this->render('lieu/create.html.twig', [
+            'lieuForm' => $lieuForm->createView()
         ]);
     }
 
@@ -102,3 +132,6 @@ class SortieController extends AbstractController
         ]);
     }
 }
+
+
+

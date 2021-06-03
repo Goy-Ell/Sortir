@@ -1,0 +1,104 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer un lieu{% endblock %}
+
+
+{% block body %}
+    <div class="container">
+        <div class="row justify-content-center mt-5">
+            <div class="col-12 col-sm-10 col-md-8 col-lg-4">
+                <h1 class="text-center">Créer un lieu</h1>
+            </div>
+        </div>
+    </div>
+
+
+    {# Affichage form create lieu détaillé #}
+    </div>
+    <div class="row justify-content-center mt-5">
+        <div class="col-12 col-sm-10 col-md-8 col-lg-4">
+            <div class="row justify-content-center mt-5">
+                {{ form_start(lieuForm) }}
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <div class="mb-4">
+                            <div class="row justify-content-center mt-5">
+                                <div class="col-lg-4">
+                                    {{ form_label(lieuForm.nom) }}
+                                </div>
+                                <div class="col-lg-8">
+                                    {{ form_widget (lieuForm.nom) }}
+                                    {{ form_errors (lieuForm.nom) }}
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="mb-4">
+                            <div class="row justify-content-center mt-5">
+                                <div class="col-lg-4">
+                                    {{ form_label(lieuForm.rue) }}
+                                </div>
+                                <div class="col-lg-8">
+                                    {{ form_widget (lieuForm.rue) }}
+                                    {{ form_errors (lieuForm.rue) }}
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="mb-4">
+                            <div class="row justify-content-center mt-5">
+                                <div class="col-lg-4">
+                                    {{ form_label(lieuForm.latitude) }}
+                                </div>
+                                <div class="col-lg-8">
+                                    {{ form_widget (lieuForm.latitude) }}
+                                    {{ form_errors (lieuForm.latitude) }}
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="mb-4">
+                            <div class="row justify-content-center mt-5">
+                                <div class="col-lg-4">
+                                    {{ form_label(lieuForm.longitude) }}
+                                </div>
+                                <div class="col-lg-8">
+                                    {{ form_widget (lieuForm.longitude) }}
+                                    {{ form_errors (lieuForm.longitude) }}
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="mb-4">
+                            <div class="row justify-content-center mt-5">
+                                <div class="col-lg-4">
+                                    {{ form_label(lieuForm.ville) }}
+                                </div>
+                                <div class="col-lg-8">
+                                    {{ form_widget (lieuForm.ville) }}
+                                    {{ form_errors (lieuForm.ville) }}
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-center mt-5">
+        <div class="col-12 col-sm-10 col-md-8 col-lg-4">
+            <div class="row justify-content-center">
+                <div class="btn-group" role="group" aria-label="Basic outlined example">
+                    <button type="submit" class="btn btn-outline-primary">Valider</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    {{ form_end(lieuForm) }}
+{% endblock %}
+
