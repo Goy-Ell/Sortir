@@ -12,7 +12,7 @@
                 <div class="alert alert-danger" role="alert">{{ flashError }}</div>
             {% endfor %}
 
-            <h1 class="mb-3 font-weight-normal">Inscription</h1>
+            <h2 class="mb-3 font-weight-normal">Inscription nouvel utilisateur</h2>
 
             {{ form_start(registrationForm) }}
                 <div class="mb-3">
@@ -57,7 +57,7 @@
                     {{ form_widget(registrationForm.agreeTerms, {'attr' : {'class': 'form-check-input'}}) }}
                     <div class="form-check-label">{{ form_label(registrationForm.agreeTerms, 'Accepter les termes') }}</div>
                 </div>
-                <button type="submit" class="btn btn-lg btn-primary">S'inscrire</button>
+                <button type="submit" class="btn btn-lg btn-primary mb-5">Inscrire</button>
             {{ form_end(registrationForm) }}
 
         </div>

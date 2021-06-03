@@ -56,7 +56,6 @@ class AppFixtures extends Fixture
             $user->setNom($faker->name()) ;
             $user->setRoles(['ROLE_USER']) ;
             $user->setActif($faker->boolean()) ;
-            $user->setAdmin($faker->boolean(5)) ;
             $user->setEmail($faker->email) ;
             $user->setTelephone($faker->phoneNumber) ;
             $user->setPseudo($faker->name()) ;
@@ -98,7 +97,7 @@ class AppFixtures extends Fixture
 
 
 
-        for($i=0;$i<=50;$i++){
+        for($i=0;$i<=10;$i++){
             $sortie= New Sortie();
             $sortie->setNom($faker->text(20));
             $sortie->setDateHeureDebut($faker->dateTime()) ;
