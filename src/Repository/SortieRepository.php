@@ -27,15 +27,28 @@ class SortieRepository extends ServiceEntityRepository
 
     public function rechercherSortie(\App\Model\Recherche $recherche): array
     {
-        $queryBuilder = $this->createQueryBuilder('r');
+        $queryBuilder = $this->createQueryBuilder('r')
+            ->join('r.etat', 'e')
+            ->leftJoin('r.participants','p');
 
-        if ( $recherche->getUser()->getRoles()=='ROLE_USER') {
-        $queryBuilder
-            ->andWhere('r.dateHeureDebut > :date')
-            ->setParameter('date', (new \DateTime())->modify('-1 month'))
-            ->join('r.etat','e')
-            ->andWhere('e.libelle != :etat')
-            ->setParameter('etat','Créée')
+
+
+        if(!$recherche->getPassees()){
+            $queryBuilder->andWhere('e.libelle != :etat2')
+                ->setParameter('etat2','Passée');
+        }
+
+        if ( $recherche->getUser()->getRoles() == ["ROLE_USER"]) {
+
+            $queryBuilder
+                ->andWhere('r.dateHeureDebut > :date')
+                ->setParameter('date', (new \DateTime())->modify('-1 month'));
+
+            $queryBuilder
+                ->join("r.organisateur", "u")
+                ->andWhere(" (r.organisateur = :organisateur) OR (e.libelle != :etat) " )
+                ->setParameter("organisateur", $recherche->getUser()->getId())
+                ->setParameter('etat', 'Créée')
             ;
         }
 
@@ -61,83 +74,37 @@ class SortieRepository extends ServiceEntityRepository
             $queryBuilder->setParameter('organisateur',$recherche->getUser()->getId());
         }
 
-
-        if(!$recherche->getPassees()){
-            $queryBuilder->join('r.etat', 'e')
-                ->andWhere('e.libelle != :etat')
-                ->setParameter('etat','Passée');
-        }
-
         if($recherche->getSite()){
-            $queryBuilder->Join('r.site', 's')
-                ->addSelect('s');
+            $queryBuilder->Join('r.site', 's');
             $queryBuilder->andWhere('s.nom = :site');
             $queryBuilder->setParameter('site',$recherche->getSite()->getNom());
         }
 
-        //TODO
+
         if($recherche->getInscrit()){
-
-            $queryBuilder->andWhere('');
-            $queryBuilder->setParameter('',$recherche->getInscrit());
+            $queryBuilder
+                ->andWhere('p.id = :participant ')
+                ->setParameter('participant',$recherche->getUser()->getId());
         }
-//TODO
+
         if($recherche->getPasInscrit()){
-            $queryBuilder->andWhere('');
-            $queryBuilder->setParameter('',$recherche->getPasInscrit());
+            $queryBuilder->andWhere('p.id != :participant ');
+            $queryBuilder->setParameter('participant',$recherche->getUser()->getId());
         }
 
-        //permet de récupérer le nombre de résultat
-//        $queryBuilder->select('COUNT(r)');
-//        $countQuery = $queryBuilder->getQuery();
-//        $nbSorties = $countQuery->getSingleScalarResult();
 
-        //doit refaire le select pour bien récupérer les résultats
+        // select pour récupérer les résultats
         $queryBuilder->addOrderBy('r.dateHeureDebut','ASC');
-        $queryBuilder->select('r');
+//        $queryBuilder->select('r');
         $query = $queryBuilder->getQuery();
         $sorties = $query->getResult();
+        // compte le nombre de sorties trouvées
         $nbSorties = count($sorties);
-
-//        $query->setMaxResults(20);
-//        $query->setFirstResult($offset);
 
 
         return [
             'sorties' => $sorties,
             'nbSorties' => $nbSorties
         ];
-
-
     }
-
-    // /**
-    //  * @return Sortie[] Returns an array of Sortie objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('s.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Sortie
-    {
-        return $this->createQueryBuilder('s')
-            ->andWhere('s.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
-
 }
