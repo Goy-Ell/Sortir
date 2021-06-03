@@ -29,7 +29,7 @@ class SortieRepository extends ServiceEntityRepository
     {
         $queryBuilder = $this->createQueryBuilder('r');
 
-        if (!$recherche->getUser()->getAdmin()) {
+        if ( $recherche->getUser()->getRoles()=='ROLE_ADMIN') {
         $queryBuilder->andWhere('r.dateHeureDebut > :date')
             ->setParameter('date', (new \DateTime())->modify('-1 month'));
         }

@@ -22,13 +22,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class SortieController extends AbstractController
 {
     /**
-     * @Route("/sortie/create/{id}", name="sortie_create")
+     * @Route("/sortie/create", name="sortie_create")
      */
     public function create(Request $request,
                             EntityManagerInterface $entityManager,
                             UserRepository $userRepository,
-                            EtatRepository $etatRepository,
-                            $id
+                            EtatRepository $etatRepository
                             ): Response
     {
         $sortie = new Sortie();
