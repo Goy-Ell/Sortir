@@ -80,7 +80,7 @@ class AppFixtures extends Fixture
         $users=$userRepo->findAll();
 
 
-        for($i=0;$i<=50;$i++){
+        for($i=0;$i<=25;$i++){
             $lieu=New Lieu();
             $lieu->setNom($faker->text(15) ) ;
             $lieu->setRue($faker->streetName ) ;
