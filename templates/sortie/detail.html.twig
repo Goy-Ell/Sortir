@@ -11,175 +11,205 @@
     </div>
 
 
-        <div class="row justify-content-center mt-5">
-                <div class="col-12 col-sm-10 col-md-8 col-lg-4">
-                    <div class="row justify-content-center mt-5">
-                        <ul class="list-group">
-                            <li class="list-group-item">
-                                <div class="mb-4">
-                                    <div class="row justify-content-center mt-3">
-                                        <div class="col-lg-5">
-                                            Nom de la sortie :
-                                        </div>
-                                        <div class="col-lg-6">
-                                            {{ sorties.nom }}
-                                        </div>
-                                    </div>
+    <div class="row justify-content-center mt-5">
+        <div class="col-12 col-sm-10 col-md-8 col-lg-4">
+            <div class="row justify-content-center mt-5">
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <div class="mb-4">
+                            <div class="row justify-content-center mt-3">
+                                <div class="col-lg-5">
+                                    Nom de la sortie :
                                 </div>
-                            </li>
-                            <li class="list-group-item">
-                                <div class="mb-4">
-                                    <div class="row justify-content-center mt-3">
-                                        <div class="col-lg-5">
-                                            Date et heure :
-                                        </div>
-                                        <div class="col-lg-6">
-                                            {{ sorties.dateHeureDebut | format_datetime('full', 'medium', locale='fr') }}
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="list-group-item">
-                                <div class="mb-4">
-                                    <div class="row justify-content-center mt-3">
-                                        <div class="col-lg-5">
-                                            Date limite d'inscription :
-                                        </div>
-                                        <div class="col-lg-6">
-                                            {{ sorties.dateLimiteInscription | format_date('full', locale='fr') }}
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="list-group-item">
-                                <div class="mb-4">
-                                    <div class="row justify-content-center mt-3">
-                                        <div class="col-lg-5">
-                                            Nombre de places :
-                                        </div>
-                                        <div class="col-lg-6">
-                                            {{ sorties.nbInscriptionMax }}
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="list-group-item">
-                                <div class="mb-4">
-                                    <div class="row justify-content-center mt-3">
-                                        <div class="col-lg-5">
-                                            Durée :
-                                        </div>
-                                        <div class="col-lg-6">
-                                            {{ sorties.duree }} minutes
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="list-group-item">
-                                <div class="mb-4">
-                                    <div class="row justify-content-center mt-3">
-                                        <div class="col-lg-5">
-                                            Description et infos :
-                                        </div>
-                                        <div class="col-lg-6">
-                                            {{ sorties.infosSortie }}
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-
-
-
-
-            <div class="col-12 col-sm-10 col-md-8 col-lg-4">
-                <div class="row justify-content-center mt-5">
-                    <ul class="list-group">
-                        <li class="list-group-item">
-                            <div class="mb-4">
-                                <div class="row justify-content-center mt-3">
-                                    <div class="col-lg-5">
-                                        Ville organisatrice :
-                                    </div>
-                                    <div class="col-lg-7">
-                                        {{ sorties.site.nom }}
-                                    </div>
+                                <div class="col-lg-6">
+                                    {{ sorties.nom }}
                                 </div>
                             </div>
-                        </li>
-                        <li class="list-group-item">
-                            <div class="mb-4">
-                                <div class="row justify-content-center mt-3">
-                                    <div class="col-lg-5">
-                                        Lieu :
-                                    </div>
-                                    <div class="col-lg-7">
-                                        {{ sorties.lieu.nom }}
-                                    </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="mb-4">
+                            <div class="row justify-content-center mt-3">
+                                <div class="col-lg-5">
+                                    Date et heure :
+                                </div>
+                                <div class="col-lg-6">
+                                    {{ sorties.dateHeureDebut | format_datetime('full', 'medium', locale='fr') }}
                                 </div>
                             </div>
-                        </li>
-                        <li class="list-group-item">
-                            <div class="mb-4">
-                                <div class="row justify-content-center mt-3">
-                                    <div class="col-lg-5">
-                                        Rue :
-                                    </div>
-                                    <div class="col-lg-7">
-                                        {{ sorties.lieu.rue }}
-                                    </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="mb-4">
+                            <div class="row justify-content-center mt-3">
+                                <div class="col-lg-5">
+                                    Date limite d'inscription :
+                                </div>
+                                <div class="col-lg-6">
+                                    {{ sorties.dateLimiteInscription | format_date('full', locale='fr') }}
                                 </div>
                             </div>
-                        </li>
-                        <li class="list-group-item">
-                            <div class="mb-4">
-                                <div class="row justify-content-center mt-3">
-                                    <div class="col-lg-5">
-                                        Code Postal :
-                                    </div>
-                                    <div class="col-lg-7">
-                                        {{ sorties.lieu.ville.codePostal }}
-                                    </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="mb-4">
+                            <div class="row justify-content-center mt-3">
+                                <div class="col-lg-5">
+                                    Nombre de places :
+                                </div>
+                                <div class="col-lg-6">
+                                    {{ sorties.nbInscriptionMax }}
                                 </div>
                             </div>
-                        </li>
-                        <li class="list-group-item">
-                            <div class="mb-4">
-                                <div class="row justify-content-center mt-3">
-                                    <div class="col-lg-5">
-                                        Latitude :
-                                    </div>
-                                    <div class="col-lg-7">
-                                        {{ sorties.lieu.latitude }}
-                                    </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="mb-4">
+                            <div class="row justify-content-center mt-3">
+                                <div class="col-lg-5">
+                                    Durée :
+                                </div>
+                                <div class="col-lg-6">
+                                    {{ sorties.duree }} minutes
                                 </div>
                             </div>
-                        </li>
-                        <li class="list-group-item">
-                            <div class="mb-4">
-                                <div class="row justify-content-center mt-3">
-                                    <div class="col-lg-5">
-                                        Longitude :
-                                    </div>
-                                    <div class="col-lg-7">
-                                        {{ sorties.lieu.longitude }}
-                                    </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="mb-4">
+                            <div class="row justify-content-center mt-3">
+                                <div class="col-lg-5">
+                                    Description et infos :
+                                </div>
+                                <div class="col-lg-6">
+                                    {{ sorties.infosSortie }}
                                 </div>
                             </div>
-                        </li>
-                    </ul>
-                </div>
+                        </div>
+                    </li>
+                </ul>
             </div>
         </div>
 
 
-<div class="container">
-    <div class="row justify-content-start mt-5">
-    <h5>Liste des participants inscrits : </h5>
+        <div class="col-12 col-sm-10 col-md-8 col-lg-4">
+            <div class="row justify-content-center mt-5">
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <div class="mb-4">
+                            <div class="row justify-content-center mt-3">
+                                <div class="col-lg-5">
+                                    Site école :
+                                </div>
+                                <div class="col-lg-7">
+                                    {{ sorties.site.nom }}
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="mb-4">
+                            <div class="row justify-content-center mt-3">
+                                <div class="col-lg-5">
+                                    Lieu :
+                                </div>
+                                <div class="col-lg-7">
+                                    {{ sorties.lieu.nom }}
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="mb-4">
+                            <div class="row justify-content-center mt-3">
+                                <div class="col-lg-5">
+                                    Rue :
+                                </div>
+                                <div class="col-lg-7">
+                                    {{ sorties.lieu.rue }}
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="mb-4">
+                            <div class="row justify-content-center mt-3">
+                                <div class="col-lg-5">
+                                    Code Postal :
+                                </div>
+                                <div class="col-lg-7">
+                                    {{ sorties.lieu.ville.codePostal }}
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="mb-4">
+                            <div class="row justify-content-center mt-3">
+                                <div class="col-lg-5">
+                                    Latitude :
+                                </div>
+                                <div class="col-lg-7">
+                                    {{ sorties.lieu.latitude }}
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="mb-4">
+                            <div class="row justify-content-center mt-3">
+                                <div class="col-lg-5">
+                                    Longitude :
+                                </div>
+                                <div class="col-lg-7">
+                                    {{ sorties.lieu.longitude }}
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
-</div>
+
+
+    <div class="container">
+        <div class="row justify-content-start mt-5">
+            <h5>Liste des participants inscrits : </h5>
+        </div>
+
+
+        <div class="row justify-content-start mt-3">
+
+            <div class="col-lg-4">
+                <div class="table-wrapper-scroll-y my-custom-scrollbar">
+                    <table class="table table-striped table-bordered table-sm">
+
+                        <thead>
+                        <tr>
+                            <th scope="col">Pseudo</th>
+                            <th scope="col">Nom</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        {% for participant in sorties.participants %}
+
+                            <tr>
+                                <td>{{ participant.nom }}</td>
+                                <td>{{ participant.prenom }}</td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td scope="row">Pas de participants !</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 
 {% endblock %}
 

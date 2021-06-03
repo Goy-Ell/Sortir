@@ -115,20 +115,26 @@
                         <div class="mb-4">
                             <div class="row justify-content-start mt-4">
                                 <div class="col">
-                                    Ville Organisatrice : {{ app.user.site.nom }}
+                                    Site école : {{ app.user.site.nom }}
                                 </div>
                             </div>
                         </div>
                     </li>
                     <li class="list-group-item">
                         <div class="mb-4">
-                            <div class="row justify-content-center mt-5">
+                            <div class="row justify-content-center mt-4">
+                                <div class="row align-items-center">
                                 <div class="col-lg-2">
                                     {{ form_label(sortieForm.lieu) }}
                                 </div>
-                                <div class="col-lg-10">
+                                <div class="col-lg-8">
                                     {{ form_widget (sortieForm.lieu) }}
                                     {{ form_errors (sortieForm.lieu) }}
+                                </div>
+
+                                    <div class="col-lg-2">
+                                        <button type="button" class="btn btn-outline-light"><a href="{{ path('lieu_create') }}"><img src="{{ asset('img/icon/ajouter_lieu.png') }}" alt="bouton ajout lieu" height="50px" width="50px"></a></button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -147,6 +153,15 @@
 
                             <div class="col">
                                 Code Postal :
+                            </div>
+
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="mb-4">
+
+                            <div class="col">
+                                Ville :
                             </div>
 
                         </div>
@@ -200,7 +215,7 @@
     {{ form_end(sortieForm) }}
 {% endblock %}
 
-    {# {% block Javascripts %}
+    {% block Javascripts %}
         <script>
             window.onload = () => {
                 //On va chercher la ville
@@ -232,4 +247,4 @@
                 })
             }
         </script>
-    {% endblock %} #}
+    {% endblock %}

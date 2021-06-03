@@ -80,23 +80,18 @@ class SortieType extends AbstractType
 
         ;
 
-            /*$formModifier = function (FormInterface $form, Ville $site = null){
-                $lieu = null === $site ? [] : $site->getLieux();
+            /*$formModifier = function (FormInterface $form, Lieu $lieu = null){
+                $rue = (null === $lieu) ? [] : $lieu->getRue();
 
-                $form->add('lieu', EntityType::class, [
-                    'class' => Lieu::class,
-                    'choices' => $lieu,
-                    'choice_label' => 'nom',
-                    'placeholder' => 'Lieu (Choisir une ville)',
-                    'label' => 'Lieu'
+
                 ]);
             };
 
-            $builder->get('site')->addEventListener(
+            $builder->get('lieu')->addEventListener(
                 FormEvents::POST_SUBMIT,
                 function (FormEvent $event) use ($formModifier){
-                    $site = $event->getForm()->getData();
-                    $formModifier($event->getForm()->getParent(), $site);
+                    $lieu = $event->getForm()->getData();
+                    $formModifier($event->getForm()->getParent(), $lieu);
                 }
             );*/
 
