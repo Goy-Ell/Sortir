@@ -29,12 +29,16 @@ class SortieRepository extends ServiceEntityRepository
     {
         $queryBuilder = $this->createQueryBuilder('r');
 
-        if ( $recherche->getUser()->getRoles()=='ROLE_ADMIN') {
-        $queryBuilder->andWhere('r.dateHeureDebut > :date')
-            ->setParameter('date', (new \DateTime())->modify('-1 month'));
+        if ( $recherche->getUser()->getRoles()=='ROLE_USER') {
+        $queryBuilder
+            ->andWhere('r.dateHeureDebut > :date')
+            ->setParameter('date', (new \DateTime())->modify('-1 month'))
+            ->join('r.etat','e')
+            ->andWhere('e.libelle != :etat')
+            ->setParameter('etat','Créée')
+            ;
         }
 
-//        $queryBuilder ->andWhere( $recherche->getUser())
 
 
         if($recherche->getDateMax()){
@@ -58,17 +62,13 @@ class SortieRepository extends ServiceEntityRepository
         }
 
 
-        if($recherche->getPassees()){
-            $dateNow=New \DateTime();
-//            $queryBuilder->andWhere('h.HeureDebut < :dateNow');
-            $queryBuilder->andWhere('r.etat = :etat');
-            $queryBuilder->andWhere('r.dateHeureDebut > :dateNow1m');
-//            $queryBuilder->setParameter('dateNow',$dateNow);
-            $queryBuilder->setParameter('etat','Passée');
-            $queryBuilder->setParameter('dateNow1m',$dateNow->modify('-1 month'));
+        if(!$recherche->getPassees()){
+            $queryBuilder->join('r.etat', 'e')
+                ->andWhere('e.libelle != :etat')
+                ->setParameter('etat','Passée');
         }
+
         if($recherche->getSite()){
-//        dd($recherche->getSite()->getNom());
             $queryBuilder->Join('r.site', 's')
                 ->addSelect('s');
             $queryBuilder->andWhere('s.nom = :site');

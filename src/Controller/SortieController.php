@@ -87,9 +87,6 @@ class SortieController extends AbstractController
      */
     public function recherche(SortieRepository $sortieRepository, Request $request): Response
     {
-
-//      $this->getUser()->getSite();
-
         $recherche= new Recherche();
         $recherche->setUser($this->getUser());
         $rechercheForm=$this->createForm(RechercheType::class,$recherche);
