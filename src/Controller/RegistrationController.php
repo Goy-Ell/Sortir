@@ -26,10 +26,9 @@ class RegistrationController extends AbstractController
     {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
-
         $user->setRoles(['ROLE_USER']);
         $user->setActif(true);
-        $user->setAdmin(false);
+
 
         $form->handleRequest($request);
 
@@ -49,12 +48,7 @@ class RegistrationController extends AbstractController
 
             $this->addFlash('success', 'Inscription validée !');
 
-            return $guardHandler->authenticateUserAndHandleSuccess(
-                $user,
-                $request,
-                $authenticator,
-                'main' // firewall name in security.yaml
-            );
+            return $this->redirectToRoute('sortie_recherche');
         }
 
         return $this->render('registration/register.html.twig', [
