@@ -36,11 +36,13 @@
                     {{ form_errors(registrationForm.telephone) }}
                 </div>
             <div class="mb-3">
+                <div class="form-label">{{ form_label(registrationForm.roles, 'Type de droits') }}</div>
+                {{ form_widget(registrationForm.roles, {'attr' : {'class': 'form-select'}}) }}
+                {{ form_errors(registrationForm.roles) }}
+            </div>
+            <div class="mb-3">
                 <div class="form-label">{{ form_label(registrationForm.site) }}</div>
-                {{ form_widget(registrationForm.site, {'attr' : {
-                    'class': 'form-select',
-                    'selected' : '',
-                }}) }}
+                {{ form_widget(registrationForm.site, {'attr' : {'class': 'form-select',}}) }}
                 {{ form_errors(registrationForm.site) }}
             </div>
                 <div class="mb-3">

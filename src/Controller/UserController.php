@@ -83,4 +83,17 @@ class UserController extends AbstractController
             'monProfilType'=>$monProfilType->createView()
         ]);
     }
+
+    /**
+     * Affiche le profil d'un utilisateur
+     * @Route("/user/profilUtilisateur/{id}", name="user_profilUtilisateur")
+     */
+    public function profilUtilisateur($id, UserRepository $userRepository){
+
+        $user = $userRepository->find($id);
+
+        return $this->render('user/profilUtilisateur.html.twig', [
+            'user'=>$user
+        ]);
+    }
 }
