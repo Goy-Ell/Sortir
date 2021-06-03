@@ -5,6 +5,7 @@ namespace App\Controller;
 
 use App\Entity\Etat;
 use App\Entity\Sortie;
+use App\Entity\User;
 use App\Form\RechercheType;
 use App\Form\SortieType;
 use App\Model\Recherche;
@@ -21,25 +22,22 @@ use Symfony\Component\Routing\Annotation\Route;
 class SortieController extends AbstractController
 {
     /**
-     * @Route("/sortie/create/{id}", name="sortie_create")
+     * @Route("/sortie/create", name="sortie_create")
      */
     public function create(Request $request,
                             EntityManagerInterface $entityManager,
                             UserRepository $userRepository,
-                            EtatRepository $etatRepository,
-                            $id
+                            EtatRepository $etatRepository
                             ): Response
     {
         $sortie = new Sortie();
-        $user = $userRepository->find($id);
 
-        $sortie->setOrganisateur($user);
+        $sortie->setOrganisateur($this->getUser());
 
         $sortieEtat = $etatRepository->findOneBy(['libelle'=> 'Créée']);
-
         $sortie->setEtat($sortieEtat);
 
-        $sortie->setSite($user->getSite());
+        $sortie->setSite($this->getUser()->getSite());
 
         $sortieForm = $this->createForm(SortieType::class, $sortie);
 
@@ -85,16 +83,20 @@ class SortieController extends AbstractController
 
     /**
      * @Route("/sortie/recherche", name="sortie_recherche")
+     * @var   User $user
      */
     public function recherche(SortieRepository $sortieRepository, Request $request): Response
     {
+
+//      $this->getUser()->getSite();
+
         $recherche= new Recherche();
+        $recherche->setUser($this->getUser());
         $rechercheForm=$this->createForm(RechercheType::class,$recherche);
         $rechercheForm->handleRequest($request);
 
         $resultat=$sortieRepository->rechercherSortie($recherche);
 
-//        $nbSorties=$participantRepository->count([]);
 
         return $this->render('sortie/recherche.html.twig', [
             'rechercheForm'=>$rechercheForm->createView(),

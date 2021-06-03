@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Form\MonProfilType;
 use App\Repository\UserRepository;
+use App\Security\AppAuthenticator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -11,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 
 class UserController extends AbstractController
 {
@@ -22,7 +24,9 @@ class UserController extends AbstractController
                            UserRepository $userRepository,
                            EntityManagerInterface $entityManager,
                            UserPasswordEncoderInterface $passwordEncoder,
-                           Request $request): Response
+                           Request $request,
+                           GuardAuthenticatorHandler $guardHandler,
+                           AppAuthenticator $authenticator): Response
     {
         //instancie l'utilisateur connecté
         $user = $userRepository->find($id);
@@ -66,7 +70,14 @@ class UserController extends AbstractController
             $entityManager->flush();
 
             $this->addFlash('success', 'Modifications enregistrées !! ');
-            return $this->redirectToRoute('sortie_recherche');
+
+            //permet de rester connecté après modification du profil
+            return $guardHandler->authenticateUserAndHandleSuccess(
+                $user,
+                $request,
+                $authenticator,
+                'main' // firewall name in security.yaml
+            );
         }
 
         return $this->render('user/profil.html.twig', [

@@ -3,6 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\Sortie;
+use App\Entity\Site;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -19,13 +21,21 @@ class SortieRepository extends ServiceEntityRepository
         parent::__construct($registry, Sortie::class);
     }
 
+    /**
+     * @var User $user
+     */
 
-
-    public function rechercherSortie(\App\Model\Recherche $recherche)
+    public function rechercherSortie(\App\Model\Recherche $recherche): array
     {
-        $queryBuilder=$this->createQueryBuilder('r');
-        $queryBuilder->addOrderBy('r.dateHeureDebut','ASC');
-//        $queryBuilder->Join('r.', '');
+        $queryBuilder = $this->createQueryBuilder('r');
+
+        if ( $recherche->getUser()->getRoles()=='ROLE_ADMIN') {
+        $queryBuilder->andWhere('r.dateHeureDebut > :date')
+            ->setParameter('date', (new \DateTime())->modify('-1 month'));
+        }
+
+//        $queryBuilder ->andWhere( $recherche->getUser())
+
 
         if($recherche->getDateMax()){
             $queryBuilder->andWhere('r.dateHeureDebut <= :dateMax');
@@ -35,57 +45,66 @@ class SortieRepository extends ServiceEntityRepository
             $queryBuilder->andWhere('r.dateHeureDebut >= :dateMin');
             $queryBuilder->setParameter('dateMin',$recherche->getDateMin());
         }
-//TODO
-        if($recherche->getInscrit()){
 
-            $queryBuilder->andWhere('');
-            $queryBuilder->setParameter('',$recherche->getInscrit());
-        }
+
         if($recherche->getNom()){
             $queryBuilder->andWhere('r.nom LIKE :nom');
-            $queryBuilder->setParameter('nom',$recherche->getNom());
+            $queryBuilder->setParameter('nom', '%'.$recherche->getNom().'%' );
         }
-//TODO la meme que get inscrit
+
         if($recherche->getOrganisateur()){
-            $queryBuilder->andWhere('');
-            $queryBuilder->setParameter('',$recherche->getOrganisateur());
+            $queryBuilder->andWhere('r.organisateur = :organisateur');
+            $queryBuilder->setParameter('organisateur',$recherche->getUser()->getId());
         }
-        if($recherche->getPasInscrit()){
-            $queryBuilder->andWhere('');
-            $queryBuilder->setParameter('',$recherche->getPasInscrit());
-        }
+
 
         if($recherche->getPassees()){
             $dateNow=New \DateTime();
 //            $queryBuilder->andWhere('h.HeureDebut < :dateNow');
             $queryBuilder->andWhere('r.etat = :etat');
-            $queryBuilder->andWhere('r.HeureDebut > :dateNow1m');
+            $queryBuilder->andWhere('r.dateHeureDebut > :dateNow1m');
 //            $queryBuilder->setParameter('dateNow',$dateNow);
             $queryBuilder->setParameter('etat','Passée');
             $queryBuilder->setParameter('dateNow1m',$dateNow->modify('-1 month'));
         }
-//        if($recherche->getSite()){
-//            $queryBuilder->andWhere('r.site = :site');
-//            $queryBuilder->setParameter('site',$recherche->getSite());
-//        }
+        if($recherche->getSite()){
+//        dd($recherche->getSite()->getNom());
+            $queryBuilder->Join('r.site', 's')
+                ->addSelect('s');
+            $queryBuilder->andWhere('s.nom = :site');
+            $queryBuilder->setParameter('site',$recherche->getSite()->getNom());
+        }
+
+        //TODO
+        if($recherche->getInscrit()){
+
+            $queryBuilder->andWhere('');
+            $queryBuilder->setParameter('',$recherche->getInscrit());
+        }
+//TODO
+        if($recherche->getPasInscrit()){
+            $queryBuilder->andWhere('');
+            $queryBuilder->setParameter('',$recherche->getPasInscrit());
+        }
 
         //permet de récupérer le nombre de résultat
-        $queryBuilder->select('COUNT(r)');
-        $countQuery = $queryBuilder->getQuery();
-        $nbSorties = $countQuery->getSingleScalarResult();
+//        $queryBuilder->select('COUNT(r)');
+//        $countQuery = $queryBuilder->getQuery();
+//        $nbSorties = $countQuery->getSingleScalarResult();
 
         //doit refaire le select pour bien récupérer les résultats
+        $queryBuilder->addOrderBy('r.dateHeureDebut','ASC');
         $queryBuilder->select('r');
         $query = $queryBuilder->getQuery();
-
-
+        $sorties = $query->getResult();
+        $nbSorties = count($sorties);
 
 //        $query->setMaxResults(20);
 //        $query->setFirstResult($offset);
 
 
         return [
-            'sorties' => $query->getResult(),
+            'sorties' => $sorties,
             'nbSorties' => $nbSorties
         ];
 

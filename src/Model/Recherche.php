@@ -2,64 +2,57 @@
 
 namespace App\Model;
 
-use App\Repository\RechercheRepository;
+use App\Entity\Site;
+use App\Entity\User;
+use App\Repository\SortieRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=RechercheRepository::class)
- */
+
 class Recherche
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
+
     private $id;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Site::class)
-     */
+    private $user;
+
     private $site;
 
-    /**
-     * @ORM\Column(type="string", length=50, nullable=true)
-     */
+
     private $nom;
 
-    /**
-     * @ORM\Column(type="date", nullable=true)
-     */
+
     private $dateMin;
 
-    /**
-     * @ORM\Column(type="date", nullable=true)
-     */
+
     private $dateMax;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
+
     private $organisateur;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
+
     private $inscrit;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
+
     private $pasInscrit;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
+
     private $passees;
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
     }
 
     public function getSite(): ?Site

@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -23,6 +24,8 @@ class User implements UserInterface
     private $id;
 
     /**
+     * @Assert\Email(message="Cet email '{{ value }}' n'est pas valide.")
+     * @Assert\NotBlank(message="L'email est obligatoire")
      * @ORM\Column(type="string", length=180, unique=true)
      */
     private $email;
@@ -33,22 +36,40 @@ class User implements UserInterface
     private $roles = [];
 
     /**
+     * @Assert\Length (
+     *     min=6, minMessage="Le mot de passe doit faire au moins 6 caratères",
+     *     max=4096, maxMessage="Le mot de passe doit faire au max 4096 caratères"
+     * )
      * @var string The hashed password
      * @ORM\Column(type="string")
      */
     private $password;
 
     /**
+     * @Assert\NotBlank(message="Le nom est obligatoire")
+     * @Assert\Length(
+     *     min=2, minMessage="Min 2 caractères",
+     *     max=30, maxMessage="Max 30 caractères"
+     * )
      * @ORM\Column(type="string", length=30)
      */
     private $nom;
 
     /**
+     * @Assert\NotBlank(message="Le prénom est obligatoire")
+     * @Assert\Length(
+     *     min=2, minMessage="Min 2 caractères",
+     *     max=30, maxMessage="Max 30 caractères"
+     * )
      * @ORM\Column(type="string", length=30)
      */
     private $prenom;
 
     /**
+     * @Assert\Length(
+     *     min=10, minMessage="Le numéro de téléphone doit faire 10 chiffres",
+     *     max=10, maxMessage="Le numéro de téléphone doit faire 10 chiffres"
+     * )
      * @ORM\Column(type="string", length=10, nullable=true)
      */
     private $telephone;
@@ -64,6 +85,7 @@ class User implements UserInterface
     private $actif;
 
     /**
+     * @Assert\NotBlank(message="Le site de rattachement est obligatoire")
      * @ORM\ManyToOne(targetEntity=Site::class, inversedBy="users")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -80,6 +102,11 @@ class User implements UserInterface
     private $sortiesUser;
 
     /**
+     * @Assert\NotBlank(message="Le pseudo est obligatoire")
+     * @Assert\Length(
+     *     min=2, minMessage="Min 2 caractères",
+     *     max=30, maxMessage="Max 30 caractères"
+     * )
      * @ORM\Column(type="string", length=30)
      */
     private $pseudo;
