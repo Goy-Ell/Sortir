@@ -28,7 +28,7 @@ class AppFixtures extends Fixture
         }
 
 
-        $siteNames=['Nantes','Rennes','Quimper','Niort'];
+      /*  $siteNames=['Nantes','Rennes','Quimper','Niort'];
         foreach ($siteNames as $name){
             $site=new Site();
             $site->setNom($name);
@@ -111,7 +111,7 @@ class AppFixtures extends Fixture
             $sortie->setLieu($faker->randomElement($lieux)) ;
 
             $manager->persist($sortie);
-        }
+        }*/
         $manager->flush();
     }
 }

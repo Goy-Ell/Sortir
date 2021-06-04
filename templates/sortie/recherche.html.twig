@@ -116,6 +116,9 @@
 {#                            {% if app.user.admin %}#}
 {#                                <a href="{{  path('sortie_activer',{'id': sortie.id}) }}">Activer</a>#}
 {#                            {% endif %}#}
+                            {% if (sortie.etat.libelle == 'Ouverte') and (sortie.organisateur != app.user) %}
+                            <button type="submit" class="btn btn-link"><a href="{{ path('sortie_inscription', {'id' : sortie.id}) }}">S'inscrire</a></button>
+                            {% endif %}
                         </td>
                         
                     </tr>

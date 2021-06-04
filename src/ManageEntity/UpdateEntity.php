@@ -6,7 +6,9 @@ namespace App\ManageEntity;
 //use App\Entity\Sortie;
 //use App\Repository\EtatRepository;
 //use App\Repository\SortieRepository;
+use App\Entity\Etat;
 use App\Entity\Sortie;
+use App\Repository\EtatRepository;
 use DateInterval;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
@@ -16,15 +18,15 @@ use Exception;
 class UpdateEntity
 {
     private $entityManager;
-//    private $etatRepository;
+    private $etatRepository;
 //    private $sortieRepository;
     public function __construct(EntityManagerInterface $entityManager
-//        ,EtatRepository $etatRepository
+        ,EtatRepository $etatRepository
 //        ,SortieRepository $sortieRepository
     )
     {
         $this->entityManager= $entityManager;
-//        $this->etatRepository=$etatRepository;
+        $this->etatRepository=$etatRepository;
 //        $this->sortieRepository=$sortieRepository;
     }
 
@@ -83,5 +85,18 @@ class UpdateEntity
     public function annulerSortie($sortie){
 
     }
+    public function validerSortie($sortie){
 
+        $etats = $this->etatRepository->findAll();
+
+        if ($sortie->getEtat() != 'Passée' &&
+            $sortie->getEtat() != 'Annulée' &&
+            $sortie->getEtat() != 'Cloturé' &&
+            $sortie->getEtat() != 'Activité en cours' &&
+            $sortie->getEtat() != 'Ouverte'){
+
+            $sortie->setEtat($etats[1]);
+            $this->entityManager->persist($sortie);
+        }
+    }
 }
