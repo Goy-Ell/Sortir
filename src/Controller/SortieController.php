@@ -12,11 +12,13 @@ use App\Form\RechercheType;
 use App\Form\SortieType;
 use App\Model\Recherche;
 use App\Repository\EtatRepository;
+use App\Repository\LieuRepository;
 use App\Repository\SiteRepository;
 use App\Repository\SortieRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -92,7 +94,7 @@ class SortieController extends AbstractController
     }
 
     /**
-     * @Route("/sortie/detail/{id}", name="sortie_detail")
+     * @Route("/sortie/detail/{id}", name="sortie_detail", requirements={"id"="\d+"})
      */
 
     public function detail($id, SortieRepository $sortieRepository): Response
@@ -133,6 +135,26 @@ class SortieController extends AbstractController
             'resultat'=>$resultat,
 
         ]);
+    }
+
+    /**
+     * @Route("/sortie/ajax-lieu", name="sortie_ajax_lieu")
+     *
+     */
+    public function remplissageLieu(Request $request,
+                                    LieuRepository $lieuRepository,
+                                    EntityManagerInterface $entityManager):Response
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $lieu = $data->rue;
+        $lieu_id = $data ->lieu;
+
+        $rue = $lieuRepository->find($lieu_id);
+
+        return new JsonResponse('rue');
+
+
     }
 }
 
