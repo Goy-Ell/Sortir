@@ -215,13 +215,17 @@
     {{ form_end(sortieForm) }}
 {% endblock %}
 
-    {% block Javascripts %}
+   {#  {% block Javascripts %}
         <script>
-            window.onload = () => {
-                //On va chercher la ville
-                let ville = document.querySelector("#sortie_site");
+            window.onload = init;
 
-                ville.addEventListener("change", function () {
+            function init() {
+                //On va chercher le lieu
+                let lieu = document.getElementById("sortie_lieu");
+
+                console.log(lieu);
+
+                  lieu.addEventListener("change", function () {
                     let form = this.closest("form");
 
                     console.log(form);
@@ -247,4 +251,4 @@
                 })
             }
         </script>
-    {% endblock %}
+    {% endblock %} #}
