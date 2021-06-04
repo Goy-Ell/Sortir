@@ -14,7 +14,10 @@
         <script src="{{ asset('js/ajax.js') }}"></script>
     </head>
     <body>
-        <header> {% include 'nav/nav.html.twig' %}</header>
+        <header>
+            <a href="{{ path('sortie_recherche') }}"><img src="{{ asset('img/icon/bandeau.jpg') }}" class="img-fluid" alt="Bandeau site sortir.com"></a>
+            {% include 'nav/nav.html.twig' %}
+        </header>
         <!-- Gestion de message flash -->
         {% for label, messages in app.flashes %}
             <div class="alert alert-success">

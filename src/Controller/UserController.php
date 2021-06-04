@@ -129,6 +129,8 @@ class UserController extends AbstractController
         $entityManager->persist($user);
         $entityManager->flush();
 
+        $this->addFlash('success', 'Utilisateur mis à jour');
+
         return $this->render('user/profilUtilisateur.html.twig', [
             'user'=>$user,
             'page'=> 2
