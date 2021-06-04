@@ -93,7 +93,45 @@ class UserController extends AbstractController
         $user = $userRepository->find($id);
 
         return $this->render('user/profilUtilisateur.html.twig', [
-            'user'=>$user
+            'user'=>$user,
+            'page'=> 1
+        ]);
+    }
+
+    /**
+     * Affiche l'ensemble des utilisateurs en ADMIN
+     * @Route("/user/ensembleUtilisateur", name="user_ensembleUtilisateur")
+     */
+    public function ensembleUtilisateur(UserRepository $userRepository){
+
+        $users = $userRepository->findAll();
+
+        return $this->render('user/ensembleUtilisateur.html.twig', [
+            'users'=>$users
+        ]);
+    }
+
+    /**
+     * Activer ou désactiver un utilisateur en ADMIN
+     * @Route("/user/activerDesactiver/{id}", name="user_activerDesactiver")
+     */
+    public function activerDesactiver($id, UserRepository $userRepository, EntityManagerInterface $entityManager){
+
+        $user = $userRepository->find($id);
+
+        if ($user->getActif()){
+            //desactive un user
+            $user->setActif(false);
+        } else {
+            //active un user
+            $user->setActif(true);
+        }
+        $entityManager->persist($user);
+        $entityManager->flush();
+
+        return $this->render('user/profilUtilisateur.html.twig', [
+            'user'=>$user,
+            'page'=> 2
         ]);
     }
 }

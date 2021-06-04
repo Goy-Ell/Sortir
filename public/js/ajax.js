@@ -1,8 +1,8 @@
 window.onload = init;
 
-//fonction retour page n-1
-    function goBack() {
-    window.history.go(-1);
+//fonction retour page-n
+    function goBack(n) {
+    window.history.go(-n);
 }
 
 //fonction AJAX en tentative

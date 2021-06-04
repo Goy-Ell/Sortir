@@ -9,6 +9,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationException;
 use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
 use Symfony\Component\Security\Core\Security;
@@ -71,6 +73,11 @@ class AppAuthenticator extends AbstractFormLoginAuthenticator implements Passwor
 
         if (!$user) {
             throw new UsernameNotFoundException('Email could not be found.');
+        }
+
+        //ajout verif si le user est actif
+        if (!$user->getActif()){
+            throw new CustomUserMessageAuthenticationException("Compte désactivé ! Contacter un administrateur !");
         }
 
         return $user;
