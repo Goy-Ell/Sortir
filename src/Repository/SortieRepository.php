@@ -88,7 +88,7 @@ class SortieRepository extends ServiceEntityRepository
         }
 
         if($recherche->getPasInscrit()){
-            $queryBuilder->andWhere('p.id != :participant ');
+            $queryBuilder->andWhere(':participant MEMBER OF r.participants  ');
             $queryBuilder->setParameter('participant',$recherche->getUser()->getId());
         }
 
