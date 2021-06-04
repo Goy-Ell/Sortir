@@ -36,9 +36,8 @@ class UserController extends AbstractController
         }
 
         $monProfilType = $this->createForm(MonProfilType::class, $user);
-        $user->setRoles(["ROLE_USER"]);
         $user->setActif(true);
-        $user->setAdmin(false);
+
         $monProfilType->handleRequest($request);
 
         if ($monProfilType->isSubmitted() && $monProfilType->isValid()){
@@ -58,7 +57,7 @@ class UserController extends AbstractController
             $file = $monProfilType->get('photoProfil')->getData();
             if ($file){
                 $directory = $this->getParameter('upload_photo_profil_dir');
-                //rename files - parametre uniqid special prdi nico !!
+                //rename files - parametre uniqid special ordi nico !!
                 $newFileName = $user->getNom().'-'.uniqid('', true).'.'.$file->guessExtension();
                 //save in to directory (+ modified service.yaml)
                 $file->move($directory, $newFileName);
@@ -82,6 +81,19 @@ class UserController extends AbstractController
 
         return $this->render('user/profil.html.twig', [
             'monProfilType'=>$monProfilType->createView()
+        ]);
+    }
+
+    /**
+     * Affiche le profil d'un utilisateur
+     * @Route("/user/profilUtilisateur/{id}", name="user_profilUtilisateur")
+     */
+    public function profilUtilisateur($id, UserRepository $userRepository){
+
+        $user = $userRepository->find($id);
+
+        return $this->render('user/profilUtilisateur.html.twig', [
+            'user'=>$user
         ]);
     }
 }

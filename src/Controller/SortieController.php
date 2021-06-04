@@ -10,6 +10,7 @@ use App\Entity\User;
 use App\Form\LieuType;
 use App\Form\RechercheType;
 use App\Form\SortieType;
+use App\ManageEntity\UpdateEntity;
 use App\Model\Recherche;
 use App\Repository\EtatRepository;
 use App\Repository\LieuRepository;
@@ -34,31 +35,22 @@ class SortieController extends AbstractController
                             ): Response
     {
         $sortie = new Sortie();
-
         $sortie->setOrganisateur($this->getUser());
-
         $sortieEtat = $etatRepository->findOneBy(['libelle'=> 'Créée']);
         $sortie->setEtat($sortieEtat);
-
         $sortie->setSite($this->getUser()->getSite());
 
         $sortieForm = $this->createForm(SortieType::class, $sortie);
-
         $sortieForm->handleRequest($request);
 
-
         if ($sortieForm->isSubmitted() && $sortieForm->isValid()) {
-
-
-        $entityManager->persist($sortie);
-        $entityManager->flush(); 
+            $entityManager->persist($sortie);
+            $entityManager->flush();
 
             $this->addFlash('success', 'Sortie ajoutée ! ');
 
             return $this->redirectToRoute('sortie_recherche');
         }
-
-
         return $this->render('sortie/create.html.twig', [
             'sortieForm' => $sortieForm->createView(),
         ]);
@@ -112,24 +104,30 @@ class SortieController extends AbstractController
     }
 
 
-
     /**
      * @Route("/sortie/recherche", name="sortie_recherche")
-     * @var   User $user
+     *
      */
-    public function recherche(SortieRepository $sortieRepository, Request $request): Response
+    public function recherche(EntityManagerInterface $entityManager,
+                              EtatRepository $etatRepository,
+                              SortieRepository $sortieRepository,
+                              Request $request,
+                              UpdateEntity $updateEntity): Response
     {
+            //maj etat bdd
+        $updateEntity->majEtat($sortieRepository->findAll(),$etatRepository->findAll());
 
-//      $this->getUser()->getSite();
-
+            //creation d un model de recherche via formulaire
         $recherche= new Recherche();
         $recherche->setUser($this->getUser());
         $rechercheForm=$this->createForm(RechercheType::class,$recherche);
         $rechercheForm->handleRequest($request);
 
+            //traitement des requetes formulaire dans le repository
         $resultat=$sortieRepository->rechercherSortie($recherche);
 
 
+            //renvoie a la page d'acceuil avec le formulaire et les resultat du repository
         return $this->render('sortie/recherche.html.twig', [
             'rechercheForm'=>$rechercheForm->createView(),
             'resultat'=>$resultat,
