@@ -1,45 +1,85 @@
 <?php
-//
-//
-//namespace App\ManageEntity;
-//
+
+
+namespace App\ManageEntity;
+
 //use App\Entity\Sortie;
-//
-///**
-// * Class UpdateEntity
-// * @package App\ManageEntity
-// * @var $sortie Sortie
-// */
-//class UpdateEntity
-//{
-//    private $entityManager;
-//
-//    /**
-//     * @var $sortie Sortie
-//     */
-//    public function majEtat($listeMaj){
-//        foreach ($listeMaj as $sortie){
-//            if ($sortie->get ){
-//
-//            }
-////            if ($sortie ){
-////                ouverte
-////            }
-////            if ($sortie ){
-////                Activité en cours
-////            }
-////            if ($sortie ){
-////                passéé
-//            }
-//        }
-//    }
-//
-//    public function supprimerSortie($sortie){
-//
-//    }
-//    public function supprimerUser($user){
-//
-//    }
-//
-//
-//}
+//use App\Repository\EtatRepository;
+//use App\Repository\SortieRepository;
+use App\Entity\Sortie;
+use Doctrine\ORM\EntityManagerInterface;
+use Exception;
+
+
+class UpdateEntity
+{
+    private $entityManager;
+//    private $etatRepository;
+//    private $sortieRepository;
+    public function __construct(EntityManagerInterface $entityManager
+//        ,EtatRepository $etatRepository
+//        ,SortieRepository $sortieRepository
+    )
+    {
+        $this->entityManager= $entityManager;
+//        $this->etatRepository=$etatRepository;
+//        $this->sortieRepository=$sortieRepository;
+    }
+
+    /**
+     * @param $listeMaj
+     * @param $etats
+     * @throws Exception
+     * @var $sortie Sortie
+     */
+    public function majEtat($listeMaj, $etats)
+    {
+
+        foreach ($listeMaj as $sortie) {
+
+            if ($sortie->getEtat() != 'Passée' &&
+                $sortie->getEtat() != 'Annulée' &&
+                $sortie->getEtat() != 'Cloturé' &&
+                $sortie->getEtat() != 'Activité en cours' &&
+                ((count($sortie->getParticipants()) >= $sortie->getNbInscriptionMax()) || $sortie->getDateLimiteInscription() < new \DateTime())) {
+                    $sortie->setEtat($etats[2]);
+                    $this->entityManager->persist($sortie);
+//                dd('bou');
+            }
+            if ($sortie->getEtat() != 'Passée' &&
+                $sortie->getEtat() != 'Annulée' &&
+                $sortie->getEtat() != 'Cloturé' &&
+                $sortie->getDateHeureDebut() < (new \DateTime()) &&
+                $sortie->getDateHeureDebut()->add(new \DateInterval('PT' . $sortie->getDuree() . 'M')) > new \DateTime()) {
+                    $sortie->setEtat($etats[3]);
+                    $this->entityManager->persist($sortie);
+            }
+
+
+            if ($sortie->getEtat() != 'Passée' &&
+                $sortie->getEtat() != 'Annulée' &&
+                $sortie->getDateHeureDebut()->add(new \DateInterval('PT' . $sortie->getDuree() . 'M')) < new \DateTime()            ) {
+                    $sortie->setEtat($etats[4]);
+                    $this->entityManager->persist($sortie);
+
+            }
+
+        }
+        $this->entityManager->flush();
+    }
+
+
+
+
+
+    public function supprimerSortie($sortie){
+
+    }
+    public function supprimerUser($user){
+
+    }
+    public function annulerSortie($sortie){
+
+    }
+
+}

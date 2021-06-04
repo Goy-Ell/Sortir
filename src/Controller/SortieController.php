@@ -102,89 +102,30 @@ class SortieController extends AbstractController
     }
 
 
-
     /**
      * @Route("/sortie/recherche", name="sortie_recherche")
-     * @var $user User
-     * @var $sortie Sortie
+     *
      */
     public function recherche(EntityManagerInterface $entityManager,
                               EtatRepository $etatRepository,
                               SortieRepository $sortieRepository,
-                              Request $request
-//                              UpdateEntity $updateEntity
-                                ): Response
+                              Request $request,
+                              UpdateEntity $updateEntity): Response
     {
-//        $updateEntity->majEtat($sortieRepository->findAll());
+            //maj etat bdd
+        $updateEntity->majEtat($sortieRepository->findAll(),$etatRepository->findAll());
 
-        $etats=$etatRepository->findAll();
-
-        $listeMaj=$sortieRepository->findAll();
-
-        foreach ($listeMaj as $sortie) {
-//            $sortie1=$sortie->getDateHeureDebut();
-//
-//            dump($sortie->getDateHeureDebut());
-//            dump($sortie->getDuree());
-//
-//            dump($sortie1->add(new \DateInterval('PT'.$sortie->getDuree().'M')));
-//
-//            dd($sortie1->add(new \DateInterval('PT'.($sortie->getDuree()+44640).'M')));
-            if ($sortie->getEtat() != 'Passée' &&
-                $sortie->getEtat() != 'Annulée' &&
-                $sortie->getEtat() != 'Cloturé' &&
-                $sortie->getEtat() != 'Activité en cours' &&
-                ((count($sortie->getParticipants())>=$sortie->getNbInscriptionMax())|| $sortie->getDateLimiteInscription()< new \DateTime())) {
-                $sortie->setEtat($etats[2]);
-                $entityManager->persist($sortie);
-//                dd('bou');
-            }
-            if ($sortie->getEtat() != 'Passée' &&
-                $sortie->getEtat() != 'Annulée' &&
-                $sortie->getEtat() != 'Cloturé' &&
-                $sortie->getDateHeureDebut() <(New \DateTime()) &&
-                $sortie->getDateHeureDebut()->add(new \DateInterval('PT'.$sortie->getDuree().'M')) >New \DateTime()
-
-            ){
-                $sortie->setEtat($etats[3]);
-                $entityManager->persist($sortie);
-            }
-
-
-            if ($sortie->getEtat() != 'Passée' &&
-                $sortie->getEtat() != 'Annulée' &&
-                $sortie->getDateHeureDebut()->add(new \DateInterval('PT'.$sortie->getDuree().'M')) < New \DateTime()
-            ) {
-                    $sortie->setEtat($etats[4]);
-                    $entityManager->persist($sortie);
-            }
-
-
-
-
-
-
-
-        }
-        $entityManager->flush();
-
-
-
-
-
-
-
-
-
-
+            //creation d un model de recherche via formulaire
         $recherche= new Recherche();
         $recherche->setUser($this->getUser());
         $rechercheForm=$this->createForm(RechercheType::class,$recherche);
         $rechercheForm->handleRequest($request);
 
+            //traitement des requetes formulaire dans le repository
         $resultat=$sortieRepository->rechercherSortie($recherche);
 
 
+            //renvoie a la page d'acceuil avec le formulaire et les resultat du repository
         return $this->render('sortie/recherche.html.twig', [
             'rechercheForm'=>$rechercheForm->createView(),
             'resultat'=>$resultat,
