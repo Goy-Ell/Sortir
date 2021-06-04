@@ -1,9 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}
-
-{% endblock %}
-
+{% block title %}Profil utilisateur{% endblock %}
 
 {% block body %}
 
@@ -29,7 +26,7 @@
                         <div class="col">Nom : </div><div class="col">{{ user.nom }}</div>
                     </div>
                     <div class="row">
-                        <div class="col">Prénom : </div>
+                        <div class="col">Téléphone : </div>
                         {% if user.telephone %}
                             <div class="col">{{ user.telephone }}</div>
                         {% else %}
@@ -42,27 +39,40 @@
                     <div class="row">
                         <div class="col">Ville de rattachement : </div><div class="col">{{ user.site.nom }}</div>
                     </div>
+                    <div class="row">
+                        <div class="col">Satut : </div>
+                        {% if user.actif %}
+                            <div class="col">Actif</div>
+                        {% else %}
+                            <div class="col">Désactivé</div>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
             <div class="row justify-content-around">
                 <div class="col-3 mt-4">
-                    <button class="btn btn-secondary" onclick="goBack()">Retour</button>
+                    <button class="btn btn-secondary" onclick="goBack( {{ page }} )">Retour</button>
                 </div>
                 {% if is_granted("ROLE_ADMIN") %}
-                    <div class="col-3 mt-4">
-                        <a class="btn btn-secondary" href="#">Désactiver</a>
-                    </div>
+                    {% if user.actif %}
+                        <div class="col-3 mt-4">
+                            <a class="btn btn-secondary" href="{{ path('user_activerDesactiver', {'id' : user.id }) }}">Désactiver</a>
+                        </div>
+                    {% else %}
+                        <div class="col-3 mt-4">
+                             <a class="btn btn-secondary" href="{{ path('user_activerDesactiver', {'id' : user.id }) }}">Activer</a>
+                        </div>
+                    {% endif %}
                     <div class="col-3 mt-4">
                         <a class="btn btn-secondary" href="#">Supprimer</a>
                     </div>
+
                 {% endif %}
             </div>
 
         </div>
     </div>
 </div>
-
-
 
 {% endblock %}
 
