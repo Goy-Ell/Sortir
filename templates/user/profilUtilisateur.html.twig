@@ -46,7 +46,7 @@
             </div>
             <div class="row justify-content-around">
                 <div class="col-3 mt-4">
-                    <a class="btn btn-secondary" href="{{ path('sortie_recherche') }}">Retour</a>
+                    <button class="btn btn-secondary" onclick="goBack()">Retour</button>
                 </div>
                 {% if is_granted("ROLE_ADMIN") %}
                     <div class="col-3 mt-4">

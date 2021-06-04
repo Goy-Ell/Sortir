@@ -1,6 +1,11 @@
+window.onload = init;
 
-    window.onload = init;
+//fonction retour page n-1
+    function goBack() {
+    window.history.go(-1);
+}
 
+//fonction AJAX en tentative
     function init() {
         //On va chercher le lieu
         let lieu = document.getElementById("sortie_lieu");
