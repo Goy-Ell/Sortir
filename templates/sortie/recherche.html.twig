@@ -100,10 +100,12 @@
                         <td>{{ sortie.nom }}</td>
                         <td>{{ sortie.dateHeureDebut|date }}</td>
                         <td>{{ sortie.dateLimiteInscription|date }}</td>
-                        <td>{{ sortie.participants|length }}/{{ sortie.nbInscriptionMax }}</td>
+                        <td>
+                            <div class="text-center">{{ sortie.participants|length }}/{{ sortie.nbInscriptionMax }}</div>
+                        </td>
                         <td>{{ sortie.etat.libelle }}</td>
-                        <td class="justify-content-center ">{% if (app.user in sortie.participants) %}
-                               <div class="col-2 justify-content-center" >X</div>
+                        <td >{% if (app.user in sortie.participants) %}
+                               <div class="text-center " >X</div>
                             {% else  %}
                             {{ null }}
                             {% endif %}
