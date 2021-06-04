@@ -65,9 +65,9 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- fin du contenaire formulaire -->
+
                     </div>
-                </div>
+                 </div>
             </div>
         </div>
     </div>
@@ -107,11 +107,19 @@
 {#                            {% if app.user.admin %}#}
 {#                                <a href="{{  path('sortie_activer',{'id': sortie.id}) }}">Activer</a>#}
 {#                            {% endif %}#}
-                    </td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+                            {% if (sortie.etat.libelle == 'Ouverte') and (sortie.organisateur != app.user) %}
+                            <button type="submit" class="btn btn-link"><a href="{{ path('sortie_inscription', {'id' : sortie.id}) }}">S'inscrire</a></button>
+                            {% endif %}
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
     </div>
 </div>
 {% endblock %}

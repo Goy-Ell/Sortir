@@ -16,13 +16,17 @@ use Exception;
 class UpdateEntity
 {
     private $entityManager;
-
+    private $etatRepository;
+//    private $sortieRepository;
     public function __construct(EntityManagerInterface $entityManager
+        ,EtatRepository $etatRepository
+//        ,SortieRepository $sortieRepository
     )
     {
         $this->entityManager= $entityManager;
+        $this->etatRepository=$etatRepository;
+//        $this->sortieRepository=$sortieRepository;
     }
-
 
     /**
      * @param $listeMaj
@@ -88,6 +92,14 @@ class UpdateEntity
     public function annulerSortie($sortie){
 
     }
+    public function validerSortie($sortie){
 
+        $etats = $this->etatRepository->findAll();
 
+        if ($sortie->getEtat() != 'Créée') {
+
+            $sortie->setEtat($etats[1]);
+            $this->entityManager->persist($sortie);
+        }
+    }
 }

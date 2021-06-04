@@ -26,6 +26,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class SortieController extends AbstractController
 {
+    //Creer une sortie
     /**
      * @Route("/sortie/create", name="sortie_create")
      */
@@ -53,6 +54,30 @@ class SortieController extends AbstractController
         }
         return $this->render('sortie/create.html.twig', [
             'sortieForm' => $sortieForm->createView(),
+        ]);
+    }
+
+    //Publier une sortie
+    /**
+     * @Route("/sortie/publier{id}", name="sortie_publier")
+     */
+    public function publierSortie($id, SortieRepository $sortieRepository, UpdateEntity $updateEntity, EntityManagerInterface $entityManager){
+
+        //On récupère le user
+        $user = $this->getUser();
+
+        //On recupere sortie repository
+        $sorties = $sortieRepository->find($id);
+
+        $updateEntity->validerSortie($sorties);
+
+        $entityManager->persist($sorties);
+        $entityManager->flush();
+
+        $this->addFlash('success', 'Sortie publiée ! ');
+
+        return $this->render('sortie/detail.html.twig', [
+            'sorties' => $sorties
         ]);
     }
 
@@ -97,6 +122,47 @@ class SortieController extends AbstractController
         if(!$sorties){
             throw $this->createNotFoundException(("Cette sortie n'existe pas ! "));
         }
+
+        return $this->render('sortie/detail.html.twig', [
+            "sorties" => $sorties
+        ]);
+    }
+
+    //Inscription à une sortie
+
+    /**
+     * @Route("/sortie/recherche/inscription{id}", name="sortie_inscription")
+     * @param UserRepository $userRepository
+     * @return Response
+     */
+
+    public function inscriptionSortie($id, UserRepository $userRepository,
+                                      SortieRepository $sortieRepository,
+                                      EntityManagerInterface $entityManager):Response
+    {
+
+        $sorties = $sortieRepository->find($id);
+        //verification si la sortie est bien recuperer
+        if (!$sorties){
+            throw $this->createNotFoundException("Sortie non trouvée !!");
+        }
+
+        //On recupere le user
+        $user = $this->getUser();
+
+        if($sorties->getParticipants()->contains($user)){
+            $this->addFlash('success', 'Vous êtes déjà inscrit à cette sortie ! ');
+            return $this->redirectToRoute('sortie_recherche');
+        }
+
+        //Ajout du user en participant de la sortie
+        $sorties->addParticipant($user);
+
+        $entityManager->persist($sorties);
+        $entityManager->flush();
+
+        $this->addFlash('success', 'Felicitation, vous vous êtes bien inscrit ! ');
+
 
         return $this->render('sortie/detail.html.twig', [
             "sorties" => $sorties
@@ -154,6 +220,10 @@ class SortieController extends AbstractController
 
 
     }
+
+
+
+
 }
 
 

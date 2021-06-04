@@ -179,7 +179,7 @@
         </div>
 
 
-        <div class="row justify-content-start mt-3">
+        <div class="row justify-content-between mt-3">
 
             <div class="col-lg-4">
                 <div class="table-wrapper-scroll-y my-custom-scrollbar">
@@ -196,7 +196,9 @@
                         {% for participant in sorties.participants %}
 
                             <tr>
-                                <td><a href="{{ path('user_profilUtilisateur', {'id' : participant.id } ) }}">{{ participant.pseudo }}</td>
+                                <td>
+                                    <a href="{{ path('user_profilUtilisateur', {'id' : participant.id } ) }}">{{ participant.pseudo }}
+                                </td>
                                 <td>{{ participant.prenom }} {{ participant.nom }}</td>
                             </tr>
                         {% else %}
@@ -208,8 +210,24 @@
                     </table>
                 </div>
             </div>
+
+            <div class="col-lg-2">
+                <div class="btn-group" role="group" aria-label="Basic outlined example">
+
+                    {% if sorties.organisateur == app.user %}
+
+                    <button type="button" class="btn btn-outline-primary"><a href="{{ path('sortie_publier', {'id' : sorties.id}) }}">Publier
+                            la sortie</a>
+                    </button>
+
+                    {% endif %}
+                </div>
+            </div>
         </div>
     </div>
+
+
+
 
 {% endblock %}
 
