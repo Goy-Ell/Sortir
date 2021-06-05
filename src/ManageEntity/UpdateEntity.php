@@ -4,7 +4,7 @@
 namespace App\ManageEntity;
 
 //use App\Entity\Sortie;
-//use App\Repository\EtatRepository;
+use App\Repository\EtatRepository;
 //use App\Repository\SortieRepository;
 use App\Entity\Sortie;
 use DateInterval;
