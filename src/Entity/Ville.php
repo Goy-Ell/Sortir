@@ -44,6 +44,11 @@ class Ville
      */
     private $longitude;
 
+    /**
+     * @ORM\Column(type="string", length=5)
+     */
+    private $departement;
+
     public function __construct()
     {
         $this->lieux = new ArrayCollection();
@@ -128,6 +133,18 @@ class Ville
     public function setLongitude(?float $longitude): self
     {
         $this->longitude = $longitude;
+
+        return $this;
+    }
+
+    public function getDepartement(): ?string
+    {
+        return $this->departement;
+    }
+
+    public function setDepartement(string $departement): self
+    {
+        $this->departement = $departement;
 
         return $this;
     }

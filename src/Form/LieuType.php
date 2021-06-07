@@ -6,6 +6,7 @@ use App\Entity\Lieu;
 use App\Entity\Ville;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -32,13 +33,22 @@ class LieuType extends AbstractType
             [
                 'label' => 'Longitude'
             ])
-            ->add('ville',EntityType::class,
+            ->add('ville',TextType::class,
             [
-                'class' => Ville::class,
+//                'class' => Ville::class,
                 'label' => 'Ville',
-                'choice_label' => 'nom',
-                'placeholder' => 'Ville',
+//                'choice_label' => 'nom',
+//                'placeholder' => 'Ville',
             ])
+//            ->add('codePostal'
+//                , EntityType::class,[
+//                'class' =>Ville::class,
+//                'label' => 'Code Postale',
+//                'choice_label' => 'codePostal',
+//                'placeholder' => 'Ville',
+//                'required' => false
+//            ]
+//    )
         ;
     }
 

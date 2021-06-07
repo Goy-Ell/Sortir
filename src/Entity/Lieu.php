@@ -50,6 +50,12 @@ class Lieu
      */
     private $ville;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Ville::class, inversedBy="lieux")
+     * @ORM\Column(type="string", length=10, nullable=true)
+     */
+    private $codePostal;
+
     public function __construct()
     {
         $this->sortie = new ArrayCollection();
@@ -146,6 +152,18 @@ class Lieu
     public function setVille(?Ville $ville): self
     {
         $this->ville = $ville;
+
+        return $this;
+    }
+
+    public function getCp(): ?string
+    {
+        return $this->codePostal;
+    }
+
+    public function setCp(?string $cp): self
+    {
+        $this->codePostal = $cp;
 
         return $this;
     }
