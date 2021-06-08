@@ -64,7 +64,7 @@
                         </div>
                     {% endif %}
                     <div class="col-3 mt-4">
-                        <a class="btn btn-secondary" href="#">Supprimer</a>
+                        <a class="btn btn-secondary" onclick="confirmeSupUser()" href="{{ path('user_suprrimerUtilisateur', {'id': user.id}) }}">Supprimer</a>
                     </div>
 
                 {% endif %}
