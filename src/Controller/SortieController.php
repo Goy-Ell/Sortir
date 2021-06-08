@@ -18,6 +18,7 @@ use App\Repository\LieuRepository;
 use App\Repository\SiteRepository;
 use App\Repository\SortieRepository;
 use App\Repository\UserRepository;
+use App\Repository\VilleRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -235,6 +236,37 @@ class SortieController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/sortie/rechercheVille", name="sortie_rechercheVille")
+     *
+     */
+    public function rechercheVille(VilleRepository $villeRepository, Request $request):Response
+    {
+        $saisi = $request->query->get('saisi');
+
+        $resultats = $villeRepository->rechercheVilleParSaisi($saisi);
+
+        return $this->render("sortie/ajax_ville.html.twig", [
+            "villes"=>$resultats
+        ]);
+
+    }
+
+    /**
+     * @Route("/sortie/rechercheLieu", name="sortie_rechercheLieu")
+     *
+     */
+    public function rechercheLieu(LieuRepository $lieuRepository, Request $request):Response
+    {
+        $ville = $request->query->get('ville');
+        dump("rechercheLieu : ".$ville);
+        $resultats = $lieuRepository->rechercheLieuSelonVille($ville);
+
+        return $this->render("sortie/ajax_lieux.html.twig", [
+            "lieux"=>$resultats
+        ]);
+
+    }
 }
 
 

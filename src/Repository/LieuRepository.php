@@ -19,6 +19,15 @@ class LieuRepository extends ServiceEntityRepository
         parent::__construct($registry, Lieu::class);
     }
 
+    public  function rechercheLieuSelonVille(string $ville)
+    {
+        $queryBuilder = $this->createQueryBuilder('l');
+        $queryBuilder->andWhere('l.ville = :ville')->setParameter('ville', $ville);
+        dump($queryBuilder);
+        $queryBuilder->setMaxResults(30);
+        return $queryBuilder->getQuery()->getResult();
+    }
+
     // /**
     //  * @return Lieu[] Returns an array of Lieu objects
     //  */
