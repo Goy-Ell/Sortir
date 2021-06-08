@@ -102,7 +102,75 @@ class SortieController extends AbstractController
         ]);
     }
 
+    //Annuler une sortie
+    /**
+     * @Route("/sortie/annuler{id}", name="sortie_annuler")
+     */
+    public function annulerSortie($id,
+                                  Request $request,
+                                  SortieRepository $sortieRepository,
+                                  UpdateEntity $updateEntity,
+                                  EntityManagerInterface $entityManager){
 
+        //On récupère le user
+        $user = $this->getUser();
+
+        //On recupere sortie repository
+        $sortie = $sortieRepository->find($id);
+
+        $annulationSortieForm = $this->createForm(AnnulationSortieType::class, $sortie);
+        $annulationSortieForm->handleRequest($request);
+
+        if ($annulationSortieForm->isSubmitted() && $annulationSortieForm->isValid()) {
+
+
+            $updateEntity->annulerSortie($sortie);
+
+            $entityManager->persist($sortie);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Sortie annulée ! ');
+            return $this->redirectToRoute('sortie_recherche');
+        }
+        return $this->render('sortie/delete.html.twig', [
+            'sortie' => $sortie,
+            'annulationSortieForm' => $annulationSortieForm->createView(),
+        ]);
+    }
+
+    //Créer un nouveau lieu pour une sortie
+    /**
+     * @Route("/lieu/create", name="lieu_create")
+     */
+
+    public function ajouterLieu(Request $request,
+                                EntityManagerInterface $entityManager):Response
+    {
+        $lieu = new Lieu();
+
+        $lieuForm = $this->createForm(LieuType::class, $lieu);
+
+        $lieuForm->handleRequest($request);
+
+        if($lieuForm->isSubmitted() && $lieuForm->isValid()){
+
+            $entityManager->persist($lieu);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Lieu ajouté !');
+
+            return $this->redirectToRoute('sortie_create');
+
+        }
+
+        return $this->render('lieu/create.html.twig', [
+            'lieuForm' => $lieuForm->createView(),
+            'page'=> 1
+        ]);
+    }
+=========
+
+>>>>>>>>> Temporary merge branch 2
 
     //Afficher les details d'une sortie
     /**
