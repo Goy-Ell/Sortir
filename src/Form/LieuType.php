@@ -35,20 +35,10 @@ class LieuType extends AbstractType
             ])
             ->add('ville',TextType::class,
             [
-//                'class' => Ville::class,
                 'label' => 'Ville',
-//                'choice_label' => 'nom',
-//                'placeholder' => 'Ville',
+
             ])
-//            ->add('codePostal'
-//                , EntityType::class,[
-//                'class' =>Ville::class,
-//                'label' => 'Code Postale',
-//                'choice_label' => 'codePostal',
-//                'placeholder' => 'Ville',
-//                'required' => false
-//            ]
-//    )
+
         ;
     }
 

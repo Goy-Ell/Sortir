@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use App\Entity\Lieu;
 use App\Form\LieuType;
+use App\Repository\LieuRepository;
+use App\Repository\VilleRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -39,5 +41,37 @@ class LieuController extends AbstractController
         return $this->render('lieu/create.html.twig', [
             'lieuForm' => $lieuForm->createView()
         ]);
+    }
+
+    /**
+     * @Route("/lieu/recherche", name="lieu_recherche")
+     *
+     */
+    public function rechercheLieu(LieuRepository $lieuRepository, Request $request):Response
+    {
+        $ville = $request->query->get('ville');
+        dump("rechercheLieu : ".$ville);
+        $resultats = $lieuRepository->rechercheLieuSelonVille($ville);
+
+        return $this->render("sortie/ajax_lieux.html.twig", [
+            "lieux"=>$resultats
+        ]);
+
+    }
+
+    /**
+     * @Route("/lieu/rechercheVille", name="lieu_rechercheVille")
+     *
+     */
+    public function rechercheVille(VilleRepository $villeRepository, Request $request):Response
+    {
+        $saisi = $request->query->get('saisi');
+
+        $resultats = $villeRepository->rechercheVilleParSaisi($saisi);
+
+        return $this->render("sortie/ajax_ville.html.twig", [
+            "villes"=>$resultats
+        ]);
+
     }
 }
