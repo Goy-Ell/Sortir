@@ -7,6 +7,7 @@ use App\Entity\Etat;
 use App\Entity\Lieu;
 use App\Entity\Sortie;
 use App\Entity\User;
+use App\Form\AnnulationSortieType;
 use App\Form\LieuType;
 use App\Form\RechercheType;
 use App\Form\SortieType;
@@ -19,10 +20,12 @@ use App\Repository\SortieRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+
 
 class SortieController extends AbstractController
 {
@@ -45,6 +48,23 @@ class SortieController extends AbstractController
         $sortieForm->handleRequest($request);
 
         if ($sortieForm->isSubmitted() && $sortieForm->isValid()) {
+
+            /**
+             * Gestion du telechargement de la photo de sortie
+             * @var  UploadedFile file
+             */
+            $file = $sortieForm->get('photoSortie')->getData();
+            if ($file){
+                $directory = $this->getParameter('upload_photo_sortie_dir');
+
+                //rename files - parametre uniqid special ordi nico !!
+                $newFileName = $sortie->getNom().'-'.uniqid('', true).'.'.$file->guessExtension();
+                //save in to directory (+ modified service.yaml)
+                $file->move($directory, $newFileName);
+                //save name in BDD
+                $sortie->setPhoto($newFileName);
+            }
+
             $entityManager->persist($sortie);
             $entityManager->flush();
 
@@ -81,6 +101,43 @@ class SortieController extends AbstractController
         ]);
     }
 
+    //Annuler une sortie
+    /**
+     * @Route("/sortie/annuler{id}", name="sortie_annuler")
+     */
+    public function annulerSortie($id,
+                                  Request $request,
+                                  SortieRepository $sortieRepository,
+                                  UpdateEntity $updateEntity,
+                                  EntityManagerInterface $entityManager){
+
+        //On récupère le user
+        $user = $this->getUser();
+
+        //On recupere sortie repository
+        $sortie = $sortieRepository->find($id);
+
+        $annulationSortieForm = $this->createForm(AnnulationSortieType::class, $sortie);
+        $annulationSortieForm->handleRequest($request);
+
+        if ($annulationSortieForm->isSubmitted() && $annulationSortieForm->isValid()) {
+
+
+            $updateEntity->annulerSortie($sortie);
+
+            $entityManager->persist($sortie);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Sortie annulée ! ');
+            return $this->redirectToRoute('sortie_recherche');
+        }
+        return $this->render('sortie/delete.html.twig', [
+            'sortie' => $sortie,
+            'annulationSortieForm' => $annulationSortieForm->createView(),
+        ]);
+    }
+
+    //Créer un nouveau lieu pour une sortie
     /**
      * @Route("/lieu/create", name="lieu_create")
      */
@@ -106,10 +163,12 @@ class SortieController extends AbstractController
         }
 
         return $this->render('lieu/create.html.twig', [
-            'lieuForm' => $lieuForm->createView()
+            'lieuForm' => $lieuForm->createView(),
+            'page'=> 1
         ]);
     }
 
+    //Afficher les details d'une sortie
     /**
      * @Route("/sortie/detail/{id}", name="sortie_detail", requirements={"id"="\d+"})
      */
@@ -169,6 +228,46 @@ class SortieController extends AbstractController
         ]);
     }
 
+    //Se desister d'une sortie
+    /**
+     * @Route("/sortie/recherche/desistement{id}", name="sortie_desistement")
+     * @param UserRepository $userRepository
+     * @return Response
+     */
+
+    public function desistementSortie($id, UserRepository $userRepository,
+                                      SortieRepository $sortieRepository,
+                                      EntityManagerInterface $entityManager):Response
+    {
+
+        $sorties = $sortieRepository->find($id);
+        //verification si la sortie est bien recuperer
+        if (!$sorties){
+            throw $this->createNotFoundException("Sortie non trouvée !!");
+        }
+
+        //On recupere le user
+        $user = $this->getUser();
+
+        if(!$sorties->getParticipants()->contains($user)){
+            $this->addFlash('success', 'Vou n\'êtes pas inscrit à cette sortie ! ');
+            return $this->redirectToRoute('sortie_recherche');
+        }
+
+        //Ajout du user en participant de la sortie
+        $sorties->removeUser($user);
+
+        $entityManager->persist($sorties);
+        $entityManager->flush();
+
+        $this->addFlash('success', 'Vous vous êtes désister de cette sortie !');
+
+
+        return $this->render('sortie/detail.html.twig', [
+            "sorties" => $sorties
+        ]);
+    }
+
 
     /**
      * @Route("/sortie/recherche", name="sortie_recherche")
@@ -200,29 +299,6 @@ class SortieController extends AbstractController
 
         ]);
     }
-
-    /**
-     * @Route("/sortie/ajax-lieu", name="sortie_ajax_lieu")
-     *
-     */
-    public function remplissageLieu(Request $request,
-                                    LieuRepository $lieuRepository,
-                                    EntityManagerInterface $entityManager):Response
-    {
-        $data = json_decode($request->getContent(), true);
-
-        $lieu = $data->rue;
-        $lieu_id = $data ->lieu;
-
-        $rue = $lieuRepository->find($lieu_id);
-
-        return new JsonResponse('rue');
-
-
-    }
-
-
-
 
 }
 

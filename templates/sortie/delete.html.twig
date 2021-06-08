@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Annuler une sortie{% endblock %}
+
+
+{% block body %}
+<div class="container">
+    <div class="row justify-content-center mt-5">
+        <div class="col-12 col-sm-10 col-md-8 col-lg-4">
+            <h1 class="text-center">Annuler une sortie</h1>
+        </div>
+    </div>
+</div>
+
+<div class="row justify-content-center mt-5">
+    <div class="col-12 col-sm-10 col-md-8 col-lg-4">
+        <div class="row justify-content-center mt-5">
+            {{ form_start(annulationSortieForm) }}
+            <ul class="list-group">
+                <li class="list-group-item">
+                    <div class="mb-4">
+                        <div class="row justify-content-center mt-5">
+                            <div class="col-lg-4">
+                                {{ form_label(annulationSortieForm.raisonAnnulation) }}
+                            </div>
+                            <div class="col-lg-8">
+                                {{ form_widget (annulationSortieForm.raisonAnnulation) }}
+                                {{ form_errors (annulationSortieForm.raisonAnnulation) }}
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+    <div class="row justify-content-center mt-5">
+        <div class="col-12 col-sm-10 col-md-8 col-lg-4">
+            <div class="row justify-content-center">
+                <div class="btn-group" role="group" aria-label="Basic outlined example">
+                    <button type="submit" class="btn btn-outline-primary">Valider</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{ form_end(annulationSortieForm) }}
+
+{% endblock %}

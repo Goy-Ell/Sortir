@@ -6,6 +6,7 @@ use App\Repository\SortieRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=SortieRepository::class)
@@ -20,32 +21,55 @@ class Sortie
     private $id;
 
     /**
+     * @Assert\NotBlank (message= "Veuillez remplir ce champ avant de valider !")
+     * @Assert\Length (
+     *     min=10,
+     *     max=255,
+     *     minMessage="Minimum 10 caractères svp !",
+     *     maxMessage="Maximum 255 caractères svp !"
+     *  )
      * @ORM\Column(type="string", length=50)
      */
     private $nom;
 
     /**
+     * @Assert\NotBlank
+     * @Assert\Type("DateTimeInterface")
+     * @Assert\GreaterThan (propertyPath="dateLimiteInscription", message="La date de la sortie doit être supérieure à la date limite d'inscription !")
      * @ORM\Column(type="datetime")
      */
     private $dateHeureDebut;
 
     /**
+     * @Assert\NotBlank
+     * @Assert\GreaterThan ("today UTC", message="La date de début doit être supérieure à la date du jour !")
+     * @Assert\GreaterThan (value="10", message="Une sortie doit être supérieure à 10 minutes !")
      * @ORM\Column(type="integer", nullable=true)
      */
     private $duree;
 
     /**
+     * @Assert\Type("DateTimeInterface")
+     * @Assert\NotBlank
      * @ORM\Column(type="datetime")
      */
     private $dateLimiteInscription;
 
     /**
+     * @Assert\NotBlank
+     * @Assert\GreaterThan (value="1", message="Le nombre de participant doit être au moins de 2 !")
      * @ORM\Column(type="integer")
      */
     private $nbInscriptionMax;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\NotBlank (message="Veuillez remplir une description de la sortie (min 30 caractères)!")
+     * @Assert\Length (min=30,
+     *     max=3000,
+     *      minMessage="Veuillez remplir une description de la sortie (min 30 caractères)!",
+     *     maxMessage="Le nombre de caractères maximal est de 3000 !")
+     *
+     * @ORM\Column(type="text", nullable=true)
      */
     private $infosSortie;
 
@@ -82,6 +106,11 @@ class Sortie
      * @ORM\JoinColumn(nullable=false)
      */
     private $etat;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $raisonAnnulation;
 
     public function __construct()
     {
@@ -218,6 +247,7 @@ class Sortie
         return $this;
     }
 
+
     public function removeUser(User $user): self
     {
         $this->participants->removeElement($user);
@@ -245,6 +275,18 @@ class Sortie
     public function setEtat(?Etat $etat): self
     {
         $this->etat = $etat;
+
+        return $this;
+    }
+
+    public function getRaisonAnnulation(): ?string
+    {
+        return $this->raisonAnnulation;
+    }
+
+    public function setRaisonAnnulation(?string $raisonAnnulation): self
+    {
+        $this->raisonAnnulation = $raisonAnnulation;
 
         return $this;
     }

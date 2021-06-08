@@ -1,12 +1,13 @@
-window.onload = init;
+//window.onload = init;
 
 //fonction retour page-n
     function goBack(n) {
     window.history.go(-n);
 }
 
+
 //fonction AJAX en tentative
-    function init() {
+   /* function init() {
         //On va chercher le lieu
         let lieu = document.getElementById("sortie_lieu");
 
@@ -28,4 +29,4 @@ window.onload = init;
         });
 
 
-    }
+    }*/

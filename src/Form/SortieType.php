@@ -11,6 +11,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -19,6 +20,7 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Image;
 
 class SortieType extends AbstractType
 {
@@ -28,6 +30,16 @@ class SortieType extends AbstractType
             ->add('nom', TextType::class,
             [
                 'label' => 'Nom de la sortie'
+            ])
+            ->add('photoSortie', FileType::class, [
+                'mapped'=>false,
+                'required'=>false,
+                'constraints'=>[
+                    new Image([
+                        'maxSize'=>'7024k',
+                        'mimeTypesMessage'=>'Format image incompatible ! '
+                    ])
+                ]
             ])
             ->add('dateHeureDebut', DateTimeType::class,
             [

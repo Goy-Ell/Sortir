@@ -107,9 +107,14 @@
 {#                            {% if app.user.admin %}#}
 {#                                <a href="{{  path('sortie_activer',{'id': sortie.id}) }}">Activer</a>#}
 {#                            {% endif %}#}
-                            {% if (sortie.etat.libelle == 'Ouverte') and (sortie.organisateur != app.user) %}
-                            <button type="submit" class="btn btn-link"><a href="{{ path('sortie_inscription', {'id' : sortie.id}) }}">S'inscrire</a></button>
+
+{#                             {% if (sortie.etat.libelle == 'Ouverte') and (sortie.organisateur != app.user) and (app.user not in sortie.participants) %}
+                            <a href="{{ path('sortie_inscription', {'id' : sortie.id}) }}">S'inscrire</a>
                             {% endif %}
+
+                        {% if app.user in sortie.participants %}
+                           <a href="{{ path('sortie_desistement', {'id' : sortie.id}) }}">Se desister</a>
+                        {% endif %} #}
                         </td>
                         
                     </tr>

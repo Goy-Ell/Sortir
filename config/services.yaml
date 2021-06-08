@@ -5,6 +5,7 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     upload_photo_profil_dir: '%kernel.project_dir%/public/img/photosProfil'
+    upload_photo_sortie_dir: '%kernel.project_dir%/public/img/photosSorties'
 services:
     # default configuration for services in *this* file
     _defaults:
