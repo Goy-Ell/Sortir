@@ -136,4 +136,19 @@ class UserController extends AbstractController
             'page'=> 2
         ]);
     }
+
+    /**
+     * Supprimer un utilisateur en ADMIN
+     * @Route("/user/suprrimerUtilisateur/{id}", name="user_suprrimerUtilisateur")
+     */
+    public function supprimerUtilisateur($id, UserRepository $userRepository, EntityManagerInterface $entityManager){
+
+        $user = $userRepository->find($id);
+        $entityManager->remove($user);
+        $entityManager->flush();
+
+        $this->addFlash('success', 'Utilisateur supprimé !');
+
+        return $this->redirectToRoute('sortie_recherche');
+    }
 }

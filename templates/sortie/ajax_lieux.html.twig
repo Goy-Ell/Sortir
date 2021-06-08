@@ -1,5 +1,8 @@
 
-    {% for lieu in lieux %}
-        <option value="{{ lieu.id }}">{{ lieu.nom }}</option>
-    {% endfor %}
+<!-- Choix des villes proposé par la requete AJAX -->
+
+<option value=""> </option>
+{% for lieu in lieux %}
+    <option value="{{ lieu.id }}">{{ lieu.nom }}</option>
+{% endfor %}
 

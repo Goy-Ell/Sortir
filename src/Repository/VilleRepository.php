@@ -19,6 +19,11 @@ class VilleRepository extends ServiceEntityRepository
         parent::__construct($registry, Ville::class);
     }
 
+    /**
+     * Recherche une ville selon un champs de saisi par la requete AJAX
+     * @param string $saisi
+     * @return int|mixed|string
+     */
     public function rechercheVilleParSaisi(string $saisi)
     {
         $queryBuilder = $this->createQueryBuilder('v');

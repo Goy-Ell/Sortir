@@ -36,7 +36,8 @@ class SortieController extends AbstractController
      */
     public function create(Request $request,
                             EntityManagerInterface $entityManager,
-                            EtatRepository $etatRepository
+                            EtatRepository $etatRepository,
+                            LieuRepository $lieuRepository
                             ): Response
     {
         $sortie = new Sortie();
@@ -49,6 +50,12 @@ class SortieController extends AbstractController
         $sortieForm->handleRequest($request);
 
         if ($sortieForm->isSubmitted() && $sortieForm->isValid()) {
+
+            //recupere le lieu en dehors du SortieType.php
+            $idLieu = $_REQUEST['lieuxSelect'];
+            $lieuChoisi = $lieuRepository->findOneBy(['id'=>$idLieu]);
+            $sortie->setLieu($lieuChoisi);
+
 
             /**
              * Gestion du telechargement de la photo de sortie
@@ -168,9 +175,8 @@ class SortieController extends AbstractController
             'page'=> 1
         ]);
     }
-=========
 
->>>>>>>>> Temporary merge branch 2
+
 
     //Afficher les details d'une sortie
     /**

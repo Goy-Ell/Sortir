@@ -19,6 +19,12 @@ class LieuRepository extends ServiceEntityRepository
         parent::__construct($registry, Lieu::class);
     }
 
+    /**
+     * Recherche le lieu selon une ville
+     * utilisé dans la requete AJAX
+     * @param string $ville
+     * @return int|mixed|string
+     */
     public  function rechercheLieuSelonVille(string $ville)
     {
         $queryBuilder = $this->createQueryBuilder('l');

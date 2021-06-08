@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -45,7 +46,7 @@ class SortieType extends AbstractType
             [
                 'label' => 'Date et heure de la sortie',
                 'html5' => true,
-           //     'widget' => 'single_text'
+                'widget' => 'single_text'
 
 
             ])
@@ -64,51 +65,11 @@ class SortieType extends AbstractType
                 'label' => 'Durée',
 
             ])
-            ->add('infosSortie', TextType::class,
+            ->add('infosSortie', TextareaType::class,
             [
                 'label' => 'Description et infos'
             ])
-
-            ->add('lieu', EntityType::class,
-            [
-                'class' => Lieu::class,
-                'label' => 'Lieu',
-                'choice_label' => 'nom',
-                'placeholder' => 'Lieu',
-
-            ])
-
-            ->add('latitude', TextType::class,
-            [
-                'required' => false,
-                'mapped' => false,
-                'label' => 'Latitude'
-
-            ])
-            ->add('longitude', TextType::class,
-            [
-                'required' => false,
-                'mapped' => false,
-                'label' => 'Longitude'
-            ])
-
         ;
-
-            /*$formModifier = function (FormInterface $form, Lieu $lieu = null){
-                $rue = (null === $lieu) ? [] : $lieu->getRue();
-
-
-                ]);
-            };
-
-            $builder->get('lieu')->addEventListener(
-                FormEvents::POST_SUBMIT,
-                function (FormEvent $event) use ($formModifier){
-                    $lieu = $event->getForm()->getData();
-                    $formModifier($event->getForm()->getParent(), $lieu);
-                }
-            );*/
-
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -1,0 +1,26 @@
+
+<!-- Remplace le code Html du details du lieu -->
+
+<li class="list-group-item">
+    <div class="mb-4">
+        <div class="col mt-3">
+            Rue : {{ lieu.rue }}<br>
+            Ville : {{ lieu.ville.nom }}<br>
+            Code Postal : {{ lieu.ville.codePostal }}<br>
+        </div>
+    </div>
+</li>
+<li class="list-group-item">
+    <div class="mb-4">
+            <div class="col mt-3">
+                {% if lieu.latitude and lieu.longitude %}
+                latitude : {{ lieu.latitude }}<br>
+                longitude : {{ lieu.longitude }}<br>
+                {% else %}
+                    latitude : inconnu<br>
+                    longitude : inconnu<br>
+                {% endif %}
+            </div>
+    </div>
+</li>
+
