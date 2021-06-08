@@ -17,6 +17,7 @@ use App\Repository\LieuRepository;
 use App\Repository\SiteRepository;
 use App\Repository\SortieRepository;
 use App\Repository\UserRepository;
+use App\Repository\VilleRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -136,22 +137,34 @@ class SortieController extends AbstractController
     }
 
     /**
-     * @Route("/sortie/ajax-lieu", name="sortie_ajax_lieu")
+     * @Route("/sortie/rechercheVille", name="sortie_rechercheVille")
      *
      */
-    public function remplissageLieu(Request $request,
-                                    LieuRepository $lieuRepository,
-                                    EntityManagerInterface $entityManager):Response
+    public function rechercheVille(VilleRepository $villeRepository, Request $request):Response
     {
-        $data = json_decode($request->getContent(), true);
+        $saisi = $request->query->get('saisi');
 
-        $lieu = $data->rue;
-        $lieu_id = $data ->lieu;
+        $resultats = $villeRepository->rechercheVilleParSaisi($saisi);
 
-        $rue = $lieuRepository->find($lieu_id);
+        return $this->render("sortie/ajax_ville.html.twig", [
+            "villes"=>$resultats
+        ]);
 
-        return new JsonResponse('rue');
+    }
 
+    /**
+     * @Route("/sortie/rechercheLieu", name="sortie_rechercheLieu")
+     *
+     */
+    public function rechercheLieu(LieuRepository $lieuRepository, Request $request):Response
+    {
+        $ville = $request->query->get('ville');
+        dump("rechercheLieu : ".$ville);
+        $resultats = $lieuRepository->rechercheLieuSelonVille($ville);
+
+        return $this->render("sortie/ajax_lieux.html.twig", [
+            "lieux"=>$resultats
+        ]);
 
     }
 }

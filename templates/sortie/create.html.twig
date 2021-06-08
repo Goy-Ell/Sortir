@@ -4,6 +4,10 @@
 
 {# //la vie est belle #}
 {% block body %}
+
+<!-- AXIOS en ligne -->
+
+
     <div class="container">
         <div class="row justify-content-center mt-5">
             <div class="col-12 col-sm-10 col-md-8 col-lg-4">
@@ -122,8 +126,75 @@
                     </li>
                     <li class="list-group-item">
                         <div class="mb-4">
+
+                            <div>
+                                Ville :
+                            </div>
+                            <div class="row">
+                                <div class="col-5">
+                                    <label for="rechercheVille">Recherche ville :</label>
+                                    <input type="text" id="rechercheVille">
+                                </div>
+                                <div class="col-7">
+                                    <label for="villeSelect">Choisir la ville :</label>
+                                    <select name="villeSelect" id="villeSelect">
+                                        <!-- zone affichage resultats requete AJAX -->
+                                    </select>
+                                </div>
+                                <!-- AJAX pour la recherche de ville -->
+                                <script> const rechercheVilleUrl = "{{ path('sortie_rechercheVille') }}" </script>
+                                <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+                                <script>
+                                    let rechercheSaisi = document.getElementById("rechercheVille");
+                                    rechercheSaisi.addEventListener("keyup", envoyerAjaxRequest);
+
+                                    function envoyerAjaxRequest(){
+                                        let saisi = rechercheSaisi.value;
+                                        axios.get(rechercheVilleUrl, {
+                                            params: { "saisi": saisi }
+                                        })
+                                            .then(function (response){
+                                                console.log(response.data);
+                                                let selectResultats = document.getElementById("villeSelect");
+                                                selectResultats.innerHTML = response.data;
+                                            });
+                                    }
+                                </script>
+                                <!-- AJAX pour la recherche de ville -->
+                            </div>
+
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="mb-4">
                             <div class="row justify-content-center mt-4">
                                 <div class="row align-items-center">
+                                    <label for="lieuxSelect">Choisir le lieu :</label>
+                                    <select name="lieuxSelect" id="lieuxSelect">
+                                        <!-- zone affichage resultats requete AJAX -->
+                                    </select>
+                                    <!-- AJAX pour la recherche de lieu -->
+                                    <script> const rechercheLieuSelonVilleURL = "{{ path('sortie_rechercheLieu') }}"</script>
+                                    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+                                    <script>
+                                        let rechercheLieu = document.getElementById("villeSelect");
+                                        rechercheLieu.addEventListener('click', envoyerAjaxRequest);
+
+                                        function envoyerAjaxRequest(){
+                                            let ville = rechercheLieu.value;
+                                            console.log(ville);
+                                            axios.get(rechercheLieuSelonVilleURL, {
+                                                params: { "ville": ville }
+                                            })
+                                                .then(function (response){
+                                                    console.log(response.data);
+                                                    let resultatsLieux = document.getElementById("lieuxSelect");
+                                                    resultatsLieux.innerHTML = response.data;
+                                                });
+                                        }
+                                    </script>
+                                    <!-- AJAX pour la recherche de lieu -->
+
                                 <div class="col-lg-2">
                                     {{ form_label(sortieForm.lieu) }}
                                 </div>
@@ -131,7 +202,6 @@
                                     {{ form_widget (sortieForm.lieu) }}
                                     {{ form_errors (sortieForm.lieu) }}
                                 </div>
-
                                     <div class="col-lg-2">
                                         <button type="button" class="btn btn-outline-light"><a href="{{ path('lieu_create') }}"><img src="{{ asset('img/icon/ajouter_lieu.png') }}" alt="bouton ajout lieu" height="50px" width="50px"></a></button>
                                     </div>
@@ -157,15 +227,7 @@
 
                         </div>
                     </li>
-                    <li class="list-group-item">
-                        <div class="mb-4">
 
-                            <div class="col">
-                                Ville :
-                            </div>
-
-                        </div>
-                    </li>
                     <li class="list-group-item">
                         <div class="mb-4">
                             <div class="row justify-content-center mt-5">
