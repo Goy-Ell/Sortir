@@ -20,8 +20,8 @@ class AppFixtures extends Fixture
         $faker = Faker\Factory::create('fr_FR');
 
 
-        $etatNames=['Créée','Ouverte','Cloturé','Activité en cours','Passée','Annulée'];
-        foreach ($etatNames as $name ){
+        $etatNames=['Créée','Ouverte','Cloturée','Activité en cours','Passée','Annulée'];
+        foreach ($etatNames as $name){
             $etat = new Etat();
             $etat->setLibelle($name);
             $manager->persist($etat);
@@ -41,7 +41,7 @@ class AppFixtures extends Fixture
             $ville->setNom($faker->city);
             $ville->setCodePostal($faker->postcode);
 
-            $manager->persist($ville);
+//            $manager->persist($ville);
         }
         $manager->flush();
 
@@ -62,7 +62,7 @@ class AppFixtures extends Fixture
             $user->setPrenom($faker->firstName()) ;
             $user->setPassword($faker->password()) ;
 
-            $manager->persist($user);
+//            $manager->persist($user);
         }
 
         $manager->flush();

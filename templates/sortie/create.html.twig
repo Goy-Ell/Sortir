@@ -208,11 +208,13 @@
                                     {{ form_label(sortieForm.lieu) }}
                                 </div>
                                 <div class="col-lg-8">
-                                    {{ form_widget (sortieForm.lieu) }}
+                                    <div class="choix_lieu" >{{ form_widget (sortieForm.lieu) }}</div>
+{#                                    <input type="hidden" id="sortie_id" value="{{ lieu }}">#}
                                     {{ form_errors (sortieForm.lieu) }}
                                 </div>
                                     <div class="col-lg-2">
-                                        <button type="button" class="btn btn-outline-light"><a href="{{ path('lieu_create') }}"><img src="{{ asset('img/icon/ajouter_lieu.png') }}" alt="bouton ajout lieu" height="50px" width="50px"></a></button>
+
+                                        <button type="button" class="btn btn-outline-light " value=""><a href="{{ path('lieu_create') }}"><img src="{{ asset('img/icon/ajouter_lieu.png') }}" alt="bouton ajout lieu" height="50px" width="50px"></a></button>
                                     </div>
                                 </div>
                             </div>

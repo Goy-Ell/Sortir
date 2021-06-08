@@ -80,12 +80,14 @@ class SortieType extends AbstractType
 
             ->add('latitude', TextType::class,
             [
+                'required' => false,
                 'mapped' => false,
                 'label' => 'Latitude'
 
             ])
             ->add('longitude', TextType::class,
             [
+                'required' => false,
                 'mapped' => false,
                 'label' => 'Longitude'
             ])

@@ -9,7 +9,9 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\RadioType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -44,12 +46,23 @@ class RechercheType extends AbstractType
                 'label' => "Sorties dont je suis l'organisateur/trice",
                 'required'=>false
             ])
-            ->add('inscrit',CheckboxType::class,[
-                'label' => "Sorties auquelles je suis inscrit/e",
+//            ->add('inscrit',ChoiceType::class,[
+//                'choices'=>[
+//                    "Sorties auquelles je suis inscrit/e"=>'inscrit',
+//                    "Sorties auquelles je ne suis pas inscrit/e" => 'nonInscrit',
+//                ],
+//                'required'=>false,
+//                'expanded' => true,
+//                'multiple'=>false,
+//            ])
+            ->add('pasInscrit',CheckBoxType::class,[
+                'label' => "Sorties auquelles je ne suis pas inscrit/e",
+//                'label_attr'=>['id'=>'inscrit'],
                 'required'=>false
             ])
-            ->add('pasInscrit',CheckboxType::class,[
-                'label' => "Sorties auquelles je ne suis pas inscrit/e",
+            ->add('inscrit',CheckBoxType::class,[
+                'label' => "Sorties auquelles je  suis  inscrit/e",
+//                'label_attr'=>['id'=>'inscrit'],
                 'required'=>false
             ])
             ->add('passees',CheckboxType::class,[
