@@ -44,6 +44,7 @@ class LieuController extends AbstractController
     }
 
     /**
+     * Fonction pour requete AJAX de recherche des lieux selon la ville
      * @Route("/lieu/recherche", name="lieu_recherche")
      *
      */
@@ -60,6 +61,7 @@ class LieuController extends AbstractController
     }
 
     /**
+     * Fonction pour requete AJAX de recherche d'une ville
      * @Route("/lieu/rechercheVille", name="lieu_rechercheVille")
      *
      */
@@ -73,5 +75,18 @@ class LieuController extends AbstractController
             "villes"=>$resultats
         ]);
 
+    }
+
+    /**
+     * Fonction pour requete AJAX de recherche d'un lieu
+     * @Route("/lieu/detailsLieu", name="lieu_detailsLieu")
+     */
+    public function detailsLieu(LieuRepository $lieuRepository, Request $request):Response
+    {
+        $lieu = $request->query->get('lieu');
+        $resultat = $lieuRepository->find($lieu);
+        return $this->render("sortie/ajax_detailsLieu.html.twig", [
+            "lieu"=>$resultat
+        ]);
     }
 }

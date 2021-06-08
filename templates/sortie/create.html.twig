@@ -146,7 +146,7 @@
                                 </select>
                             </div>
                             <!-- AJAX pour la recherche de ville -->
-                            <script> const rechercheVilleUrl = "{{ path('sortie_rechercheVille') }}" </script>
+                            <script> const rechercheVilleUrl = "{{ path('lieu_rechercheVille') }}" </script>
                             <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
                             <script>
                                 let rechercheSaisi = document.getElementById("rechercheVille");
@@ -176,7 +176,7 @@
                                         <!-- zone affichage resultats requete AJAX -->
                                     </select>
                                     <!-- AJAX pour la recherche de lieu -->
-                                    <script> const rechercheLieuSelonVilleURL = "{{ path('sortie_rechercheLieu') }}"</script>
+                                    <script> const rechercheLieuSelonVilleURL = "{{ path('lieu_recherche') }}"</script>
                                     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
                                     <script>
                                         let rechercheLieu = document.getElementById("villeSelect");
@@ -227,7 +227,7 @@
                         </li>
                     </div>
                     <!-- AJAX pour le detail du lieu -->
-                    <script> const detailsLieuURL = "{{ path('sortie_detailsLieu') }}"</script>
+                    <script> const detailsLieuURL = "{{ path('lieu_detailsLieu') }}"</script>
                     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
                     <script>
                         let selectLieu = document.getElementById("lieuxSelect");
