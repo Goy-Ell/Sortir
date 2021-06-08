@@ -32,7 +32,8 @@ class SortieController extends AbstractController
      */
     public function create(Request $request,
                             EntityManagerInterface $entityManager,
-                            EtatRepository $etatRepository
+                            EtatRepository $etatRepository,
+                            LieuRepository $lieuRepository
                             ): Response
     {
         $sortie = new Sortie();
@@ -45,6 +46,12 @@ class SortieController extends AbstractController
         $sortieForm->handleRequest($request);
 
         if ($sortieForm->isSubmitted() && $sortieForm->isValid()) {
+
+            //recupere le lieu en dehors du SortieType.php
+            $idLieu = $_REQUEST['lieuxSelect'];
+            $lieuChoisi = $lieuRepository->findOneBy(['id'=>$idLieu]);
+            $sortie->setLieu($lieuChoisi);
+
             $entityManager->persist($sortie);
             $entityManager->flush();
 
@@ -137,35 +144,42 @@ class SortieController extends AbstractController
     }
 
     /**
+     * Fonction pour requete AJAX de recherche de ville
      * @Route("/sortie/rechercheVille", name="sortie_rechercheVille")
-     *
      */
     public function rechercheVille(VilleRepository $villeRepository, Request $request):Response
     {
         $saisi = $request->query->get('saisi');
-
         $resultats = $villeRepository->rechercheVilleParSaisi($saisi);
-
         return $this->render("sortie/ajax_ville.html.twig", [
             "villes"=>$resultats
         ]);
-
     }
 
     /**
+     * Fonction pour requete AJAX de recherche d'un lieu selon une ville
      * @Route("/sortie/rechercheLieu", name="sortie_rechercheLieu")
-     *
      */
     public function rechercheLieu(LieuRepository $lieuRepository, Request $request):Response
     {
         $ville = $request->query->get('ville');
-        dump("rechercheLieu : ".$ville);
         $resultats = $lieuRepository->rechercheLieuSelonVille($ville);
-
         return $this->render("sortie/ajax_lieux.html.twig", [
             "lieux"=>$resultats
         ]);
+    }
 
+    /**
+     * Fonction pour requete AJAX de recherche d'un lieu
+     * @Route("/sortie/detailsLieu", name="sortie_detailsLieu")
+     */
+    public function detailsLieu(LieuRepository $lieuRepository, Request $request):Response
+    {
+        $lieu = $request->query->get('lieu');
+        $resultat = $lieuRepository->find($lieu);
+        return $this->render("sortie/ajax_detailsLieu.html.twig", [
+            "lieu"=>$resultat
+        ]);
     }
 }
 
