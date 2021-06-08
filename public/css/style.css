@@ -12,3 +12,19 @@
     height: 350px;
     overflow: auto;
 }
+
+.vue-max{
+    height: 90%   ;
+}
+.my-custom-scrollbar-list-recherche {
+    position: relative;
+    max-height: 350px;
+    overflow: auto;
+}
+body{
+    height: 20%   ;
+}
+.no-padding{
+    padding:0;
+
+}

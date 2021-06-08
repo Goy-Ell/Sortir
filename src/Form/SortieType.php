@@ -29,11 +29,11 @@ class SortieType extends AbstractType
             [
                 'label' => 'Nom de la sortie'
             ])
-            ->add('dateHeureDebut', DateTimeType::class,
+            ->add('dateHeureDebut', DateType::class,
             [
                 'label' => 'Date et heure de la sortie',
                 'html5' => true,
-           //     'widget' => 'single_text'
+                'widget' => 'single_text'
 
 
             ])
@@ -68,12 +68,14 @@ class SortieType extends AbstractType
 
             ->add('latitude', TextType::class,
             [
+                'required' => false,
                 'mapped' => false,
                 'label' => 'Latitude'
 
             ])
             ->add('longitude', TextType::class,
             [
+                'required' => false,
                 'mapped' => false,
                 'label' => 'Longitude'
             ])

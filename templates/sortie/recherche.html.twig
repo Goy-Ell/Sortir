@@ -4,15 +4,15 @@
 
 {% block body %}
 <div>
-    <div class="container mt-3 rounded">
+    <div class="container mt-3 rounded no-padding">
         <div class="accordion" id="accordionExample">
             <div class="accordion-item">
                 <h2 class="accordion-header" id="headingTwo">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    <button class="accordion-button " type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
                         <strong>Filtrer les sorties</strong>
                     </button>
                 </h2>
-                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                <div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
                     <div class="accordion-body">
                         <!-- Début du contenaire formulaire -->
                         <div class="row justify-content-center">
@@ -65,14 +65,14 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
                  </div>
             </div>
         </div>
     </div>
 
-    <div class="container border mt-4 rounded">
+    <div class="container border mt-4 rounded my-custom-scrollbar-list-recherche ">
+        < Nombre de sorties trouvées : {{ resultat.nbSorties }}
         <table class="table">
             <thead class="thead-dark">
                 <tr>
@@ -87,7 +87,8 @@
                 </tr>
             </thead>
             <tbody>
-            Nombre de sorties trouvées : {{ resultat.nbSorties }}
+
+
             {% for sortie in resultat.sorties %}
                 <tr>
                     <td>{{ sortie.nom }}</td>
@@ -104,9 +105,7 @@
                     <td><a href="{{ path('user_profilUtilisateur', {'id' : sortie.organisateur.id}) }}">{{ sortie.organisateur.pseudo }}</a></td>
                     <td>
                         <a href="{{ path('sortie_detail',{'id': sortie.id}) }}">Détail</a>
-{#                            {% if app.user.admin %}#}
-{#                                <a href="{{  path('sortie_activer',{'id': sortie.id}) }}">Activer</a>#}
-{#                            {% endif %}#}
+
                             {% if (sortie.etat.libelle == 'Ouverte') and (sortie.organisateur != app.user) %}
                             <button type="submit" class="btn btn-link"><a href="{{ path('sortie_inscription', {'id' : sortie.id}) }}">S'inscrire</a></button>
                             {% endif %}
@@ -115,11 +114,11 @@
                     </tr>
 
                     {% endfor %}
-                    </tbody>
-                </table>
+            </tbody>
+        </table>
 
-            </div>
-        </div>
     </div>
 </div>
+
+
 {% endblock %}

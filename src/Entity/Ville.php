@@ -30,6 +30,11 @@ class Ville
     private $codePostal;
 
     /**
+     * @ORM\Column(type="string", length=10)
+     */
+    private $departement;
+
+    /**
      * @ORM\OneToMany(targetEntity=Lieu::class, mappedBy="ville")
      */
     private $lieux;
@@ -44,10 +49,23 @@ class Ville
      */
     private $longitude;
 
+
     /**
-     * @ORM\Column(type="string", length=5)
+     * @return mixed
      */
-    private $departement;
+    public function getDepartement()
+    {
+        return $this->departement;
+    }
+
+    /**
+     * @param mixed $departement
+     */
+    public function setDepartement($departement): void
+    {
+        $this->departement = $departement;
+    }
+
 
     public function __construct()
     {
@@ -137,15 +155,5 @@ class Ville
         return $this;
     }
 
-    public function getDepartement(): ?string
-    {
-        return $this->departement;
-    }
 
-    public function setDepartement(string $departement): self
-    {
-        $this->departement = $departement;
-
-        return $this;
-    }
 }
