@@ -12,11 +12,6 @@
         </div>
     </div>
 
-    {# Afficher pseudo user #}
-    {# <div class="row justify-content-center mt-5">
-    {% if app.user.site %}
-    Bonjour {{ app.user.pseudo }}
-    {% endif %} #}
 
     {# Affichage form create sortie détaillé #}
     </div>
@@ -34,6 +29,20 @@
                                 <div class="col-lg-8">
                                     {{ form_widget (sortieForm.nom) }}
                                     {{ form_errors (sortieForm.nom) }}
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="mb-4">
+                            <div class="row justify-content-center mt-5">
+                                <div class="col-lg-4">
+                                    <div class="form-label">{{ form_label(sortieForm.photoSortie, 'Photo de sortie') }}</div>
+
+                                </div>
+                                <div class="col-lg-8">
+                                    {{ form_widget(sortieForm.photoSortie, {'attr' : {'class': 'form-control'}}) }}
+                                    {{ form_errors (sortieForm.photoSortie) }}
                                 </div>
                             </div>
                         </div>
@@ -207,7 +216,7 @@
                 <div class="btn-group" role="group" aria-label="Basic outlined example">
                     <button type="submit" class="btn btn-outline-primary">Enregistrer</button>
 
-                    <button type="button" class="btn btn-outline-primary">Annulez</button>
+                    <a href="{{ path ('sortie_recherche') }}" class="btn btn-outline-primary">Annuler</a>
                 </div>
             </div>
         </div>
@@ -215,40 +224,6 @@
     {{ form_end(sortieForm) }}
 {% endblock %}
 
-   {#  {% block Javascripts %}
-        <script>
-            window.onload = init;
+{% block footer %}
 
-            function init() {
-                //On va chercher le lieu
-                let lieu = document.getElementById("sortie_lieu");
-
-                console.log(lieu);
-
-                  lieu.addEventListener("change", function () {
-                    let form = this.closest("form");
-
-                    console.log(form);
-                    let data = this.name + "=" + this.value;
-
-                    fetch(form.action, {
-                        method: form.getAttribute("method"),
-                        body: data,
-                        headers: {
-                            "Content-Type": "application/x-www-form-urlencoded;charset:UTF-8"
-                        }
-                    })
-                        .then(response => response.text())
-                        .then(html => {
-                            let content = document.createElement("html");
-                            content.innerHTML = html;
-                            let nouveauSelect = content.querySelector("#sortie_lieu");
-                            document.querySelector("#sortie_lieu").replaceWith(nouveauSelect);
-                        })
-                        .catch(error => {
-                            console.log(error);
-                        })
-                })
-            }
-        </script>
-    {% endblock %} #}
+{% endblock %}

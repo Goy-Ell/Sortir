@@ -6,6 +6,7 @@ use App\Repository\LieuRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=LieuRepository::class)
@@ -20,11 +21,21 @@ class Lieu
     private $id;
 
     /**
+     * @Assert\NotBlank
+     * @Assert\Length (min=5,
+     *     max=50,
+     *     minMessage="min 5 caractères !",
+     *     maxMessage="max 50 caractères !")
      * @ORM\Column(type="string", length=50)
      */
     private $nom;
 
     /**
+     * @Assert\NotBlank
+     * @Assert\Length (min=5,
+     *                 max=50,
+     *                 minMessage="min 5 caractères !",
+     *                 maxMessage="max 50 caractères !")
      * @ORM\Column(type="string", length=50, nullable=true)
      */
     private $rue;

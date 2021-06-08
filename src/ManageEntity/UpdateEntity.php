@@ -90,7 +90,16 @@ class UpdateEntity
 
     }
     public function annulerSortie($sortie){
+        $etats = $this->etatRepository->findAll();
 
+        if ($sortie->getEtat() != 'Passée' &&
+            $sortie->getEtat() != 'Annulée' &&
+            $sortie->getEtat() != 'Cloturé' &&
+            $sortie->getEtat() != 'Activité en cours'){
+
+            $sortie->setEtat($etats[5]);
+            $this->entityManager->persist($sortie);
+        }
     }
     public function validerSortie($sortie){
 

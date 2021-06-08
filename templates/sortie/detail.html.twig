@@ -1,17 +1,28 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Afficher sortie{% endblock %}
+{% block title %}{{ sorties.nom }}{% endblock %}
 
 {% block body %}
-<div class="vue-max">
-    <div class="container">
+
+
         <div class="row justify-content-center mt-3">
-            <h1 class="col-12 col-sm-10 col-md-8 col-lg-4">Afficher une sortie</h1>
+            <div class="col-12 col-sm-10 col-md-8 col-lg-4">
+            <h1 class="text-center">{{ sorties.nom }}{% if sorties.etat.libelle == 'Annulée' %} (Annulée) {% endif %}</h1>
+            </div>
+        </div>
+
+<div class="row justify-content-center mt-5">
+    <div class="col-lg-3 col-md-5 col-sm-6">
+        <div class="card">
+            {% if sorties.photo %}
+                <img class="img-thumbnail" src="{{ asset('img/photosSorties/' ~ sorties.Photo) }}" alt="Photo de la sortie">
+            {% else %}
+                <p>Pas de photo</p>
+            {% endif %}
         </div>
     </div>
-
-
-    <div class="row justify-content-center mt-5 padding">
+</div>
+    <div class="row justify-content-center mt-5">
         <div class="col-12 col-sm-10 col-md-8 col-lg-4">
             <div class="row justify-content-center mt-5">
                 <ul class="list-group">
@@ -167,6 +178,20 @@
                             </div>
                         </div>
                     </li>
+                    {% if sorties.raisonAnnulation %}
+                    <li class="list-group-item bg-danger">
+                        <div class="mb-4">
+                            <div class="row justify-content-center mt-3">
+                                <div class="col-lg-5">
+                                    Raison Annulation :
+                                </div>
+                                <div class="col-lg-7">
+                                    {{ sorties.raisonAnnulation }}
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    {% endif %}
                 </ul>
             </div>
         </div>
@@ -214,18 +239,36 @@
             <div class="col-lg-2">
                 <div class="btn-group" role="group" aria-label="Basic outlined example">
 
-                    {% if sorties.organisateur == app.user %}
+                    {% if (sorties.etat.libelle == 'Ouverte') and (app.user not in sorties.participants) %}
+                    <a href="{{ path('sortie_inscription', {'id' : sorties.id}) }}" class="btn btn-outline-primary" >S'inscrire</a>
 
-                    <button type="button" class="btn btn-outline-primary"><a href="{{ path('sortie_publier', {'id' : sorties.id}) }}">Publier
+                    {% endif %}
+
+                    {% if app.user in sorties.participants %}
+                       <a href="{{ path('sortie_desistement', {'id' : sorties.id}) }}" class="btn btn-outline-primary" >Se desister</a>
+
+                    {% endif %}
+
+                    {% if sorties.organisateur == app.user or is_granted("ROLE_ADMIN")%}
+                        {% if sorties.etat.libelle == 'Créée' %}
+                   <a href="{{ path('sortie_publier', {'id' : sorties.id}) }}" class="btn btn-outline-primary">Publier
                             la sortie</a>
-                    </button>
 
+                            {% endif %}
+
+                    {% if sorties.etat.libelle == 'Créée' or sorties.etat.libelle == 'Ouverte' or sorties.etat.libelle == 'Cloturé' or is_granted("ROLE_ADMIN")%}
+                        {% if sorties.etat.libelle != 'Annulée'%}
+                         <a class="btn btn-outline-primary" href="{{ path('sortie_annuler', {'id' : sorties.id}) }}">Annuler
+                                la sortie</a>
+
+                        {% endif %}
+                        {% endif %}
                     {% endif %}
                 </div>
             </div>
         </div>
     </div>
-</div>
+
 
 
 
