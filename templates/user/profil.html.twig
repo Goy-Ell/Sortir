@@ -4,85 +4,93 @@
 
 {% block body %}
     <div class="container">
-        <div class="row justify-content-around mt-5 mb-5 col-12 col-sm-12 col-md-10 col-lg-8">
+        <div class="row justify-content-around mt-3 mb-3 col-12 col-sm-12 col-md-10 col-lg-10">
+            <!-- 1ere colonne: photo profil -->
             <div class="col-3">
-                <div class="card">
+                <div class="card mt-5">
                     <!-- Evite le beug quand le formulaire rencontre une contrainte sur un champ et met en pause la fonction profil()-->
                     {% if app.user %}
-                        <img class="img-thumbnail" src="{{ asset('img/photosProfil/' ~ app.user.photoProfil) }}" alt="Ma photo de profil">
+                        <img class="img-thumbnail" src="{{ asset('img/photosProfil/' ~ app.user.photoProfil) }}"
+                             alt="Ma photo de profil">
                     {% else %}
                         <p class="card-text">Modification du profil en cours</p>
                     {% endif %}
                 </div>
             </div>
-            <div class="col-7">
-                <div>
+            <!-- 2eme colonne: formulaire -->
+            <div class="col-9">
+                <div class="row justify-content-around">
+                    <h1 class="mb-3 font-weight-normal text-center">Mon profil</h1>
+                    <!-- 1ere colonne du formulaire -->
+                    <div class="col-5">
 
-                    {% for flashError in app.flashes('verify_email_error') %}
-                        <div class="alert alert-danger" role="alert">{{ flashError }}</div>
-                    {% endfor %}
+                        {% for flashError in app.flashes('verify_email_error') %}
+                            <div class="alert alert-danger" role="alert">{{ flashError }}</div>
+                        {% endfor %}
 
-                    <h1 class="mb-3 font-weight-normal">Mon profil</h1>
-                    {{ form_start(monProfilType) }}
-                    <div class="mb-3">
-                        <div class="form-label">{{ form_label(monProfilType.pseudo) }}</div>
-                        {{ form_widget(monProfilType.pseudo, {'attr' : {'class': 'form-control'}}) }}
-                        {{ form_errors(monProfilType.pseudo) }}
-                    </div>
-                    <div class="mb-3">
-                        <div class="form-label">{{ form_label(monProfilType.nom) }}</div>
-                        {{ form_widget(monProfilType.nom, {'attr' : {'class': 'form-control'}}) }}
-                        {{ form_errors(monProfilType.nom) }}
+                        {{ form_start(monProfilType) }}
+                        <div class="mb-3">
+                            <div class="form-label">{{ form_label(monProfilType.pseudo) }}</div>
+                            {{ form_widget(monProfilType.pseudo, {'attr' : {'class': 'form-control'}}) }}
+                            {{ form_errors(monProfilType.pseudo) }}
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-label">{{ form_label(monProfilType.nom) }}</div>
+                            {{ form_widget(monProfilType.nom, {'attr' : {'class': 'form-control'}}) }}
+                            {{ form_errors(monProfilType.nom) }}
 
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-label">{{ form_label(monProfilType.prenom) }}</div>
+                            {{ form_widget(monProfilType.prenom, {'attr' : {'class': 'form-control'}}) }}
+                            {{ form_errors(monProfilType.prenom) }}
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-label">{{ form_label(monProfilType.telephone) }}</div>
+                            {{ form_widget(monProfilType.telephone, {'attr' : {'class': 'form-control'}}) }}
+                            {{ form_errors(monProfilType.telephone) }}
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-label">{{ form_label(monProfilType.site) }}</div>
+                            {{ form_widget(monProfilType.site, {'attr' : {
+                                'class': 'form-select',
+                                'selected' : '',
+                            }}) }}
+                            {{ form_errors(monProfilType.site) }}
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <div class="form-label">{{ form_label(monProfilType.prenom) }}</div>
-                        {{ form_widget(monProfilType.prenom, {'attr' : {'class': 'form-control'}}) }}
-                        {{ form_errors(monProfilType.prenom) }}
+                    <!-- 2eme colonne du formulaire -->
+                    <div class="col-5">
+                        <div class="mb-3">
+                            <div class="form-label">{{ form_label(monProfilType.email) }}</div>
+                            {{ form_widget(monProfilType.email, {'attr' : {'class': 'form-control'}}) }}
+                            {{ form_errors(monProfilType.email) }}
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-label">{{ form_label(monProfilType.password.first) }}</div>
+                            {{ form_widget(monProfilType.password.first, {'attr' : {'class': 'form-control'}}) }}
+                            {{ form_errors(monProfilType.password.first) }}
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-label">{{ form_label(monProfilType.password.second) }}</div>
+                            {{ form_widget(monProfilType.password.second, {'attr' : {'class': 'form-control'}}) }}
+                            {{ form_errors(monProfilType.password.second) }}
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-label">{{ form_label(monProfilType.photoProfil, 'Ma photo') }}</div>
+                            {{ form_widget(monProfilType.photoProfil, {'attr' : {'class': 'form-control'}}) }}
+                            {{ form_errors(monProfilType.photoProfil) }}
+                        </div>
+                        <div class="row justify-content-around">
+                            <div class="col mt-4">
+                                <button type="submit" class="btn btn-primary">Enregistrer</button>
+                            </div>
+                            <div class="col mt-4">
+                                <a class="btn btn-secondary" href="{{ path('sortie_recherche') }}">Annuler</a>
+                            </div>
+                        </div>
+                        {{ form_end(monProfilType) }}
                     </div>
-                    <div class="mb-3">
-                        <div class="form-label">{{ form_label(monProfilType.telephone) }}</div>
-                        {{ form_widget(monProfilType.telephone, {'attr' : {'class': 'form-control'}}) }}
-                        {{ form_errors(monProfilType.telephone) }}
-                    </div>
-                    <div class="mb-3">
-                        <div class="form-label">{{ form_label(monProfilType.email) }}</div>
-                        {{ form_widget(monProfilType.email, {'attr' : {'class': 'form-control'}}) }}
-                        {{ form_errors(monProfilType.email) }}
-                    </div>
-                    <div class="mb-3">
-                        <div class="form-label">{{ form_label(monProfilType.password.first) }}</div>
-                        {{ form_widget(monProfilType.password.first, {'attr' : {'class': 'form-control'}}) }}
-                        {{ form_errors(monProfilType.password.first) }}
-                    </div>
-                    <div class="mb-3">
-                        <div class="form-label">{{ form_label(monProfilType.password.second) }}</div>
-                        {{ form_widget(monProfilType.password.second, {'attr' : {'class': 'form-control'}}) }}
-                        {{ form_errors(monProfilType.password.second) }}
-                    </div>
-                    <div class="mb-3">
-                        <div class="form-label">{{ form_label(monProfilType.site) }}</div>
-                        {{ form_widget(monProfilType.site, {'attr' : {
-                            'class': 'form-select',
-                            'selected' : '',
-                        }}) }}
-                        {{ form_errors(monProfilType.site) }}
-                    </div>
-                    <div class="mb-3">
-                        <div class="form-label">{{ form_label(monProfilType.photoProfil, 'Ma photo') }}</div>
-                        {{ form_widget(monProfilType.photoProfil, {'attr' : {'class': 'form-control'}}) }}
-                        {{ form_errors(monProfilType.photoProfil) }}
-                    </div>
-                    <div class="mt-4">
-                        <button type="submit" class="btn btn-lg btn-primary">Enregistrer</button>
-                    </div>
-
-                    {{ form_end(monProfilType) }}
-
-                    <div class="col mt-4">
-                        <a class="btn btn-secondary" href="{{ path('sortie_recherche') }}">Annuler</a>
-                    </div>
-
                 </div>
             </div>
 

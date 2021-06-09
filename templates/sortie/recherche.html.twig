@@ -74,25 +74,23 @@
         </div>
     </div>
 
-    <div class="container border mt-4 rounded my-custom-scrollbar-list-recherche" >
+    <div class="container border mt-4 rounded my-custom-scrollbar-list-recherche">
         < Nombre de sorties trouvées : {{ resultat.nbSorties }}
         <table class="table">
             <thead class="thead-dark">
-            <tr>
-                <th scope="col">Nom de la sortie</th>
-                <th scope="col">Date de la sortie</th>
-                <th scope="col">Cloture</th>
-                <th scope="col">Inscrits/places</th>
-                >
-                <th scope="col">Etat</th>
-                <th scope="col">Inscrit</th>
-                <th scope="col">Organisateur</th>
-                <th scope="col">Actions</th>
-            </tr>
+                <tr>
+                    <th scope="col">Nom de la sortie</th>
+                    <th scope="col">Date de la sortie</th>
+                    <th scope="col">Cloture</th>
+                    <th scope="col">Inscrits/places</th>>
+                    <th scope="col">Etat</th>
+                    <th scope="col">Inscrit</th>
+                    <th scope="col">Organisateur</th>
+                    <th scope="col">Actions</th>
+                </tr>
             </thead>
+
             <tbody>
-
-
             {% for sortie in resultat.sorties %}
                 <tr>
                     <td>{{ sortie.nom }}</td>
@@ -112,15 +110,9 @@
                     <td>
                         <a href="{{ path('sortie_detail',{'id': sortie.id}) }}">Détail</a>
 
-                        {% if (sortie.etat.libelle == 'Ouverte') and (sortie.organisateur != app.user) %}
-                            <button type="submit" class="btn btn-link"><a
-                                        href="{{ path('sortie_inscription', {'id' : sortie.id}) }}">S'inscrire</a>
-                            </button>
-                        {% endif %}
                     </td>
 
                 </tr>
-
             {% endfor %}
             </tbody>
         </table>

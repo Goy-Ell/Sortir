@@ -7,10 +7,21 @@
     display: block;
 }
 
+/* liste utilisateurs */
 .my-custom-scrollbar-list-users {
-    position: relative;
-    height: 250px;
     overflow: auto;
+    height: 350px;
+    position: relative;
+}
+.my-custom-scrollbar-list-users thead th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background: #DDDDDD;
+}
+
+footer {
+    max-height: 40px;
 }
 
 .vue-max{
@@ -24,7 +35,14 @@
 body{
     height: 20%   ;
 }
-.no-padding{
-    padding:0;
+.no-padding {
+    padding: 0;
+}
+.navbar{
 
 }
+
+
+
+
+
