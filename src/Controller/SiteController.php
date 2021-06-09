@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\Site;
 use App\Form\SiteType;
 use App\Repository\SiteRepository;
+use App\Repository\SortieRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -54,6 +56,5 @@ class SiteController extends AbstractController
             'sites'=>$sites
         ]);
     }
-
 
 }
