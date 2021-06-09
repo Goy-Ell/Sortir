@@ -2,7 +2,7 @@
 <!-- Choix des codes postaux proposé par la requete AJAX -->
 
 {#<option value=""> </option>#}
-{% for cp in cpx %}
+{% for ville in villes %}
     <option value="{{ ville.id }}">{{ ville.latitude }}</option>
 {% endfor %}
 
