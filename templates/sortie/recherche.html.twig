@@ -8,15 +8,17 @@
         <div class="accordion" id="accordionExample">
             <div class="accordion-item">
                 <h2 class="accordion-header" id="headingTwo">
-                    <button class="accordion-button " type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                    <button class="accordion-button " type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
                         <strong>Filtrer les sorties</strong>
                     </button>
                 </h2>
-                <div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                <div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingTwo"
+                     data-bs-parent="#accordionExample">
                     <div class="accordion-body">
                         <!-- Début du contenaire formulaire -->
                         <div class="row justify-content-center">
-                                {{ form_start(rechercheForm) }}
+                            {{ form_start(rechercheForm) }}
                             <div class="container row m-1 justify-content-around">
                                 <!-- colonne 1 -->
                                 <div class="col-10 col-sm-5 justify-content-center">
@@ -31,10 +33,10 @@
 
                                     <div class="mb-2 row ">
                                         <div class="col-sm-5 col-form-label ">
-                                        {{ form_label(rechercheForm.dateMin) }}{{ form_widget(rechercheForm.dateMin, {'attr' : {'class': 'form-control'}}) }}
+                                            {{ form_label(rechercheForm.dateMin) }}{{ form_widget(rechercheForm.dateMin, {'attr' : {'class': 'form-control'}}) }}
                                         </div>
                                         <div class="col-sm-5 col-form-label ">
-                                        {{ form_label(rechercheForm.dateMax) }} {{ form_widget(rechercheForm.dateMax, {'attr' : {'class': 'form-control'}}) }}
+                                            {{ form_label(rechercheForm.dateMax) }} {{ form_widget(rechercheForm.dateMax, {'attr' : {'class': 'form-control'}}) }}
                                         </div>
                                     </div>
                                 </div>
@@ -67,29 +69,28 @@
                         </div>
                         <!-- fin du contenaire formulaire -->
                     </div>
-                 </div>
+                </div>
             </div>
         </div>
     </div>
 
     <div class="container border mt-4 rounded my-custom-scrollbar-list-recherche">
-        < Nombre de sorties trouvées : {{ resultat.nbSorties }}
+        Nombre de sorties trouvées : {{ resultat.nbSorties }}
         <table class="table">
             <thead class="thead-dark">
-                <tr>
-                    <th scope="col">Nom de la sortie</th>
-                    <th scope="col">Date de la sortie</th>
-                    <th scope="col">Cloture</th>
-                    <th scope="col">Inscrits/places</th>>
-                    <th scope="col">Etat</th>
-                    <th scope="col">Inscrit</th>
-                    <th scope="col">Organisateur</th>
-                    <th scope="col">Actions</th>
-                </tr>
+            <tr>
+                <th scope="col">Nom de la sortie</th>
+                <th scope="col">Date de la sortie</th>
+                <th scope="col">Cloture</th>
+                <th scope="col">Inscrits/places</th>
+                <th scope="col">Etat</th>
+                <th scope="col">Inscrit</th>
+                <th scope="col">Organisateur</th>
+                <th scope="col">Actions</th>
+            </tr>
             </thead>
+
             <tbody>
-
-
             {% for sortie in resultat.sorties %}
                 <tr>
                     <td>{{ sortie.nom }}</td>
@@ -97,26 +98,29 @@
                     <td>{{ sortie.dateLimiteInscription|date }}</td>
                     <td class="text-center">{{ sortie.participants|length }}/{{ sortie.nbInscriptionMax }}</td>
                     <td>{{ sortie.etat.libelle }}</td>
-                    <td >{% if (app.user in sortie.participants) %}
-                           <div class="text-center">X</div>
-                        {% else  %}
+                    <td>{% if (app.user in sortie.participants) %}
+                            <div class="text-center">X</div>
+                        {% else %}
                             {{ null }}
                         {% endif %}
                     </td>
-                    <td><a href="{{ path('user_profilUtilisateur', {'id' : sortie.organisateur.id}) }}">{{ sortie.organisateur.pseudo }}</a></td>
+                    <td>
+                        <a href="{{ path('user_profilUtilisateur', {'id' : sortie.organisateur.id}) }}">{{ sortie.organisateur.pseudo }}</a>
+                    </td>
                     <td>
                         <a href="{{ path('sortie_detail',{'id': sortie.id}) }}">Détail</a>
 
-                            {% if (sortie.etat.libelle == 'Ouverte') and (sortie.organisateur != app.user) %}
-                            <button type="submit" class="btn btn-link"><a href="{{ path('sortie_inscription', {'id' : sortie.id}) }}">S'inscrire</a></button>
-                            {% endif %}
-                        </td>
+                        {% if (sortie.etat.libelle == 'Ouverte') and (sortie.organisateur != app.user) %}
+                            <button type="submit" class="btn btn-link"><a
+                                        href="{{ path('sortie_inscription', {'id' : sortie.id}) }}">S'inscrire</a>
+                            </button>
+                        {% endif %}
+                    </td>
 
-                    </tr>
-
-                    {% endfor %}
+                </tr>
+            {% endfor %}
             </tbody>
         </table>
     </div>
-</div>
+
 {% endblock %}

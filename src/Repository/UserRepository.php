@@ -57,6 +57,20 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->getOneOrNullResult();
     }
 
+    /**
+     * Permet de recuperer les users selon le psuedo, nom ou prenom
+     * @param string $saisi
+     * @return int|mixed|string
+     */
+    public function findByNomPrenomPseudo(string $saisi)
+    {
+        $queryBuilder = $this->createQueryBuilder('u');
+        $queryBuilder->andWhere('u.pseudo LIKE :saisi OR u.nom LIKE :saisi OR u.prenom LIKE :saisi');
+        $queryBuilder->setParameter('saisi', '%'.$saisi.'%');
+        $queryBuilder->setMaxResults(30);
+        return $queryBuilder->getQuery()->getResult();
+    }
+
     // /**
     //  * @return User[] Returns an array of User objects
     //  */
