@@ -111,4 +111,5 @@ class UpdateEntity
             $this->entityManager->persist($sortie);
         }
     }
+
 }
