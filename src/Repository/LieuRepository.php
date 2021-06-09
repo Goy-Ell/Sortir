@@ -29,10 +29,12 @@ class LieuRepository extends ServiceEntityRepository
     {
         $queryBuilder = $this->createQueryBuilder('l');
         $queryBuilder->andWhere('l.ville = :ville')->setParameter('ville', $ville);
-        dump($queryBuilder);
+//        dump($queryBuilder);
         $queryBuilder->setMaxResults(30);
         return $queryBuilder->getQuery()->getResult();
     }
+
+
 
     // /**
     //  * @return Lieu[] Returns an array of Lieu objects

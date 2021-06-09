@@ -1,4 +1,4 @@
-window.onload = init;
+// window.onload = init;
 
 //fonction retour page-n
     function goBack(n) {

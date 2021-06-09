@@ -59,6 +59,50 @@ class LieuController extends AbstractController
         ]);
 
     }
+    /**
+     * Fonction pour requete AJAX de recherche des CP selon la ville
+     * @Route("/lieu/rechercheCP", name="lieu_rechercheCP")
+     *
+     */
+    public function rechercheCP(VilleRepository $villeRepository, Request $request):Response
+    {
+        $ville = $request->query->get('ville');
+        $resultats = $villeRepository->rechercheVille($ville);
+        return $this->render("sortie/ajax_cp.html.twig", [
+            "ville"=>$resultats
+        ]);
+
+    }
+
+    /**
+     * Fonction pour requete AJAX de recherche la longitude selon la ville
+     * @Route("/lieu/rechercheLon", name="lieu_rechercheLon")
+     *
+     */
+    public function rechercheLon(VilleRepository $villeRepository, Request $request):Response
+    {
+        $ville = $request->query->get('ville');
+        $resultats = $villeRepository->rechercheVille($ville);
+        return $this->render("sortie/ajax_lon.html.twig", [
+            "ville"=>$resultats
+        ]);
+
+    }
+
+    /**
+     * Fonction pour requete AJAX de recherche la latitude selon la ville
+     * @Route("/lieu/rechercheLat", name="lieu_rechercheLat")
+     *
+     */
+    public function rechercheLat(VilleRepository $villeRepository, Request $request):Response
+    {
+        $ville = $request->query->get('ville');
+        $resultats = $villeRepository->rechercheVille($ville);
+        return $this->render("sortie/ajax_cp.html.twig", [
+            "ville"=>$resultats
+        ]);
+
+    }
 
     /**
      * Fonction pour requete AJAX de recherche d'une ville
@@ -68,14 +112,13 @@ class LieuController extends AbstractController
     public function rechercheVille(VilleRepository $villeRepository, Request $request):Response
     {
         $saisi = $request->query->get('saisi');
-
         $resultats = $villeRepository->rechercheVilleParSaisi($saisi);
-
         return $this->render("sortie/ajax_ville.html.twig", [
             "villes"=>$resultats
         ]);
 
     }
+
 
     /**
      * Fonction pour requete AJAX de recherche d'un lieu
