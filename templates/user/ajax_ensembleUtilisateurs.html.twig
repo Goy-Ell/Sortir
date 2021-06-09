@@ -1,0 +1,13 @@
+
+
+{% for user in users %}
+    <tr>
+        <td><a href="{{ path('user_profilUtilisateur', {'id' : user.id } ) }}">{{ user.pseudo }}</td>
+        <td>{{ user.prenom }} {{ user.nom }}</td>
+    </tr>
+{% else %}
+    <tr>
+        <td scope="row">Pas de utilisateur !</td>
+    </tr>
+{% endfor %}
+

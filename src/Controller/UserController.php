@@ -151,4 +151,21 @@ class UserController extends AbstractController
 
         return $this->redirectToRoute('sortie_recherche');
     }
+
+    /**
+     * Fonction pour requete AJAX
+     * Recherche utilisateur selon un champs de saisi
+     * @Route("/user/rechercheParNomPrenomPseudo", name="user_rechercheParNomPrenomPseudo")
+     */
+    public function rechercheParNomPrenomPseudo(UserRepository $userRepository, Request $request):Response
+    {
+        dump("userController");
+        $saisi = $request->query->get('saisi');
+        dump($saisi);
+        $users = $userRepository->findByNomPrenomPseudo($saisi);
+
+        return $this->render("user/ajax_ensembleUtilisateurs.html.twig", [
+            'users'=>$users
+        ]);
+    }
 }
