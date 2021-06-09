@@ -11,6 +11,7 @@
 .my-custom-scrollbar-list-users {
     overflow: auto;
     height: 350px;
+    position: relative;
 }
 .my-custom-scrollbar-list-users thead th {
     position: sticky;
@@ -19,6 +20,9 @@
     background: #DDDDDD;
 }
 
+footer {
+    max-height: 40px;
+}
 
 .vue-max{
     height: 90%   ;
