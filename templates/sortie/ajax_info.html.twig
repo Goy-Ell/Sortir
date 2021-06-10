@@ -1,0 +1,26 @@
+
+<!-- info ville requete AJAX -->
+
+{#<option value=""> </option>#}
+
+{#{% for ville in villes %}#}
+<div class="mb-3">
+    <label class="form-label" for="cpSelect">Code Postal :</label>
+    <div class="form-control"  id="cpSelect">
+        <div >{{ ville.codePostal }}</div>
+    </div>
+</div>
+
+<div class="mb-3">
+    <label class="form-label" for="latSelect">Latitude : </label><br>
+    <input class="form-control" name="latSelect" value="{{ ville.latitude }}" id="latSelect">
+    <!-- zone affichage resultats requete AJAX -->
+
+</div>
+<div class="mb-3">
+    <label class="form-label" for="lonSelect">Longitude :</label>
+    <input class="form-control" name="lonSelect" value="{{ ville.longitude }}" id="lonSelect">
+    <!-- zone affichage resultats requete AJAX -->
+</div>
+
+{#{% endfor %}#}

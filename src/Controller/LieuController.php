@@ -19,16 +19,30 @@ class LieuController extends AbstractController
      */
 
     public function ajouterLieu(Request $request,
-                                EntityManagerInterface $entityManager):Response
+                                EntityManagerInterface $entityManager,
+                                VilleRepository $villeRepository):Response
     {
         $lieu = new Lieu();
 
         $lieuForm = $this->createForm(LieuType::class, $lieu);
 
         $lieuForm->handleRequest($request);
-
+//        dd($lieuForm);
         if($lieuForm->isSubmitted() && $lieuForm->isValid()){
+//            dd($lieuForm);
 
+//            recupere la ville le cp la latitude et longitude en dehors du LieuType.php
+            $villeId = $_REQUEST['villeSelect'];
+            dump($villeId);
+            $ville = $villeRepository->find($villeId);
+            $lieu->setVille($ville);
+
+            $latitude = $_REQUEST['latSelect'];
+            $lieu->setLatitude($latitude);
+            dump($latitude);
+            $longitude = $_REQUEST['lonSelect'];
+            $lieu->setLongitude($longitude);
+//            dd($longitude);
             $entityManager->persist($lieu);
             $entityManager->flush();
 
@@ -66,7 +80,9 @@ class LieuController extends AbstractController
     public function detailsLieu(LieuRepository $lieuRepository, Request $request):Response
     {
         $lieu = $request->query->get('lieu');
+        console.log ($lieu);
         $resultat = $lieuRepository->find($lieu);
+        dump($resultat);
         return $this->render("sortie/ajax_detailsLieu.html.twig", [
             "lieu"=>$resultat
         ]);
@@ -87,51 +103,53 @@ class LieuController extends AbstractController
 
     }
     /**
-     * Fonction pour requete AJAX de recherche des CP selon la ville
-     * @Route("/lieu/rechercheCP", name="lieu_rechercheCP")
+     * Fonction pour requete AJAX de recherche les infos de la ville
+     * @Route("/lieu/rechercheInfo", name="lieu_rechercheInfo")
      *
      */
-    public function rechercheC(VilleRepository $villeRepository, Request $request):Response
+    public function rechercheInfo(VilleRepository $villeRepository, Request $request):Response
     {
 
-        $ville = $request->query->get('ville');
-        dd($ville);
-        $resultats = $villeRepository->find($ville);
-        return $this->render("sortie/ajax_cp.html.twig", [
-            "villes"=>$resultats
+        $villeId = $request->query->get('ville');
+//        dump($villeId);
+        $ville = $villeRepository->find($villeId);
+//        dd($ville);
+        return $this->render("sortie/ajax_info.html.twig", [
+            "ville"=>$ville
         ]);
 
     }
 
-    /**
-     * Fonction pour requete AJAX de recherche la longitude selon la ville
-     * @Route("/lieu/rechercheLon", name="lieu_rechercheLon")
-     *
-     */
-    public function rechercheLon(VilleRepository $villeRepository, Request $request):Response
-    {
-        $ville = $request->query->get('ville');
-        $resultats = $villeRepository->rechercheVille($ville);
-        return $this->render("sortie/ajax_lon.html.twig", [
-            "villes"=>$resultats
-        ]);
 
-    }
-
-    /**
-     * Fonction pour requete AJAX de recherche la latitude selon la ville
-     * @Route("/lieu/rechercheLat", name="lieu_rechercheLat")
-     *
-     */
-    public function rechercheLat(VilleRepository $villeRepository, Request $request):Response
-    {
-        $ville = $request->query->get('ville');
-        $resultats = $villeRepository->rechercheVille($ville);
-        return $this->render("sortie/ajax_cp.html.twig", [
-            "villes"=>$resultats
-        ]);
-
-    }
+//    /**
+//     * Fonction pour requete AJAX de recherche la longitude selon la ville
+//     * @Route("/lieu/rechercheLon", name="lieu_rechercheLon")
+//     *
+//     */
+//    public function rechercheLon(VilleRepository $villeRepository, Request $request):Response
+//    {
+//        $ville = $request->query->get('ville');
+//        $resultats = $villeRepository->rechercheVille($ville);
+//        return $this->render("sortie/ajax_lon.html.twig", [
+//            "villes"=>$resultats
+//        ]);
+//
+//    }
+//
+//    /**
+//     * Fonction pour requete AJAX de recherche la latitude selon la ville
+//     * @Route("/lieu/rechercheLat", name="lieu_rechercheLat")
+//     *
+//     */
+//    public function rechercheLat(VilleRepository $villeRepository, Request $request):Response
+//    {
+//        $ville = $request->query->get('ville');
+//        $resultats = $villeRepository->rechercheVille($ville);
+//        return $this->render("sortie/ajax_cp.html.twig", [
+//            "villes"=>$resultats
+//        ]);
+//
+//    }
 
 
 }

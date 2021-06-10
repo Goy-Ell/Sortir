@@ -61,11 +61,11 @@ class Lieu
      */
     private $ville;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Ville::class, inversedBy="lieux")
-     * @ORM\Column(type="string", length=10, nullable=true)
-     */
-    private $codePostal;
+//    /**
+//     * @ORM\ManyToOne(targetEntity=Ville::class, inversedBy="lieux")
+//     * @ORM\Column(type="string", length=10, nullable=true)
+//     */
+//    private $codePostal;
 
     public function __construct()
     {
@@ -167,15 +167,15 @@ class Lieu
         return $this;
     }
 
-    public function getCp(): ?string
-    {
-        return $this->codePostal;
-    }
-
-    public function setCp(?string $cp): self
-    {
-        $this->codePostal = $cp;
-
-        return $this;
-    }
+//    public function getCp(): ?string
+//    {
+//        return $this->codePostal;
+//    }
+//
+//    public function setCp(?string $cp): self
+//    {
+//        $this->codePostal = $cp;
+//
+//        return $this;
+//    }
 }
