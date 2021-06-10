@@ -27,14 +27,15 @@ class LieuController extends AbstractController
         $lieuForm = $this->createForm(LieuType::class, $lieu);
 
         $lieuForm->handleRequest($request);
-//        dd($lieuForm);
+//        dd($lieu);
         if($lieuForm->isSubmitted() && $lieuForm->isValid()){
-//            dd($lieuForm);
+//            dd($lieu);
 
 //            recupere la ville le cp la latitude et longitude en dehors du LieuType.php
             $villeId = $_REQUEST['villeSelect'];
             dump($villeId);
             $ville = $villeRepository->find($villeId);
+            dump($ville);
             $lieu->setVille($ville);
 
             $latitude = $_REQUEST['latSelect'];
@@ -42,7 +43,7 @@ class LieuController extends AbstractController
             dump($latitude);
             $longitude = $_REQUEST['lonSelect'];
             $lieu->setLongitude($longitude);
-//            dd($longitude);
+            dd($lieu);
             $entityManager->persist($lieu);
             $entityManager->flush();
 
@@ -53,7 +54,8 @@ class LieuController extends AbstractController
         }
 
         return $this->render('lieu/create.html.twig', [
-            'lieuForm' => $lieuForm->createView()
+            'lieuForm' => $lieuForm->createView(),
+            'page'=>1
         ]);
     }
 
@@ -80,7 +82,7 @@ class LieuController extends AbstractController
     public function detailsLieu(LieuRepository $lieuRepository, Request $request):Response
     {
         $lieu = $request->query->get('lieu');
-        console.log ($lieu);
+
         $resultat = $lieuRepository->find($lieu);
         dump($resultat);
         return $this->render("sortie/ajax_detailsLieu.html.twig", [
