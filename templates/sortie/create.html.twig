@@ -102,6 +102,12 @@
                             let rechercheLieu = document.getElementById("villeSelect");
                             rechercheLieu.addEventListener('change', envoyerAjaxRequest);
 
+                            let eventList = ["keyup", "load"];
+                            for(e of eventList) {
+                                rechercheLieu.addEventListener(e, envoyerAjaxRequest);
+                            }
+
+
                             function envoyerAjaxRequest() {
                                 let ville = rechercheLieu.value;
                                 console.log(ville);
@@ -173,3 +179,4 @@
     </div>
     {{ form_end(sortieForm) }}
 {% endblock %}
+

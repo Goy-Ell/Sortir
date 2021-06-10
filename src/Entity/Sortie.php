@@ -23,9 +23,9 @@ class Sortie
     /**
      * @Assert\NotBlank (message= "Veuillez remplir ce champ avant de valider !")
      * @Assert\Length (
-     *     min=10,
+     *     min=2,
      *     max=255,
-     *     minMessage="Minimum 10 caractères svp !",
+     *     minMessage="Minimum 2 caractères svp !",
      *     maxMessage="Maximum 255 caractères svp !"
      *  )
      * @ORM\Column(type="string", length=50)
@@ -64,9 +64,10 @@ class Sortie
 
     /**
      * @Assert\NotBlank (message="Veuillez remplir une description de la sortie (min 30 caractères)!")
-     * @Assert\Length (min=30,
+     * @Assert\Length (
+     *     min=5,
      *     max=3000,
-     *      minMessage="Veuillez remplir une description de la sortie (min 30 caractères)!",
+     *     minMessage="Veuillez remplir une description de la sortie (min 5 caractères)!",
      *     maxMessage="Le nombre de caractères maximal est de 3000 !")
      *
      * @ORM\Column(type="text", nullable=true)

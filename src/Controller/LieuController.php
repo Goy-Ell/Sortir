@@ -19,16 +19,31 @@ class LieuController extends AbstractController
      */
 
     public function ajouterLieu(Request $request,
-                                EntityManagerInterface $entityManager):Response
+                                EntityManagerInterface $entityManager,
+                                VilleRepository $villeRepository):Response
     {
         $lieu = new Lieu();
 
         $lieuForm = $this->createForm(LieuType::class, $lieu);
 
         $lieuForm->handleRequest($request);
-
+//        dd($lieu);
         if($lieuForm->isSubmitted() && $lieuForm->isValid()){
+//            dd($lieu);
 
+//            recupere la ville le cp la latitude et longitude en dehors du LieuType.php
+            $villeId = $_REQUEST['villeSelect'];
+            //dump($villeId);
+            $ville = $villeRepository->findOneBy(['id'=>$villeId]);
+            dump($ville);
+            $lieu->setVille($ville);
+
+            $latitude = $_REQUEST['latSelect'];
+            $lieu->setLatitude($latitude);
+            //dump($latitude);
+            $longitude = $_REQUEST['lonSelect'];
+            $lieu->setLongitude($longitude);
+            //dd($lieu);
             $entityManager->persist($lieu);
             $entityManager->flush();
 
@@ -39,7 +54,39 @@ class LieuController extends AbstractController
         }
 
         return $this->render('lieu/create.html.twig', [
-            'lieuForm' => $lieuForm->createView()
+            'lieuForm' => $lieuForm->createView(),
+            'page'=>1
+        ]);
+    }
+
+    /**
+     * Fonction pour requete AJAX de recherche d'une ville
+     * @Route("/lieu/rechercheVille", name="lieu_rechercheVille")
+     *
+     */
+    public function rechercheVille(VilleRepository $villeRepository, Request $request):Response
+    {
+        $saisi = $request->query->get('saisi');
+        $resultats = $villeRepository->rechercheVilleParSaisi($saisi);
+        return $this->render("sortie/ajax_ville.html.twig", [
+            "villes"=>$resultats
+        ]);
+
+    }
+
+
+    /**
+     * Fonction pour requete AJAX de recherche d'un lieu
+     * @Route("/lieu/detailsLieu", name="lieu_detailsLieu")
+     */
+    public function detailsLieu(LieuRepository $lieuRepository, Request $request):Response
+    {
+        $lieu = $request->query->get('lieu');
+
+        $resultat = $lieuRepository->find($lieu);
+        dump($resultat);
+        return $this->render("sortie/ajax_detailsLieu.html.twig", [
+            "lieu"=>$resultat
         ]);
     }
 
@@ -51,42 +98,28 @@ class LieuController extends AbstractController
     public function rechercheLieu(LieuRepository $lieuRepository, Request $request):Response
     {
         $ville = $request->query->get('ville');
-        dump("rechercheLieu : ".$ville);
         $resultats = $lieuRepository->rechercheLieuSelonVille($ville);
-
         return $this->render("sortie/ajax_lieux.html.twig", [
             "lieux"=>$resultats
         ]);
 
     }
-
     /**
-     * Fonction pour requete AJAX de recherche d'une ville
-     * @Route("/lieu/rechercheVille", name="lieu_rechercheVille")
+     * Fonction pour requete AJAX de recherche les infos de la ville
+     * @Route("/lieu/rechercheInfo", name="lieu_rechercheInfo")
      *
      */
-    public function rechercheVille(VilleRepository $villeRepository, Request $request):Response
+    public function rechercheInfo(VilleRepository $villeRepository, Request $request):Response
     {
-        $saisi = $request->query->get('saisi');
 
-        $resultats = $villeRepository->rechercheVilleParSaisi($saisi);
-
-        return $this->render("sortie/ajax_ville.html.twig", [
-            "villes"=>$resultats
+        $villeId = $request->query->get('ville');
+//        dump($villeId);
+        $ville = $villeRepository->find($villeId);
+//        dd($ville);
+        return $this->render("sortie/ajax_info.html.twig", [
+            "ville"=>$ville
         ]);
 
     }
 
-    /**
-     * Fonction pour requete AJAX de recherche d'un lieu
-     * @Route("/lieu/detailsLieu", name="lieu_detailsLieu")
-     */
-    public function detailsLieu(LieuRepository $lieuRepository, Request $request):Response
-    {
-        $lieu = $request->query->get('lieu');
-        $resultat = $lieuRepository->find($lieu);
-        return $this->render("sortie/ajax_detailsLieu.html.twig", [
-            "lieu"=>$resultat
-        ]);
-    }
 }

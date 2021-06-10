@@ -128,13 +128,9 @@ class SortieController extends AbstractController
         $annulationSortieForm = $this->createForm(AnnulationSortieType::class, $sortie);
         $annulationSortieForm->handleRequest($request);
 
-        if ($annulationSortieForm->isSubmitted() && $annulationSortieForm->isValid()) {
-
+        if ($annulationSortieForm->isSubmitted()  && $annulationSortieForm->isValid()) {
 
             $updateEntity->annulerSortie($sortie);
-
-            $entityManager->persist($sortie);
-            $entityManager->flush();
 
             $this->addFlash('success', 'Sortie annulée ! ');
             return $this->redirectToRoute('sortie_recherche');

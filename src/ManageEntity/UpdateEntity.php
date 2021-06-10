@@ -99,6 +99,8 @@ class UpdateEntity
 
             $sortie->setEtat($etats[5]);
             $this->entityManager->persist($sortie);
+            $this->entityManager->flush();
+
         }
     }
     public function validerSortie($sortie){
