@@ -32,17 +32,13 @@ class LieuController extends AbstractController
 
 //            recupere la ville le cp la latitude et longitude en dehors du LieuType.php
             $villeId = $_REQUEST['villeSelect'];
-            //dump($villeId);
             $ville = $villeRepository->find($villeId);
-            //dump($ville);
             $lieu->setVille($ville);
 
             $latitude = $_REQUEST['latSelect'];
             $lieu->setLatitude($latitude);
-            //dump($latitude);
             $longitude = $_REQUEST['lonSelect'];
             $lieu->setLongitude($longitude);
-            //dd($lieu);
             $entityManager->persist($lieu);
             $entityManager->flush();
 
@@ -91,7 +87,7 @@ class LieuController extends AbstractController
      * @Route("/lieu/recherche", name="lieu_recherche")
      *
      */
-    public function rechercheLieu(LieuRepository $lieuRepository, Request $request):Response
+    public function rechercheLieu(LieuRepository $lieuRepository, Request $request): Response
     {
         $ville = $request->query->get('ville');
         $resultats = $lieuRepository->rechercheLieuSelonVille($ville);
