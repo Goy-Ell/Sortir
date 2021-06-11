@@ -1,0 +1,25 @@
+
+<!-- Choix des codes postaux proposé par la requete AJAX -->
+
+{#<option value=""> </option>#}
+{% for ville in villes %}
+    <option value="{{ ville.id }}">{{ ville.latitude }}</option>
+
+    <div class="mb-3">
+        <label class="form-label" for="latSelect">Latitude : </label><br>
+        <input class="form-control" name="latSelect" id="latSelect">
+        <!-- zone affichage resultats requete AJAX -->
+
+    </div>
+    <div class="mb-3">
+        <label class="form-label" for="lonSelect">Longitude :</label>
+        <div class="form-control"  id="lonSelect">
+            <!-- zone affichage resultats requete AJAX -->
+        </div>
+    </div>
+{% endfor %}
+
+
+
+
+

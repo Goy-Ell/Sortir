@@ -27,8 +27,36 @@ class VilleRepository extends ServiceEntityRepository
     public function rechercheVilleParSaisi(string $saisi)
     {
         $queryBuilder = $this->createQueryBuilder('v');
-        $queryBuilder->andWhere('v.nom LIKE :rechercheVille')->setParameter('rechercheVille', '%'.$saisi.'%');
-        $queryBuilder->setMaxResults(30);
+        $queryBuilder->andWhere('v.nom LIKE :rechercheVille')
+            ->setParameter('rechercheVille', $saisi.'%')
+            ->orderBy('v.nom','ASC');
+
+        $queryBuilder->setMaxResults(20);
+        $result=$queryBuilder->getQuery()->getResult();
+//        dump($result);
+        $queryBuilder = $this->createQueryBuilder('v');
+        $queryBuilder->andWhere('v.nom LIKE :rechercheVille1')->setParameter('rechercheVille1', '%'.$saisi.'%');
+        $queryBuilder->setMaxResults(10);
+//        array_push($result , $queryBuilder->getQuery()->getResult());
+        $result2 = $queryBuilder->getQuery()->getResult();
+//        dump($result);
+        foreach ($result2 as $ville){
+            $result[]=$ville;
+        }
+        return $result;
+    }
+
+    /**
+     * Recherche le cp selon une ville
+     * utilisé dans la requete AJAX
+     * @param string $ville
+     * @return int|mixed|string
+     */
+    public  function rechercheVille(string $ville)
+    {
+        $queryBuilder = $this->createQueryBuilder('v');
+        $queryBuilder->andWhere('v.id = :ville')->setParameter('ville', $ville);
+
         return $queryBuilder->getQuery()->getResult();
     }
 

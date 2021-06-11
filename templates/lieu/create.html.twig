@@ -5,107 +5,125 @@
 
 {% block body %}
     <div class="container">
-        <div class="row justify-content-center mt-5">
-            <div class="col-12 col-sm-10 col-md-8 col-lg-4">
-                <h1 class="text-center">Créer un lieu</h1>
+        <div class="row justify-content-evenly mt-3 mb-6 col-12 ">
+            <div class="d-inline text-center mb-3">
+                <h1 class="font-weight-normal ">Créer un lieu</h1>
+            </div>
+
+            {# Affichage form create lieu détaillé #}
+
+            <div class="col-4">
+                <div>
+                    {{ form_start(lieuForm) }}
+                    <div class="mb-3">
+                        <div class="form-label">{{ form_label(lieuForm.nom) }}</div>
+                        {{ form_widget (lieuForm.nom,{'attr' : {'class': 'form-control'}}) }}
+                        {{ form_errors (lieuForm.nom) }}
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="rechercheVille">Recherche ville :</label>
+                        <input class="form-control" type="text" id="rechercheVille">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="villeSelect">Choisir la ville :</label>
+                        <select class="form-select" name="villeSelect" id="villeSelect">
+                            <!-- zone affichage resultats requete AJAX -->
+                        </select>
+                    </div>
+
+                    <!-- AJAX pour la recherche de ville -->
+                    <script> const rechercheVilleUrl = "{{ path('lieu_rechercheVille') }}" </script>
+                    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+                    <script>
+                        let rechercheSaisi = document.getElementById("rechercheVille");
+                        rechercheSaisi.addEventListener("keyup", envoyerAjaxRequest);
+
+                        function envoyerAjaxRequest() {
+                            let saisi = rechercheSaisi.value;
+                            axios.get(rechercheVilleUrl, {
+                                params: {"saisi": saisi}
+                            })
+                                .then(function (response) {
+                                    // console.log(response.data);
+                                    let selectResultats = document.getElementById("villeSelect");
+                                    selectResultats.innerHTML = response.data;
+                                });
+                        }
+                    </script>
+                    <!-- fin: AJAX pour la recherche de ville -->
+
+                    <div id="villeInfo">
+                        <div class="mb-3">
+                            <label class="form-label" for="cpSelect">Code Postal :</label>
+                            <input class="form-control" id="cpSelect">
+                            <!-- zone affichage resultats requete AJAX -->
+
+                        </div>
+
+
+                        <div class="mb-3">
+                            <label class="form-label" for="latSelect">Latitude : </label><br>
+                            <input class="form-control" id="latSelect">
+                            <!-- zone affichage resultats requete AJAX -->
+
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="lonSelect">Longitude :</label>
+                            <input class="form-control" id="lonSelect">
+                            <!-- zone affichage resultats requete AJAX -->
+
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-label">{{ form_label(lieuForm.rue) }}</div>
+                        {{ form_widget (lieuForm.rue,{'attr' : {'class': 'form-control'}}) }}
+                        {{ form_errors (lieuForm.rue) }}
+                    </div>
+
+
+                    <!-- AJAX pour la recherche info -->
+                    <script> const rechercheInfoSelonVilleURL = "{{ path('lieu_rechercheInfo') }}"</script>
+                    {# <script> const rechercheLonSelonVilleURL = "{{ path('lieu_rechercheLon') }}"</script> #}
+                    {# <script> const rechercheLatSelonVilleURL = "{{ path('lieu_rechercheLat') }}"</script> #}
+                    {# <script> const rechercheInfoVilleURL = "{{ path('lieu_rechercheInfoVille') }}"</script> #}
+
+
+                    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+                    <script>
+                        let rechercheInfo = document.getElementById("villeSelect");
+
+                        // rechercheInfo.addEventListener('load', envoyerAjaxRequest);
+                        rechercheInfo.addEventListener('change', envoyerAjaxRequest);
+
+                        function envoyerAjaxRequest() {
+                            let ville = rechercheInfo.value;
+                            console.log("ville num :" + ville);
+
+                            axios.get(rechercheInfoSelonVilleURL, {
+                                params: {"ville": ville}
+                            })
+                                .then(function (response) {
+                                    let resultatsInfo = document.getElementById("villeInfo");
+                                    resultatsInfo.innerHTML = response.data;
+                                });
+
+
+                        }
+                    </script>
+                    <!-- fin: AJAX pour la recherche de info -->
+                    <div class="btn-group" role="group" aria-label="Basic outlined example">
+                </div>
+                <div class="row justify-content-around  ">
+                    <div class="col-2">
+                        <button class="btn btn-primary" type="submit">Enregistrer</button>
+                    </div>
+                    <div class="col-2">
+                        <a class="btn btn-secondary" onclick="goBack( {{ page }} )">Annuler</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-
-
-    {# Affichage form create lieu détaillé #}
-    </div>
-    <div class="row justify-content-center mt-5">
-        <div class="col-12 col-sm-10 col-md-8 col-lg-4">
-            <div class="row justify-content-center mt-5">
-                {{ form_start(lieuForm) }}
-                <ul class="list-group">
-                    <li class="list-group-item">
-                        <div class="mb-4">
-                            <div class="row justify-content-center mt-5">
-                                <div class="col-lg-4">
-                                    {{ form_label(lieuForm.nom) }}
-                                </div>
-                                <div class="col-lg-8">
-                                    {{ form_widget (lieuForm.nom) }}
-                                    {{ form_errors (lieuForm.nom) }}
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="list-group-item">
-                        <div class="mb-4">
-                            <div class="row justify-content-center mt-5">
-                                <div class="col-lg-4">
-                                    {{ form_label(lieuForm.rue) }}
-                                </div>
-                                <div class="col-lg-8">
-                                    {{ form_widget (lieuForm.rue) }}
-                                    {{ form_errors (lieuForm.rue) }}
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="list-group-item">
-                        <div class="mb-4">
-                            <div class="row justify-content-center mt-5">
-                                <div class="col-lg-4">
-                                    {{ form_label(lieuForm.latitude) }}
-                                </div>
-                                <div class="col-lg-8">
-                                    {{ form_widget (lieuForm.latitude) }}
-                                    {{ form_errors (lieuForm.latitude) }}
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="list-group-item">
-                        <div class="mb-4">
-                            <div class="row justify-content-center mt-5">
-                                <div class="col-lg-4">
-                                    {{ form_label(lieuForm.longitude) }}
-                                </div>
-                                <div class="col-lg-8">
-                                    {{ form_widget (lieuForm.longitude) }}
-                                    {{ form_errors (lieuForm.longitude) }}
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="list-group-item">
-                        <div class="mb-4">
-                            <div class="row justify-content-center mt-5">
-                                <div class="col-lg-4">
-                                    {{ form_label(lieuForm.ville) }}
-                                </div>
-                                <div class="col-lg-8">
-                                    {{ form_widget (lieuForm.ville) }}
-                                    {{ form_errors (lieuForm.ville) }}
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li class="list-group-item">
-                        <div class="row justify-content-center mt-5">
-                            <div class="col-12 col-sm-10 col-md-8 col-lg-4">
-                                <div class="row justify-content-center">
-                                    <div class="btn-group" role="group" aria-label="Basic outlined example">
-                                        <button type="submit" class="btn btn-outline-primary">Valider</button>
-
-                                        <button class="btn btn-outline-primary" onclick="goBack( {{ page }} )">Annuler</button>
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
-
-    </div>
-
-
 
     {{ form_end(lieuForm) }}
 
@@ -114,3 +132,44 @@
 {% block footer %}
 
 {% endblock %}
+
+
+
+{# script recherche CP #}
+                {# <script> const rechercheCPSelonVilleURL = "{{ path('lieu_rechercheCP') }}"</script> #}
+                {# <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> #}
+                {# <script> #}
+                {# let rechercheCP = document.getElementById("villeSelect"); #}
+                {# rechercheCP.addEventListener('change', envoyerAjaxRequest); #}
+                {# function envoyerAjaxRequest() { #}
+                {# let ville = rechercheCP.value; #}
+                {# console.log(ville); #}
+
+                {# axios.get(rechercheCPSelonVilleURL, { #}
+                {# params: {"ville": ville} #}
+                {# }) #}
+                {# .then(function (response) { #}
+                {# console.log(response.data); #}
+                {# let resultatsCPx = document.getElementById("cpSelect"); #}
+                {# resultatsCPx.innerHTML = response.data; #}
+                {# }); #}
+                {# } #}
+                {# </script> #}
+
+
+{# script axios #}
+                {# // axios.get(rechercheLonSelonVilleURL, { #}
+                {# //     params: {"ville": ville} #}
+                {# // }) #}
+                {# //     .then(function (response) { #}
+                {# //         let resultatsCPx = document.getElementById("lonSelect"); #}
+                {# //         resultatsCPx.innerHTML = response.data; #}
+                {# //     }); #}
+                {# // #}
+                {# // axios.get(rechercheLatSelonVilleURL, { #}
+                {# //     params: {"ville": ville} #}
+                {# // }) #}
+                {# //     .then(function (response) { #}
+                {# //         let resultatsCPx = document.getElementById("latSelect"); #}
+                {# //         resultatsCPx.innerHTML = response.data; #}
+                {# //     }); #}
