@@ -5,8 +5,8 @@
 
 {% block body %}
     <div class="container">
-        <div class="row justify-content-evenly mt-3 mb-6 col-12 ">
-            <div class="d-inline text-center mb-3">
+        <div class="row justify-content-evenly mt-1 mb-6 col-12 ">
+            <div class="d-inline text-center mb-1">
                 <h1 class="font-weight-normal ">Créer un lieu</h1>
             </div>
 
@@ -30,7 +30,6 @@
                             <!-- zone affichage resultats requete AJAX -->
                         </select>
                     </div>
-
                     <!-- AJAX pour la recherche de ville -->
                     <script> const rechercheVilleUrl = "{{ path('lieu_rechercheVille') }}" </script>
                     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -51,43 +50,30 @@
                         }
                     </script>
                     <!-- fin: AJAX pour la recherche de ville -->
-
                     <div id="villeInfo">
                         <div class="mb-3">
                             <label class="form-label" for="cpSelect">Code Postal :</label>
                             <input class="form-control" id="cpSelect">
                             <!-- zone affichage resultats requete AJAX -->
-
                         </div>
-
-
                         <div class="mb-3">
                             <label class="form-label" for="latSelect">Latitude : </label><br>
                             <input class="form-control" id="latSelect">
                             <!-- zone affichage resultats requete AJAX -->
-
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="lonSelect">Longitude :</label>
                             <input class="form-control" id="lonSelect">
                             <!-- zone affichage resultats requete AJAX -->
-
                         </div>
                     </div>
-                    <div class="mb-3">
+                    <div class="">
                         <div class="form-label">{{ form_label(lieuForm.rue) }}</div>
                         {{ form_widget (lieuForm.rue,{'attr' : {'class': 'form-control'}}) }}
                         {{ form_errors (lieuForm.rue) }}
                     </div>
-
-
                     <!-- AJAX pour la recherche info -->
                     <script> const rechercheInfoSelonVilleURL = "{{ path('lieu_rechercheInfo') }}"</script>
-                    {# <script> const rechercheLonSelonVilleURL = "{{ path('lieu_rechercheLon') }}"</script> #}
-                    {# <script> const rechercheLatSelonVilleURL = "{{ path('lieu_rechercheLat') }}"</script> #}
-                    {# <script> const rechercheInfoVilleURL = "{{ path('lieu_rechercheInfoVille') }}"</script> #}
-
-
                     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
                     <script>
                         let rechercheInfo = document.getElementById("villeSelect");
@@ -129,47 +115,4 @@
 
 {% endblock %}
 
-{% block footer %}
 
-{% endblock %}
-
-
-
-{# script recherche CP #}
-                {# <script> const rechercheCPSelonVilleURL = "{{ path('lieu_rechercheCP') }}"</script> #}
-                {# <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> #}
-                {# <script> #}
-                {# let rechercheCP = document.getElementById("villeSelect"); #}
-                {# rechercheCP.addEventListener('change', envoyerAjaxRequest); #}
-                {# function envoyerAjaxRequest() { #}
-                {# let ville = rechercheCP.value; #}
-                {# console.log(ville); #}
-
-                {# axios.get(rechercheCPSelonVilleURL, { #}
-                {# params: {"ville": ville} #}
-                {# }) #}
-                {# .then(function (response) { #}
-                {# console.log(response.data); #}
-                {# let resultatsCPx = document.getElementById("cpSelect"); #}
-                {# resultatsCPx.innerHTML = response.data; #}
-                {# }); #}
-                {# } #}
-                {# </script> #}
-
-
-{# script axios #}
-                {# // axios.get(rechercheLonSelonVilleURL, { #}
-                {# //     params: {"ville": ville} #}
-                {# // }) #}
-                {# //     .then(function (response) { #}
-                {# //         let resultatsCPx = document.getElementById("lonSelect"); #}
-                {# //         resultatsCPx.innerHTML = response.data; #}
-                {# //     }); #}
-                {# // #}
-                {# // axios.get(rechercheLatSelonVilleURL, { #}
-                {# //     params: {"ville": ville} #}
-                {# // }) #}
-                {# //     .then(function (response) { #}
-                {# //         let resultatsCPx = document.getElementById("latSelect"); #}
-                {# //         resultatsCPx.innerHTML = response.data; #}
-                {# //     }); #}

@@ -28,21 +28,21 @@ class VilleRepository extends ServiceEntityRepository
     {
         $queryBuilder = $this->createQueryBuilder('v');
         $queryBuilder->andWhere('v.nom LIKE :rechercheVille')
-            ->setParameter('rechercheVille', $saisi.'%')
+            ->setParameter('rechercheVille', '%'.$saisi.'%')
             ->orderBy('v.nom','ASC');
 
         $queryBuilder->setMaxResults(20);
         $result=$queryBuilder->getQuery()->getResult();
-//        dump($result);
-        $queryBuilder = $this->createQueryBuilder('v');
-        $queryBuilder->andWhere('v.nom LIKE :rechercheVille1')->setParameter('rechercheVille1', '%'.$saisi.'%');
-        $queryBuilder->setMaxResults(10);
-//        array_push($result , $queryBuilder->getQuery()->getResult());
-        $result2 = $queryBuilder->getQuery()->getResult();
-//        dump($result);
-        foreach ($result2 as $ville){
-            $result[]=$ville;
-        }
+////        dump($result);
+//        $queryBuilder = $this->createQueryBuilder('v');
+//        $queryBuilder->andWhere('v.nom LIKE :rechercheVille1')->setParameter('rechercheVille1', '%'.$saisi.'%');
+//        $queryBuilder->setMaxResults(10);
+////        array_push($result , $queryBuilder->getQuery()->getResult());
+//        $result2 = $queryBuilder->getQuery()->getResult();
+////        dump($result);
+//        foreach ($result2 as $ville){
+//            $result[]=$ville;
+//        }
         return $result;
     }
 
@@ -56,7 +56,6 @@ class VilleRepository extends ServiceEntityRepository
     {
         $queryBuilder = $this->createQueryBuilder('v');
         $queryBuilder->andWhere('v.id = :ville')->setParameter('ville', $ville);
-
         return $queryBuilder->getQuery()->getResult();
     }
 

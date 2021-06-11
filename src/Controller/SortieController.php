@@ -117,7 +117,8 @@ class SortieController extends AbstractController
                                   Request $request,
                                   SortieRepository $sortieRepository,
                                   UpdateEntity $updateEntity,
-                                  EntityManagerInterface $entityManager){
+                                  EntityManagerInterface $entityManager)
+    {
 
         //On récupère le user
         $user = $this->getUser();
@@ -141,41 +142,9 @@ class SortieController extends AbstractController
         ]);
     }
 
-//    //Créer un nouveau lieu pour une sortie
-//    /**
-//     * @Route("/lieu/create", name="lieu_create")
-//     */
-//
-//    public function ajouterLieu(Request $request,
-//                                EntityManagerInterface $entityManager):Response
-//    {
-//        $lieu = new Lieu();
-//
-//        $lieuForm = $this->createForm(LieuType::class, $lieu);
-//
-//        $lieuForm->handleRequest($request);
-//
-//        if($lieuForm->isSubmitted() && $lieuForm->isValid()){
-//
-//            $entityManager->persist($lieu);
-//            $entityManager->flush();
-//
-//            $this->addFlash('success', 'Lieu ajouté !');
-//
-//            return $this->redirectToRoute('sortie_create');
-//
-//        }
-//
-//        return $this->render('lieu/create.html.twig', [
-//            'lieuForm' => $lieuForm->createView(),
-//            'page'=> 1
-//        ]);
-//    }
 
-
-
-    //Afficher les details d'une sortie
     /**
+     * Afficher les details d'une sortie
      * @Route("/sortie/detail/{id}", name="sortie_detail", requirements={"id"="\d+"})
      */
 

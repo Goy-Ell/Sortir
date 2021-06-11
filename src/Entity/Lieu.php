@@ -22,9 +22,9 @@ class Lieu
 
     /**
      * @Assert\NotBlank
-     * @Assert\Length (min=5,
+     * @Assert\Length (min=2,
      *     max=50,
-     *     minMessage="min 5 caractères !",
+     *     minMessage="min 2 caractères !",
      *     maxMessage="max 50 caractères !")
      * @ORM\Column(type="string", length=50)
      */
